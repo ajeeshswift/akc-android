@@ -1,4 +1,4 @@
-package com.swift.akc;
+package com.swift.akc.Activity;
 
 import android.os.Bundle;
 import android.view.View;
@@ -12,14 +12,10 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONArrayRequestListener;
-import com.rx2androidnetworking.Rx2AndroidNetworking;
+import com.swift.akc.BaseAppCompactActivity;
+import com.swift.akc.R;
 
 import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.util.function.Function;
-
-import io.reactivex.android.schedulers.AndroidSchedulers;
 
 public class LoginActivity extends BaseAppCompactActivity {
 
@@ -45,6 +41,7 @@ public class LoginActivity extends BaseAppCompactActivity {
     }
 
     public void loginApiCall(){
+        showLoading();
         AndroidNetworking.get("https://fierce-cove-29863.herokuapp.com/getAllUsers/{pageNumber}")
                 .addPathParameter("pageNumber", "0")
                 .addQueryParameter("limit", "3")
@@ -55,6 +52,7 @@ public class LoginActivity extends BaseAppCompactActivity {
                 .getAsJSONArray(new JSONArrayRequestListener() {
                     @Override
                     public void onResponse(JSONArray response) {
+                        hideLoading();
                         // do anything with response
                         Toast.makeText(getApplicationContext(),"success",Toast.LENGTH_SHORT).show();
                     }

@@ -176,7 +176,6 @@
         android:id="@+id/submit"
         android:layout_width="272dp"
         android:layout_height="38dp"
-        android:Alignment="center"
         android:layout_marginHorizontal="45dp"
         android:layout_marginTop="75dp"
         android:background="@drawable/btn_primary_background"
