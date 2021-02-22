@@ -12,6 +12,7 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.rx2androidnetworking.Rx2AndroidNetworking;
 import com.swift.akc.BaseAppCompactActivity;
 import com.swift.akc.R;
 import com.swift.akc.network.ApiEndpoint;
@@ -21,7 +22,12 @@ import org.json.JSONObject;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class LoginActivity extends BaseAppCompactActivity {
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
+
+public class LoginActivity extends BaseAppCompactActivity implements View.OnClickListener {
 
     EditText username;
 
@@ -37,66 +43,48 @@ public class LoginActivity extends BaseAppCompactActivity {
         username = findViewById(R.id.userName);
         password = findViewById(R.id.password);
         login = findViewById(R.id.login);
-        login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                loginApiCall();
-            }
-        });
+        login.setOnClickListener(this);
     }
 
-//    public void loginApiCall(){
-//        showLoading();
-//        AndroidNetworking.get("https://fierce-cove-29863.herokuapp.com/getAllUsers/{pageNumber}")
-//                .addPathParameter("pageNumber", "0")
-//                .addQueryParameter("limit", "3")
-//                .addHeaders("token", "1234")
-//                .setTag("test")
-//                .setPriority(Priority.HIGH)
-//                .build()
-//                .getAsJSONArray(new JSONArrayRequestListener() {
-//                    @Override
-//                    public void onResponse(JSONArray response) {
-//                        hideLoading();
-//                        // do anything with response
-//                        Toast.makeText(getApplicationContext(),"success",Toast.LENGTH_SHORT).show();
-//                    }
-//
-//
-//                    @Override
-//                    public void onError(ANError error) {
-//                        // handle error
-//                        Toast.makeText(getApplicationContext(),"failure",Toast.LENGTH_SHORT).show();
-//                    }
-//                });
-//    }
+    @Override
+    public void onClick(View view) {
+        if(view.getId() == R.id.login) {
+            loginApiCall();
+        }
+    }
 
-    public void loginApiCall() {
-        showLoading();
-        JSONObject body = new JSONObject();
+    private void loginApiCall() {
+        JSONObject params = new JSONObject();
         try {
-            body.put("userName", "Admin");
-            body.put("password", "1955");
+            params.put("userName", "Admin");
+            params.put("password", "1955");
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-//        URL url = new URL(ApiEndpoint.LOGIN_API);
-//        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-
-        AndroidNetworking.post(ApiEndpoint.LOGIN_API)
-                .addJSONObjectBody(body)
-                .setPriority(Priority.MEDIUM)
+        Rx2AndroidNetworking.post(ApiEndpoint.LOGIN_API)
+                .addJSONObjectBody(params)
                 .build()
-                .getAsJSONObject(new JSONObjectRequestListener() {
+                .getJSONObjectObservable()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<JSONObject>() {
                     @Override
-                    public void onResponse(JSONObject response) {
-                        Toast.makeText(getApplicationContext(),"success",Toast.LENGTH_SHORT).show();
+                    public void onSubscribe(Disposable d) {
+
+                    }
+                    @Override
+                    public void onNext(JSONObject object) {
+                        Toast.makeText(LoginActivity.this, "Success", Toast.LENGTH_LONG).show();
                     }
 
                     @Override
-                    public void onError(ANError anError) {
-                        Toast.makeText(getApplicationContext(),"failure",Toast.LENGTH_SHORT).show();
+                    public void onError(Throwable e) {
+                        hideLoading();
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        hideLoading();
                     }
                 });
     }
