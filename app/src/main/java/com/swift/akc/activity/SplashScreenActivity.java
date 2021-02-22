@@ -1,4 +1,4 @@
-package com.swift.akc.Activity;
+package com.swift.akc.activity;
 
 
 import android.os.Bundle;
