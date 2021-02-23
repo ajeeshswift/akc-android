@@ -16,6 +16,7 @@ import com.rx2androidnetworking.Rx2AndroidNetworking;
 import com.swift.akc.BaseAppCompactActivity;
 import com.swift.akc.R;
 import com.swift.akc.network.ApiEndpoint;
+import com.swift.akc.network.data.AdminVO;
 
 import org.json.JSONObject;
 
@@ -56,24 +57,24 @@ public class LoginActivity extends BaseAppCompactActivity implements View.OnClic
     private void loginApiCall() {
         JSONObject params = new JSONObject();
         try {
-            params.put("userName", "Admin");
-            params.put("password", "1955");
+            params.put("userName", username.getText().toString());
+            params.put("password", password.getText().toString());
         } catch (Exception e) {
             e.printStackTrace();
         }
         Rx2AndroidNetworking.post(ApiEndpoint.LOGIN_API)
                 .addJSONObjectBody(params)
                 .build()
-                .getJSONObjectObservable()
+                .getObjectObservable(AdminVO.class)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<JSONObject>() {
+                .subscribe(new Observer<AdminVO>() {
                     @Override
                     public void onSubscribe(Disposable d) {
 
                     }
                     @Override
-                    public void onNext(JSONObject object) {
+                    public void onNext(AdminVO object) {
                         Toast.makeText(LoginActivity.this, "Success", Toast.LENGTH_LONG).show();
                     }
 
