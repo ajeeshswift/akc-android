@@ -8,4 +8,6 @@ public final class ApiEndpoint {
 
     public static final String LOGIN_API = BASE_URL + "/login/userValidation";
 
+    public static final String HARVEST_API = BASE_URL + "/harvest/harvestEntry";
+
 }

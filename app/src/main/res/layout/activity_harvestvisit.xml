@@ -40,7 +40,7 @@
         android:background="@drawable/edit_text_border"
         android:hint="Sappling Quantity"
         android:paddingHorizontal="15dp" />
-    <EditText
+  <EditText
         android:id="@+id/harvestdate"
         android:layout_width="355dp"
         android:layout_height="60dp"
@@ -104,6 +104,15 @@
         android:text="SUBMIT"
         android:layout_marginBottom="100dp"
         android:textColor="@color/colorWhite" />
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/button1"
+        android:layout_marginLeft="100dp"
+        android:layout_marginTop="10dp"
+        android:textSize="18dp"
+        android:textStyle="bold" />
       </LinearLayout>
   </ScrollView>
 </LinearLayout>
