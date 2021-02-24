@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -34,11 +35,12 @@ public class harvestvisit extends AppCompatActivity implements View.OnClickListe
     TextView tvw;
     DatePickerDialog picker;
     AutoCompleteTextView plantOrSeed;
+    String Dest;
 
-   private void getData(String query){
-       plantOrSeed     = (AutoCompleteTextView)findViewById(R.id.autoCompletePlantsseed);
+
+   public void getData(String query){
        Rx2AndroidNetworking.get(ApiEndpoint.GETTING_FLORA_API)
-               .addQueryParameter("query", plantOrSeed.getText().toString())
+               .addQueryParameter("query", query)
                .build()
                .getObjectObservable(AdminVO.class)
                .subscribeOn(Schedulers.io())
@@ -86,15 +88,20 @@ public class harvestvisit extends AppCompatActivity implements View.OnClickListe
             soldRate        = (EditText)findViewById(R.id.soldrate);
             totalIncome     = (EditText)findViewById(R.id.totalincome);
             submit          = (Button) findViewById(R.id.submit);
+        //Dest = plantOrSeed.getText().toString();
             submit.setOnClickListener(this);
+        //plantOrSeed.callOnClick(getData(Dest));
 
         //Creating the instance of ArrayAdapter containing list of fruit names
         ArrayAdapter<String> adapter = new ArrayAdapter<String>
                 (this, android.R.layout.select_dialog_item, fruits);
         //Getting the instance of AutoCompleteTextView
+
         plantOrSeed.setThreshold(1);//will start working from first character
         plantOrSeed.setAdapter(adapter);//setting the adapter data into the AutoCompleteTextView
         plantOrSeed.setTextColor(Color.RED);
+        //plantOrSeed.setOnItemClickListener(this);
+        //plantOrSeed.onKeyUp(new AdapterView.OnKeyListener(this.plantOrSeed));
 
 
         harvestDate.setInputType(InputType.TYPE_NULL);
@@ -142,7 +149,7 @@ public class harvestvisit extends AppCompatActivity implements View.OnClickListe
 
 
 
-
+//getData("App");
     }
     @Override
     public void onClick(View view){
