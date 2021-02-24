@@ -17,6 +17,7 @@ import com.rx2androidnetworking.Rx2AndroidNetworking;
 import com.swift.akc.BaseAppCompactActivity;
 import com.swift.akc.R;
 import com.swift.akc.harvestentry;
+import com.swift.akc.harvestingforcast;
 import com.swift.akc.harvestvisit;
 import com.swift.akc.network.ApiEndpoint;
 import com.swift.akc.network.data.AdminVO;
@@ -79,7 +80,7 @@ public class LoginActivity extends BaseAppCompactActivity implements View.OnClic
                     @Override
                     public void onNext(AdminVO object) {
                         Toast.makeText(LoginActivity.this, "Success", Toast.LENGTH_LONG).show();
-                        startActivity(new Intent(LoginActivity.this, harvestvisit.class));
+                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
                     }
 
                     @Override
