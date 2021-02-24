@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/harvestentry"
+        android:title="Harvest Entry" />
+    <item android:id="@+id/harvestvisit"
+        android:title="Harvest Visit" />
+    <item android:id="@+id/harvestforcasting"
+        android:title="Harvest Forcasting" />
+</menu>

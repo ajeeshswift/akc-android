@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 
-public class harvestentry extends AppCompatActivity {
+public class harvestentry extends LandingPageCompactActivity {
     EditText villagename;
     EditText farmno;
     Button submit;
