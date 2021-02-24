@@ -3,6 +3,7 @@ package com.swift.akc;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
@@ -12,7 +13,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.rx2androidnetworking.Rx2AndroidNetworking;
+import com.swift.akc.activity.LoginActivity;
 import com.swift.akc.network.ApiEndpoint;
+import com.swift.akc.network.data.AdminVO;
 import com.swift.akc.network.data.HarvestVO;
 import org.json.JSONObject;
 import java.util.Calendar;
@@ -20,21 +23,60 @@ import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+import android.graphics.Color;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 
 public class harvestvisit extends AppCompatActivity implements View.OnClickListener {
-    EditText plantOrSeed,sowingDate,sapQuantity,harvestQuantity,
+    EditText sowingDate,sapQuantity,harvestQuantity,
             ownUse,soldQuantity,soldRate,totalIncome,harvestDate;
     Button submit;
     TextView tvw;
     DatePickerDialog picker;
+    AutoCompleteTextView plantOrSeed;
+
+   private void getData(String query){
+       plantOrSeed     = (AutoCompleteTextView)findViewById(R.id.autoCompletePlantsseed);
+       Rx2AndroidNetworking.get(ApiEndpoint.GETTING_FLORA_API)
+               .addQueryParameter("query", plantOrSeed.getText().toString())
+               .build()
+               .getObjectObservable(AdminVO.class)
+               .subscribeOn(Schedulers.io())
+               .observeOn(AndroidSchedulers.mainThread())
+               .subscribe(new Observer<AdminVO>() {
+                   @Override
+                   public void onSubscribe(Disposable d) {
+
+                   }
+                   @Override
+                   public void onNext(AdminVO object) {
+                       Toast.makeText(harvestvisit.this, "Success", Toast.LENGTH_LONG).show();
+                       startActivity(new Intent(harvestvisit.this, harvestvisit.class));
+                   }
+
+                   @Override
+                   public void onError(Throwable e) {
+                       Toast.makeText(harvestvisit.this, "Invalid Username or Password", Toast.LENGTH_LONG).show();
+                       //hideLoading();
+                   }
+
+                   @Override
+                   public void onComplete() {
+                       //hideLoading();
+                   }
+               });
+   }
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        String[] fruits = {"Apple","Apple1","Apple2","Apple3","Apple4","Apple5", "Banana", "Cherry", "Date", "Grape", "Kiwi", "Mango", "Pear"};
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_harvestvisit);
 
             tvw             = (TextView)findViewById(R.id.textView1);
-            plantOrSeed     = (EditText)findViewById(R.id.plantsseed);
+            plantOrSeed     = (AutoCompleteTextView)findViewById(R.id.autoCompletePlantsseed);
             harvestDate     = (EditText) findViewById(R.id.harvestdate);
             sowingDate      = (EditText) findViewById(R.id.sowingdate);
             sapQuantity     = (EditText)findViewById(R.id.sapplingquantity);
@@ -45,6 +87,14 @@ public class harvestvisit extends AppCompatActivity implements View.OnClickListe
             totalIncome     = (EditText)findViewById(R.id.totalincome);
             submit          = (Button) findViewById(R.id.submit);
             submit.setOnClickListener(this);
+
+        //Creating the instance of ArrayAdapter containing list of fruit names
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>
+                (this, android.R.layout.select_dialog_item, fruits);
+        //Getting the instance of AutoCompleteTextView
+        plantOrSeed.setThreshold(1);//will start working from first character
+        plantOrSeed.setAdapter(adapter);//setting the adapter data into the AutoCompleteTextView
+        plantOrSeed.setTextColor(Color.RED);
 
 
         harvestDate.setInputType(InputType.TYPE_NULL);
@@ -68,6 +118,8 @@ public class harvestvisit extends AppCompatActivity implements View.OnClickListe
 
     });
 
+
+
         sowingDate.setInputType(InputType.TYPE_NULL);
         sowingDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,6 +139,8 @@ public class harvestvisit extends AppCompatActivity implements View.OnClickListe
                 picker.show();
             }
         });
+
+
 
 
     }

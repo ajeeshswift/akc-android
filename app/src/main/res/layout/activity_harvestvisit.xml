@@ -13,16 +13,22 @@
           android:layout_width="fill_parent"
           android:layout_height="fill_parent"
           android:orientation="vertical">
-    <EditText
-        android:id="@+id/plantsseed"
-        android:layout_width="355dp"
-        android:layout_height="60dp"
-        android:layout_marginHorizontal="15dp"
-        android:layout_marginTop="25dp"
-        android:background="@drawable/edit_text_border"
+      <AutoCompleteTextView
+        android:id="@+id/autoCompletePlantsseed"
+        android:layout_width="322dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="36dp"
+        android:layout_marginTop="17dp"
+        android:ems="10"
+        android:text="">
         android:hint="Plant / Seed"
-        android:paddingHorizontal="15dp" />
-    <EditText
+        android:background="@drawable/edit_text_border"
+        <requestFocus />
+      </AutoCompleteTextView>
+
+        <EditText
     android:id="@+id/sowingdate"
     android:layout_width="355dp"
     android:layout_height="60dp"
