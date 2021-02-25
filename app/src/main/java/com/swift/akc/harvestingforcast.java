@@ -117,12 +117,12 @@ public class harvestingforcast extends LandingPageCompactActivity implements Vie
                 @Override
                 public void onError(Throwable e) {
                     Toast.makeText(harvestingforcast.this, "Error", Toast.LENGTH_LONG).show();
-                    //hideLoading();
+                    hideLoading();
                 }
 
                 @Override
                 public void onComplete() {
-                    //hideLoading();
+                    hideLoading();
                 }
             });
         }
