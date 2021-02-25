@@ -1,22 +1,18 @@
 package com.swift.akc;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
+
 import android.app.DatePickerDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.rx2androidnetworking.Rx2AndroidNetworking;
-import com.swift.akc.activity.LoginActivity;
 import com.swift.akc.network.ApiEndpoint;
-import com.swift.akc.network.data.AdminVO;
 import com.swift.akc.network.data.HarvestVO;
 import org.json.JSONObject;
 import java.util.Calendar;
@@ -28,7 +24,9 @@ import android.graphics.Color;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 
-public class harvestvisit extends AppCompatActivity implements View.OnClickListener {
+public class harvestvisit extends LandingPageCompactActivity implements View.OnClickListener {
+
+
     EditText sowingDate,sapQuantity,harvestQuantity,
             ownUse,soldQuantity,soldRate,totalIncome,harvestDate;
     Button submit;
@@ -38,36 +36,36 @@ public class harvestvisit extends AppCompatActivity implements View.OnClickListe
     String Dest;
 
 
-   public void getData(String query){
-       Rx2AndroidNetworking.get(ApiEndpoint.GETTING_FLORA_API)
-               .addQueryParameter("query", query)
-               .build()
-               .getObjectObservable(AdminVO.class)
-               .subscribeOn(Schedulers.io())
-               .observeOn(AndroidSchedulers.mainThread())
-               .subscribe(new Observer<AdminVO>() {
-                   @Override
-                   public void onSubscribe(Disposable d) {
-
-                   }
-                   @Override
-                   public void onNext(AdminVO object) {
-                       Toast.makeText(harvestvisit.this, "Success", Toast.LENGTH_LONG).show();
-                       startActivity(new Intent(harvestvisit.this, harvestvisit.class));
-                   }
-
-                   @Override
-                   public void onError(Throwable e) {
-                       Toast.makeText(harvestvisit.this, "Invalid Username or Password", Toast.LENGTH_LONG).show();
-                       //hideLoading();
-                   }
-
-                   @Override
-                   public void onComplete() {
-                       //hideLoading();
-                   }
-               });
-   }
+//   public void getData(String query){
+//       Rx2AndroidNetworking.get(ApiEndpoint.GETTING_FLORA_API)
+//               .addQueryParameter("query", query)
+//               .build()
+//               .getObjectObservable(AdminVO.class)
+//               .subscribeOn(Schedulers.io())
+//               .observeOn(AndroidSchedulers.mainThread())
+//               .subscribe(new Observer<AdminVO>() {
+//                   @Override
+//                   public void onSubscribe(Disposable d) {
+//
+//                   }
+//                   @Override
+//                   public void onNext(AdminVO object) {
+//                       Toast.makeText(harvestvisit.this, "Success", Toast.LENGTH_LONG).show();
+//                       startActivity(new Intent(harvestvisit.this, harvestvisit.class));
+//                   }
+//
+//                   @Override
+//                   public void onError(Throwable e) {
+//                       Toast.makeText(harvestvisit.this, "Invalid Username or Password", Toast.LENGTH_LONG).show();
+//                       //hideLoading();
+//                   }
+//
+//                   @Override
+//                   public void onComplete() {
+//                       //hideLoading();
+//                   }
+//               });
+//   }
 
 
     @Override
@@ -79,8 +77,8 @@ public class harvestvisit extends AppCompatActivity implements View.OnClickListe
 
             tvw             = (TextView)findViewById(R.id.textView1);
             plantOrSeed     = (AutoCompleteTextView)findViewById(R.id.autoCompletePlantsseed);
-            harvestDate     = (EditText) findViewById(R.id.harvestdate);
-            sowingDate      = (EditText) findViewById(R.id.sowingdate);
+            harvestDate     = (EditText)findViewById(R.id.harvestdate);
+            sowingDate      = (EditText)findViewById(R.id.sowingdate);
             sapQuantity     = (EditText)findViewById(R.id.sapplingquantity);
             harvestQuantity = (EditText)findViewById(R.id.harvestquantity);
             ownUse          = (EditText)findViewById(R.id.ownhomeuse);
@@ -88,9 +86,8 @@ public class harvestvisit extends AppCompatActivity implements View.OnClickListe
             soldRate        = (EditText)findViewById(R.id.soldrate);
             totalIncome     = (EditText)findViewById(R.id.totalincome);
             submit          = (Button) findViewById(R.id.submit);
-        //Dest = plantOrSeed.getText().toString();
             submit.setOnClickListener(this);
-        //plantOrSeed.callOnClick(getData(Dest));
+
 
         //Creating the instance of ArrayAdapter containing list of fruit names
         ArrayAdapter<String> adapter = new ArrayAdapter<String>
@@ -100,56 +97,26 @@ public class harvestvisit extends AppCompatActivity implements View.OnClickListe
         plantOrSeed.setThreshold(1);//will start working from first character
         plantOrSeed.setAdapter(adapter);//setting the adapter data into the AutoCompleteTextView
         plantOrSeed.setTextColor(Color.RED);
-        //plantOrSeed.setOnItemClickListener(this);
-        //plantOrSeed.onKeyUp(new AdapterView.OnKeyListener(this.plantOrSeed));
 
 
         harvestDate.setInputType(InputType.TYPE_NULL);
         harvestDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final Calendar cldr = Calendar.getInstance();
-                int day = cldr.get(Calendar.DAY_OF_MONTH);
-                int month = cldr.get(Calendar.MONTH);
-                int year = cldr.get(Calendar.YEAR);
-                // date picker dialog
-                picker = new DatePickerDialog(harvestvisit.this,
-                        new DatePickerDialog.OnDateSetListener() {
-                            @Override
-                            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                                harvestDate.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
-                            }
-                        }, year, month, day);
-                picker.show();
+                DatePickerView datePickerView = new DatePickerView();
+                datePickerView.setDatePickerView(harvestvisit.this,harvestDate);
             }
-
     });
-
-
 
         sowingDate.setInputType(InputType.TYPE_NULL);
         sowingDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final Calendar cldr = Calendar.getInstance();
-                int day = cldr.get(Calendar.DAY_OF_MONTH);
-                int month = cldr.get(Calendar.MONTH);
-                int year = cldr.get(Calendar.YEAR);
-                // date picker dialog
-                picker = new DatePickerDialog(harvestvisit.this,
-                        new DatePickerDialog.OnDateSetListener() {
-                            @Override
-                            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                                sowingDate.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
-                            }
-                        }, year, month, day);
-                picker.show();
+                DatePickerView datePickerView = new DatePickerView();
+                datePickerView.setDatePickerView(harvestvisit.this,sowingDate);
             }
         });
 
-
-
-//getData("App");
     }
     @Override
     public void onClick(View view){
@@ -158,12 +125,13 @@ public class harvestvisit extends AppCompatActivity implements View.OnClickListe
         }
     }
     private void harvestVisitEntryAPICall(){
+        DateConversion dateConversion = new DateConversion();
         JSONObject params = new JSONObject();
         try{
-            params.put("plantOrSeed",plantOrSeed.getText().toString());
-            params.put("sowingDate",sowingDate.getText().toString());
+            //params.put("plantOrSeed",plantOrSeed.getText().toString());
+            params.put("sowingDate",dateConversion.convertDateFormat(sowingDate.getText().toString()));
             params.put("sapQuantity",sapQuantity.getText().toString());
-            params.put("harvestDate",harvestDate.getText().toString());
+            params.put("harvestDate",dateConversion.convertDateFormat(harvestDate.getText().toString()));
             params.put("harvestQuantity",harvestQuantity.getText().toString());
             params.put("ownUseQuantity",ownUse.getText().toString());
             params.put("soldQuantity",soldQuantity.getText().toString());

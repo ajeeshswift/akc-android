@@ -98,32 +98,32 @@ public class harvestingforcast extends LandingPageCompactActivity implements Vie
             e.printStackTrace();
         }
 
-        Rx2AndroidNetworking.post(ApiEndpoint.HARVEST_FORECAST_API)
-            .addJSONObjectBody(params)
-            .build()
-            .getObjectObservable(HarvestForcastingVO.class)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Observer<HarvestForcastingVO>() {
-                @Override
-                public void onSubscribe(Disposable d) {
-
-                }
-                @Override
-                public void onNext(HarvestForcastingVO object) {
-                    Toast.makeText(harvestingforcast.this, "Successfully Added", Toast.LENGTH_LONG).show();
-                }
-
-                @Override
-                public void onError(Throwable e) {
-                    Toast.makeText(harvestingforcast.this, "Error", Toast.LENGTH_LONG).show();
-                    //hideLoading();
-                }
-
-                @Override
-                public void onComplete() {
-                    //hideLoading();
-                }
-            });
-        }
+//        Rx2AndroidNetworking.post(ApiEndpoint.HARVEST_FORECAST_API)
+//            .addJSONObjectBody(params)
+//            .build()
+//            .getObjectObservable(HarvestForcastingVO.class)
+//            .subscribeOn(Schedulers.io())
+//            .observeOn(AndroidSchedulers.mainThread())
+//            .subscribe(new Observer<HarvestForcastingVO>() {
+//                @Override
+//                public void onSubscribe(Disposable d) {
+//
+//                }
+//                @Override
+//                public void onNext(HarvestForcastingVO object) {
+//                    Toast.makeText(harvestingforcast.this, "Successfully Added", Toast.LENGTH_LONG).show();
+//                }
+//
+//                @Override
+//                public void onError(Throwable e) {
+//                    Toast.makeText(harvestingforcast.this, "Error", Toast.LENGTH_LONG).show();
+//                    //hideLoading();
+//                }
+//
+//                @Override
+//                public void onComplete() {
+//                    //hideLoading();
+//                }
+//            });
+       }
     }

@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.swift.akc.activity.LoginActivity;
 import com.swift.akc.activity.MainActivity;
 
-public class LandingPageCompactActivity extends AppCompatActivity {
+public class LandingPageCompactActivity extends AppCompatActivity  {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater=getMenuInflater();
