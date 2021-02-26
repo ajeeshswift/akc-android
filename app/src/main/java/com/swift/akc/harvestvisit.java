@@ -162,12 +162,12 @@ public class harvestvisit extends LandingPageCompactActivity implements View.OnC
                     @Override
                     public void onError(Throwable e) {
                         Toast.makeText(harvestvisit.this, " ", Toast.LENGTH_LONG).show();
-                        //hideLoading();
+                        hideLoading();
                     }
 
                     @Override
                     public void onComplete() {
-                        //hideLoading();
+                        hideLoading();
                     }
                 });
          }

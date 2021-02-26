@@ -16,6 +16,7 @@ import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.rx2androidnetworking.Rx2AndroidNetworking;
 import com.swift.akc.BaseAppCompactActivity;
 import com.swift.akc.R;
+import com.swift.akc.extras.Storage;
 import com.swift.akc.harvestentry;
 import com.swift.akc.harvestingforcast;
 import com.swift.akc.harvestvisit;
@@ -40,7 +41,6 @@ public class LoginActivity extends BaseAppCompactActivity implements View.OnClic
 
     Button login;
 
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +58,7 @@ public class LoginActivity extends BaseAppCompactActivity implements View.OnClic
         }
     }
 
+
     private void loginApiCall() {
         JSONObject params = new JSONObject();
         try {
@@ -73,6 +74,7 @@ public class LoginActivity extends BaseAppCompactActivity implements View.OnClic
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<AdminVO>() {
+
                     @Override
                     public void onSubscribe(Disposable d) {
 

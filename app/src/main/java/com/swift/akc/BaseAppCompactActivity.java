@@ -10,6 +10,8 @@ import android.view.animation.AnimationUtils;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.swift.akc.extras.Storage;
+
 public class BaseAppCompactActivity extends AppCompatActivity {
 
     private ProgressDialog mProgressDialog;
@@ -42,6 +44,7 @@ public class BaseAppCompactActivity extends AppCompatActivity {
     }
 
     public void hideLoading() {
+        String token = Storage.TOKEN;
         if (mProgressDialog != null && mProgressDialog.isShowing()) {
             mProgressDialog.cancel();
         }
