@@ -21,7 +21,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class LoginActivity extends BaseAppCompactActivity implements View.OnClickListener {
+public class LoginActivity extends BaseAppCompatActivity implements View.OnClickListener {
 
     EditText username;
 
