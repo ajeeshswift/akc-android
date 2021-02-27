@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 
 import com.google.gson.Gson;
 import com.swift.akc.network.data.AdminVO;
+import com.swift.akc.network.data.HarvestFarmVO;
 
 public class Storage {
 
@@ -12,6 +13,10 @@ public class Storage {
     private static final String KEY_TOKEN = "key_token";
     private static final String KEY_APP_CONTEXT = "key_app_context";
     public static String TOKEN;
+
+    public static String selectedMenu = null;
+
+    public static HarvestFarmVO selectedHarvestFarm = null;
 
     public static void save(Context context, AdminVO adminVO) {
         Gson gson = new Gson();

@@ -11,14 +11,14 @@ import androidx.annotation.Nullable;
 import com.swift.akc.R;
 import com.swift.akc.extras.Constants;
 
-public class SearchHarvestFragment extends BaseFragment {
+public class HarvestForecastingEntryFragment extends BaseFragment {
 
-    public SearchHarvestFragment() {
+    public HarvestForecastingEntryFragment() {
 
     }
 
-    public static SearchHarvestFragment newInstance(String title) {
-        SearchHarvestFragment comingSoonFragment = new SearchHarvestFragment();
+    public static HarvestForecastingEntryFragment newInstance(String title) {
+        HarvestForecastingEntryFragment comingSoonFragment = new HarvestForecastingEntryFragment();
         Bundle bundle = new Bundle();
         bundle.putString(Constants.INTENT_PARAM_TITLE, title);
         comingSoonFragment.setArguments(bundle);
@@ -29,7 +29,7 @@ public class SearchHarvestFragment extends BaseFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        mParentView = inflater.inflate(R.layout.fr_harvest_entry, container, false);
+        mParentView = inflater.inflate(R.layout.fr_harvest_forecasting_entry, container, false);
         return mParentView;
     }
 }

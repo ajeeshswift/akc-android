@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,29 +17,23 @@ import com.swift.akc.extras.Constants;
 import com.swift.akc.network.ApiEndpoint;
 import com.swift.akc.network.data.HarvestVisitListVO;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.Map;
-
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class HarvestVisitFragment extends BaseFragment {
+public class HarvestVisitListFragment extends BaseFragment {
 
     private HarvestVisitAdapter mAdapter;
 
     private RecyclerView mRecyclerView;
 
-    public HarvestVisitFragment() {
+    public HarvestVisitListFragment() {
 
     }
 
-    public static HarvestVisitFragment newInstance(String title) {
-        HarvestVisitFragment comingSoonFragment = new HarvestVisitFragment();
+    public static HarvestVisitListFragment newInstance(String title) {
+        HarvestVisitListFragment comingSoonFragment = new HarvestVisitListFragment();
         Bundle bundle = new Bundle();
         bundle.putString(Constants.INTENT_PARAM_TITLE, title);
         comingSoonFragment.setArguments(bundle);
@@ -82,7 +75,7 @@ public class HarvestVisitFragment extends BaseFragment {
 
                     @Override
                     public void onNext(HarvestVisitListVO listVO) {
-                        mAdapter.refresh();
+                        mAdapter.refresh(listVO.getData());
                     }
 
                     @Override

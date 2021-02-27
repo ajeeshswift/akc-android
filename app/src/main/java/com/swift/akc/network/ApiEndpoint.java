@@ -8,7 +8,7 @@ public final class ApiEndpoint {
 
     public static final String LOGIN_API = BASE_URL + "/login/userValidation";
 
-    public static final String GETTING_FLORA_API = BASE_URL +"/flora/floraDetails";
+    public static final String FARMER_DETAILS_API = BASE_URL +"/harvest/farmDetails/{farmNo}";
 
     public static final String HARVEST_API = BASE_URL + "/harvest/harvestEntry";
 

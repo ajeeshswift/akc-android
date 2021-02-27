@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+    <ScrollView
+        android:layout_marginTop="10dp"
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <AutoCompleteTextView
+                android:id="@+id/autoCompletePlantsseed"
+                android:layout_width="322dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textView"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="36dp"
+                android:layout_marginTop="17dp"
+                android:ems="10"
+                android:text=""
+                android:hint="Plant / Seed"
+                android:background="@drawable/edit_text_border">
+                <requestFocus />
+            </AutoCompleteTextView>
+
+            <EditText
+                android:id="@+id/sowingdate"
+                android:layout_width="355dp"
+                android:layout_height="60dp"
+                android:layout_marginHorizontal="15dp"
+                android:layout_marginTop="25dp"
+                android:background="@drawable/edit_text_border"
+                android:hint="Sowing Date"
+                android:paddingHorizontal="15dp" />
+            <EditText
+                android:id="@+id/sapplingquantity"
+                android:layout_width="355dp"
+                android:layout_height="60dp"
+                android:layout_marginHorizontal="15dp"
+                android:layout_marginTop="25dp"
+                android:background="@drawable/edit_text_border"
+                android:hint="Sappling Quantity"
+                android:paddingHorizontal="15dp" />
+            <EditText
+                android:id="@+id/harvestdate"
+                android:layout_width="355dp"
+                android:layout_height="60dp"
+                android:layout_marginHorizontal="15dp"
+                android:layout_marginTop="25dp"
+                android:background="@drawable/edit_text_border"
+                android:hint="Harvest Date"
+                android:paddingHorizontal="15dp" />
+            <EditText
+                android:id="@+id/harvestquantity"
+                android:layout_width="355dp"
+                android:layout_height="60dp"
+                android:layout_marginHorizontal="15dp"
+                android:layout_marginTop="25dp"
+                android:background="@drawable/edit_text_border"
+                android:hint="Harvest Quantity"
+                android:paddingHorizontal="15dp" />
+            <EditText
+                android:id="@+id/ownhomeuse"
+                android:layout_width="355dp"
+                android:layout_height="60dp"
+                android:layout_marginHorizontal="15dp"
+                android:layout_marginTop="25dp"
+                android:background="@drawable/edit_text_border"
+                android:hint="Own/Home Use"
+                android:paddingHorizontal="15dp" />
+            <EditText
+                android:id="@+id/soldquantity"
+                android:layout_width="355dp"
+                android:layout_height="60dp"
+                android:layout_marginHorizontal="15dp"
+                android:layout_marginTop="25dp"
+                android:background="@drawable/edit_text_border"
+                android:hint="Sold Quantity"
+                android:paddingHorizontal="15dp" />
+            <EditText
+                android:id="@+id/soldrate"
+                android:layout_width="355dp"
+                android:layout_height="60dp"
+                android:layout_marginHorizontal="15dp"
+                android:layout_marginTop="25dp"
+                android:background="@drawable/edit_text_border"
+                android:hint="Sold @ Rate"
+                android:paddingHorizontal="15dp" />
+            <EditText
+                android:id="@+id/totalincome"
+                android:layout_width="355dp"
+                android:layout_height="60dp"
+                android:layout_marginHorizontal="15dp"
+                android:layout_marginTop="25dp"
+                android:background="@drawable/edit_text_border"
+                android:hint="Total Income"
+                android:imeOptions="actionDone"
+                android:paddingHorizontal="15dp" />
+            <Button
+                android:id="@+id/submit"
+                android:layout_width="272dp"
+                android:layout_height="38dp"
+                android:layout_marginHorizontal="45dp"
+                android:layout_marginTop="75dp"
+                android:background="@drawable/btn_primary_background"
+                android:text="SUBMIT"
+                android:layout_marginBottom="100dp"
+                android:textColor="@color/colorWhite" />
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/button1"
+                android:layout_marginLeft="100dp"
+                android:layout_marginTop="10dp"
+                android:textSize="18dp"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

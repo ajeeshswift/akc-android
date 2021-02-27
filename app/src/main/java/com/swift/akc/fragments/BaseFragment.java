@@ -67,4 +67,11 @@ public class BaseFragment extends Fragment {
             appCompatActivity.hideLoading();
         }
     }
+
+    public void showApiError(Throwable e) {
+        BaseAppCompatActivity appCompatActivity = (BaseAppCompatActivity) getActivity();
+        if(appCompatActivity != null) {
+            appCompatActivity.showApiError(e);
+        }
+    }
 }

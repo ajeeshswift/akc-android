@@ -19,16 +19,24 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.swift.akc.R;
+import com.swift.akc.extras.EntryType;
+import com.swift.akc.extras.Storage;
 import com.swift.akc.fragments.ComingSoonFragment;
-import com.swift.akc.fragments.HarvestVisitFragment;
+import com.swift.akc.fragments.HarvestFarmSearchFragment;
+import com.swift.akc.fragments.HarvestForecastingEntryFragment;
+import com.swift.akc.fragments.HarvestVisitEntryFragment;
 import com.swift.akc.fragments.HomeFragment;
 
-public class LandingPageActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
+public class LandingPageActivity extends BaseAppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
     private ProgressDialog mProgressDialog;
 
     private static final int FRAGMENT_HOME = 1;
 
-    private static final int FRAGMENT_HARVEST_ENTRY = 2;
+    public static final int FRAGMENT_HARVEST_FARM_SEARCH = 2;
+
+    public static final int FRAGMENT_HARVEST_VISIT_ENTRY = 3;
+
+    public static final int FRAGMENT_HARVEST_FORECASTING_ENTRY = 4;
 
     Toolbar mToolbar;
 
@@ -72,37 +80,19 @@ public class LandingPageActivity extends AppCompatActivity implements BottomNavi
         //Fragment fragment;
         switch (item.getItemId()) {
             case R.id.algorithm:
-                displayView(FRAGMENT_HARVEST_ENTRY, "Harvest Entry", true);
+                Storage.selectedMenu = EntryType.HARVEST_VISIT_ENTRY;
+                displayView(FRAGMENT_HARVEST_FARM_SEARCH, "Harvest Entry", true);
                 break;
             case R.id.course:
-                //displayView(FRAGMENT_HARVEST_ENTRY, "Harvest Entry", true);
-                startActivity(new Intent(LandingPageActivity.this, HarvestVisitActivity.class));
+                Storage.selectedMenu = EntryType.HARVEST_FORECASTING_ENTRY;
+                displayView(FRAGMENT_HARVEST_FARM_SEARCH, "Harvest Entry", true);
                 break;
             case R.id.profile:
-                //displayView(FRAGMENT_HARVEST_ENTRY, "Harvest Entry", true);
-                startActivity(new Intent(LandingPageActivity.this, HarvestingForcastActivity.class));
+                Storage.selectedMenu = "PROFILE";
+                displayView(FRAGMENT_HOME, "Harvest Entry", true);
                 break;
         }
         return true;
-    }
-
-    public void showLoading() {
-        hideLoading();
-        mProgressDialog = new ProgressDialog(this, R.style.AppCompatAlertDialogStyle);
-        mProgressDialog.show();
-        if (mProgressDialog.getWindow() != null) {
-            mProgressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        }
-        mProgressDialog.setContentView(R.layout.progress_dialog);
-        mProgressDialog.setIndeterminate(true);
-        mProgressDialog.setCancelable(false);
-        mProgressDialog.setCanceledOnTouchOutside(false);
-    }
-
-    public void hideLoading() {
-        if (mProgressDialog != null && mProgressDialog.isShowing()) {
-            mProgressDialog.cancel();
-        }
     }
 
     public void displayView(int position, String aTitle, boolean addToBackstack) {
@@ -111,8 +101,14 @@ public class LandingPageActivity extends AppCompatActivity implements BottomNavi
             case FRAGMENT_HOME:
                 fragment = HomeFragment.newInstance(aTitle);
                 break;
-            case FRAGMENT_HARVEST_ENTRY:
-                fragment = HarvestVisitFragment.newInstance(aTitle);
+            case FRAGMENT_HARVEST_FARM_SEARCH:
+                fragment = HarvestFarmSearchFragment.newInstance(aTitle);
+                break;
+            case FRAGMENT_HARVEST_FORECASTING_ENTRY:
+                fragment = HarvestForecastingEntryFragment.newInstance(aTitle);
+                break;
+            case FRAGMENT_HARVEST_VISIT_ENTRY:
+                fragment = HarvestVisitEntryFragment.newInstance(aTitle);
                 break;
             default:
                 fragment = ComingSoonFragment.newInstance(aTitle);
