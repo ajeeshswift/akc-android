@@ -13,11 +13,12 @@
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".harvestingforcast"></activity>
-        <activity android:name=".harvestvisit" />
-        <activity android:name=".harvestentry" />
+        <activity android:name=".activity.HarvestingForcastActivity" />
+        <activity android:name=".activity.HarvestVisitActivity" />
+        <activity android:name=".activity.HarvestEntryActivity" />
         <activity android:name=".activity.SplashScreenActivity" />
         <activity android:name=".activity.MainActivity" />
+        <activity android:name=".activity.LandingPageActivity"/>
         <activity android:name=".activity.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

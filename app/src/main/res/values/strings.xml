@@ -3,4 +3,9 @@
 <!--    <string name="harvestentry">Harvest Entry</string> -->
 <!--    <string name="harvestvisit">Harvest Visit</string>-->
 <!--    <string name="harvestforcasting">Harvest Forcasting</string>-->
+    <string name="alert_btn_ok">Ok</string>
+    <string name="alert_btn_cancel">Cancel</string>
+    <string name="confirm_dialog_title">Confirm</string>
+    <string name="exit_message_home_page">Are you sure want to Exit?</string>
+    <string name="txt_coming_soon">Coming Soon</string>
 </resources>

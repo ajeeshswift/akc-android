@@ -9,24 +9,12 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
-import com.androidnetworking.AndroidNetworking;
-import com.androidnetworking.common.Priority;
-import com.androidnetworking.error.ANError;
-import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.rx2androidnetworking.Rx2AndroidNetworking;
-import com.swift.akc.BaseAppCompactActivity;
 import com.swift.akc.R;
-import com.swift.akc.extras.Storage;
-import com.swift.akc.harvestentry;
-import com.swift.akc.harvestingforcast;
-import com.swift.akc.harvestvisit;
 import com.swift.akc.network.ApiEndpoint;
 import com.swift.akc.network.data.AdminVO;
 
 import org.json.JSONObject;
-
-import java.net.HttpURLConnection;
-import java.net.URL;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -54,7 +42,8 @@ public class LoginActivity extends BaseAppCompactActivity implements View.OnClic
     @Override
     public void onClick(View view) {
         if(view.getId() == R.id.login) {
-            loginApiCall();
+            //loginApiCall();
+            goToLandingPageActivity();
         }
     }
 
@@ -82,7 +71,7 @@ public class LoginActivity extends BaseAppCompactActivity implements View.OnClic
                     @Override
                     public void onNext(AdminVO object) {
                         Toast.makeText(LoginActivity.this, "Success", Toast.LENGTH_LONG).show();
-                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                        goToLandingPageActivity();
                     }
 
                     @Override
@@ -96,5 +85,10 @@ public class LoginActivity extends BaseAppCompactActivity implements View.OnClic
                         hideLoading();
                     }
             });
-        }
+    }
+
+    public void goToLandingPageActivity() {
+        Intent intent = new Intent(this, LandingPageActivity.class);
+        startActivity(intent);
+    }
 }

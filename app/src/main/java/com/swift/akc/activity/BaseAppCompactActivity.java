@@ -1,23 +1,20 @@
-package com.swift.akc;
+package com.swift.akc.activity;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.swift.akc.activity.LoginActivity;
-import com.swift.akc.activity.MainActivity;
+import com.swift.akc.R;
+import com.swift.akc.extras.Storage;
 
-public class LandingPageCompactActivity extends AppCompatActivity {
+public class BaseAppCompactActivity extends AppCompatActivity {
+
     private ProgressDialog mProgressDialog;
 
     public Animation blinkAnimation;
@@ -28,36 +25,12 @@ public class LandingPageCompactActivity extends AppCompatActivity {
         blinkAnimation =
                 AnimationUtils.loadAnimation(this,
                         R.anim.blink);
-        try {
+        try
+        {
             this.getSupportActionBar().hide();
-        } catch (NullPointerException e) {
         }
+        catch (NullPointerException e){}
     }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.harvestentry:
-                startActivity(new Intent(LandingPageCompactActivity.this, harvestentry.class));
-                break;
-            case R.id.harvestvisit:
-                startActivity(new Intent(LandingPageCompactActivity.this, harvestvisit.class));
-                break;
-            case R.id.harvestforcasting:
-                startActivity(new Intent(LandingPageCompactActivity.this, harvestingforcast.class));
-                break;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
     public void showLoading() {
         hideLoading();
         mProgressDialog = new ProgressDialog(this, R.style.AppCompatAlertDialogStyle);
@@ -72,6 +45,7 @@ public class LandingPageCompactActivity extends AppCompatActivity {
     }
 
     public void hideLoading() {
+        String token = Storage.TOKEN;
         if (mProgressDialog != null && mProgressDialog.isShowing()) {
             mProgressDialog.cancel();
         }

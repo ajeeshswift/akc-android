@@ -3,7 +3,6 @@ package com.swift.akc.activity;
 
 import android.os.Bundle;
 
-import com.swift.akc.BaseAppCompactActivity;
 import com.swift.akc.R;
 
 public class SplashScreenActivity extends BaseAppCompactActivity {

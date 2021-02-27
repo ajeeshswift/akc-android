@@ -12,9 +12,10 @@ public class HttpRequestInterceptor implements Interceptor {
     @Override
     public Response intercept(Interceptor.Chain chain) throws IOException {
         Request.Builder requestBuilder = chain.request().newBuilder();
-        if(Storage.TOKEN != null) {
-            requestBuilder.addHeader("Authorization", Storage.TOKEN);
+        if(Storage.TOKEN == null || Storage.TOKEN.equals("")) {
+            return chain.proceed(requestBuilder.build());
         }
+        requestBuilder.addHeader("Authorization", Storage.TOKEN);
         return chain.proceed(requestBuilder.build());
     }
 }

@@ -1,8 +1,11 @@
-package com.swift.akc;
+package com.swift.akc.utils;
 
-public class DateConversion {
+public final class DateUtils {
 
-    public String convertDateFormat(String date){
+    private DateUtils() {
+
+    }
+    public static String convertDateFormat(String date){
         String sd[] = date.split("/");
         String day = sd[0];
         if(day.length() == 1)
