@@ -8,8 +8,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 import androidx.annotation.Nullable;
 import com.rx2androidnetworking.Rx2AndroidNetworking;
-import com.swift.akc.BaseAppCompactActivity;
 import com.swift.akc.R;
+import com.swift.akc.extras.Storage;
 import com.swift.akc.network.ApiEndpoint;
 import com.swift.akc.network.data.AdminVO;
 import org.json.JSONObject;
@@ -31,7 +31,9 @@ public class LoginActivity extends BaseAppCompactActivity implements View.OnClic
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ac_login);
         username = findViewById(R.id.userName);
+        username.setText("Admin");
         password = findViewById(R.id.password);
+        password.setText("1955");
         login = findViewById(R.id.login);
         login.setOnClickListener(this);
     }
@@ -67,7 +69,8 @@ public class LoginActivity extends BaseAppCompactActivity implements View.OnClic
                     @Override
                     public void onNext(AdminVO object) {
                         Toast.makeText(LoginActivity.this, "Success", Toast.LENGTH_LONG).show();
-                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                        Storage.save(getApplicationContext(), object);
+                        goToLandingPageActivity();
                     }
 
                     @Override
@@ -81,5 +84,10 @@ public class LoginActivity extends BaseAppCompactActivity implements View.OnClic
                         hideLoading();
                     }
             });
-        }
+    }
+
+    public void goToLandingPageActivity() {
+        Intent intent = new Intent(this, LandingPageActivity.class);
+        startActivity(intent);
+    }
 }

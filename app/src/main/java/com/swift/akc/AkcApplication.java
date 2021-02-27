@@ -9,9 +9,11 @@ import okhttp3.OkHttpClient;
 public class AkcApplication extends Application {
     @Override
     public void onCreate() {
-        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
         super.onCreate();
-        AndroidNetworking.initialize(getApplicationContext());
-            httpClient.addInterceptor(new HttpRequestInterceptor());
+        OkHttpClient okHttpClient = new OkHttpClient() .newBuilder()
+                .addInterceptor(new HttpRequestInterceptor())
+                .build();
+        AndroidNetworking.initialize(getApplicationContext(), okHttpClient);
+        AndroidNetworking.enableLogging();
     }
 }

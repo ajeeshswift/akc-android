@@ -1,10 +1,12 @@
-package com.swift.akc;
+package com.swift.akc.activity;
 
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 
-public class harvestentry extends LandingPageCompactActivity {
+import com.swift.akc.R;
+
+public class HarvestEntryActivity extends LandingPageActivity {
     EditText villagename;
     EditText farmno;
     Button submit;

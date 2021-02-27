@@ -1,21 +1,19 @@
-package com.swift.akc;
+package com.swift.akc.activity;
 
 import android.app.DatePickerDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.rx2androidnetworking.Rx2AndroidNetworking;
+import com.swift.akc.utils.DateUtils;
+import com.swift.akc.R;
 import com.swift.akc.network.ApiEndpoint;
-import com.swift.akc.network.data.AdminVO;
 import com.swift.akc.network.data.HarvestForcastingVO;
-import com.swift.akc.DateConversion;
 
 import org.json.JSONObject;
 
@@ -30,7 +28,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class harvestingforcast extends LandingPageCompactActivity implements View.OnClickListener {
+public class HarvestingForcastActivity extends LandingPageActivity implements View.OnClickListener {
     EditText villagename,crop,seedsown,cultivation,sowingdate;
     DatePickerDialog picker;
     Button submit;
@@ -57,7 +55,7 @@ public class harvestingforcast extends LandingPageCompactActivity implements Vie
                 int month = cldr.get(Calendar.MONTH);
                 int year = cldr.get(Calendar.YEAR);
 
-                picker = new DatePickerDialog(harvestingforcast.this,
+                picker = new DatePickerDialog(HarvestingForcastActivity.this,
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
@@ -82,13 +80,12 @@ public class harvestingforcast extends LandingPageCompactActivity implements Vie
     }
 
     private void harvestingforcastAPICall() throws ParseException {
-        DateConversion dateConversion = new DateConversion();
         JSONObject params = new JSONObject();
         try {
             params.put("plantId",crop.getText().toString());
             params.put("seeds",seedsown.getText().toString());
             params.put("area",cultivation.getText().toString());
-            params.put("cropShowingDate",dateConversion.convertDateFormat(sowingdate.getText().toString()));
+            params.put("cropShowingDate", DateUtils.convertDateFormat(sowingdate.getText().toString()));
             params.put("farmId",1);
             params.put("uid",1);
             params.put("date",new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date()));
@@ -111,12 +108,12 @@ public class harvestingforcast extends LandingPageCompactActivity implements Vie
                 }
                 @Override
                 public void onNext(HarvestForcastingVO object) {
-                    Toast.makeText(harvestingforcast.this, "Successfully Added", Toast.LENGTH_LONG).show();
+                    Toast.makeText(HarvestingForcastActivity.this, "Successfully Added", Toast.LENGTH_LONG).show();
                 }
 
                 @Override
                 public void onError(Throwable e) {
-                    Toast.makeText(harvestingforcast.this, "Error", Toast.LENGTH_LONG).show();
+                    Toast.makeText(HarvestingForcastActivity.this, "Error", Toast.LENGTH_LONG).show();
                     hideLoading();
                 }
 

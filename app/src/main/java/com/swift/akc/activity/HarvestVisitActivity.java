@@ -1,4 +1,4 @@
-package com.swift.akc;
+package com.swift.akc.activity;
 
 import androidx.annotation.Nullable;
 
@@ -11,6 +11,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.rx2androidnetworking.Rx2AndroidNetworking;
+import com.swift.akc.utils.DateUtils;
+import com.swift.akc.helper.ui.DatePickerView;
+import com.swift.akc.R;
 import com.swift.akc.network.ApiEndpoint;
 import com.swift.akc.network.data.HarvestVO;
 import org.json.JSONObject;
@@ -22,7 +25,7 @@ import android.graphics.Color;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 
-public class harvestvisit extends LandingPageCompactActivity implements View.OnClickListener {
+public class HarvestVisitActivity extends LandingPageActivity implements View.OnClickListener {
 
 
     EditText sowingDate,sapQuantity,harvestQuantity,
@@ -102,7 +105,7 @@ public class harvestvisit extends LandingPageCompactActivity implements View.OnC
             @Override
             public void onClick(View v) {
                 DatePickerView datePickerView = new DatePickerView();
-                datePickerView.setDatePickerView(harvestvisit.this,harvestDate);
+                datePickerView.setDatePickerView(HarvestVisitActivity.this,harvestDate);
             }
     });
 
@@ -111,7 +114,7 @@ public class harvestvisit extends LandingPageCompactActivity implements View.OnC
             @Override
             public void onClick(View v) {
                 DatePickerView datePickerView = new DatePickerView();
-                datePickerView.setDatePickerView(harvestvisit.this,sowingDate);
+                datePickerView.setDatePickerView(HarvestVisitActivity.this,sowingDate);
             }
         });
 
@@ -123,13 +126,12 @@ public class harvestvisit extends LandingPageCompactActivity implements View.OnC
         }
     }
     private void harvestVisitEntryAPICall(){
-        DateConversion dateConversion = new DateConversion();
         JSONObject params = new JSONObject();
         try{
             //params.put("plantOrSeed",plantOrSeed.getText().toString());
-            params.put("sowingDate",dateConversion.convertDateFormat(sowingDate.getText().toString()));
+            params.put("sowingDate", DateUtils.convertDateFormat(sowingDate.getText().toString()));
             params.put("sapQuantity",sapQuantity.getText().toString());
-            params.put("harvestDate",dateConversion.convertDateFormat(harvestDate.getText().toString()));
+            params.put("harvestDate", DateUtils.convertDateFormat(harvestDate.getText().toString()));
             params.put("harvestQuantity",harvestQuantity.getText().toString());
             params.put("ownUseQuantity",ownUse.getText().toString());
             params.put("soldQuantity",soldQuantity.getText().toString());
@@ -153,13 +155,13 @@ public class harvestvisit extends LandingPageCompactActivity implements View.OnC
                     }
                     @Override
                     public void onNext(HarvestVO object) {
-                        Toast.makeText(harvestvisit.this, "Successfully Added", Toast.LENGTH_LONG).show();
+                        Toast.makeText(HarvestVisitActivity.this, "Successfully Added", Toast.LENGTH_LONG).show();
 
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        Toast.makeText(harvestvisit.this, " ", Toast.LENGTH_LONG).show();
+                        Toast.makeText(HarvestVisitActivity.this, " ", Toast.LENGTH_LONG).show();
                         hideLoading();
                     }
 

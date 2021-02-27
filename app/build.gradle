@@ -15,10 +15,29 @@ android {
     }
 
     buildTypes {
+        debug {
+            // stage
+            buildConfigField("String", "BASE_URL", "\"http://206.189.133.0:4040\"")
+            buildConfigField("Boolean", "IS_DEVELOPMENT", "true")
+            println "Started generating apk in debug mode"
+            debuggable true
+            shrinkResources false
+            minifyEnabled false
+            useProguard false
+            signingConfig signingConfigs.debug
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            proguardFiles fileTree('proguard').asList().toArray()
+        }
         release {
             minifyEnabled false
+            buildConfigField("String", "BASE_URL", "\"http://206.189.133.0:4040\"")
+            buildConfigField("Boolean", "IS_DEVELOPMENT", "true")
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+    }
+    compileOptions {
+        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_1_8
     }
 }
 
