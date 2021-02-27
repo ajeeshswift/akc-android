@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.swift.akc.activity.BaseAppCompatActivity;
 import com.swift.akc.activity.LandingPageActivity;
 import com.swift.akc.extras.Constants;
 
@@ -49,6 +50,21 @@ public class BaseFragment extends Fragment {
         LandingPageActivity landingPageActivity = (LandingPageActivity) getActivity();
         if(null != landingPageActivity) {
             landingPageActivity.displayView(fragment, title, addToBackStack);
+        }
+    }
+
+    public void showLoading() {
+        BaseAppCompatActivity appCompatActivity = (BaseAppCompatActivity) getActivity();
+        if(appCompatActivity != null) {
+            appCompatActivity.showLoading();
+        }
+    }
+
+
+    public void hideLoading() {
+        BaseAppCompatActivity appCompatActivity = (BaseAppCompatActivity) getActivity();
+        if(appCompatActivity != null) {
+            appCompatActivity.hideLoading();
         }
     }
 }

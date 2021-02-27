@@ -9,9 +9,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,10 +20,8 @@ import androidx.fragment.app.FragmentTransaction;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.swift.akc.R;
 import com.swift.akc.fragments.ComingSoonFragment;
-import com.swift.akc.fragments.HarvestEntryFragment;
+import com.swift.akc.fragments.HarvestVisitFragment;
 import com.swift.akc.fragments.HomeFragment;
-
-import java.util.List;
 
 public class LandingPageActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
     private ProgressDialog mProgressDialog;
@@ -117,7 +112,7 @@ public class LandingPageActivity extends AppCompatActivity implements BottomNavi
                 fragment = HomeFragment.newInstance(aTitle);
                 break;
             case FRAGMENT_HARVEST_ENTRY:
-                fragment = HarvestEntryFragment.newInstance(aTitle);
+                fragment = HarvestVisitFragment.newInstance(aTitle);
                 break;
             default:
                 fragment = ComingSoonFragment.newInstance(aTitle);

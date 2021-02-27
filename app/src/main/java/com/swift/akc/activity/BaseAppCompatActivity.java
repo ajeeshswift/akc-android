@@ -13,7 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.swift.akc.R;
 import com.swift.akc.extras.Storage;
 
-public class BaseAppCompactActivity extends AppCompatActivity {
+public class BaseAppCompatActivity extends AppCompatActivity {
 
     private ProgressDialog mProgressDialog;
 

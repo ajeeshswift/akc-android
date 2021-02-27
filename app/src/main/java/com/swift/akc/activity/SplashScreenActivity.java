@@ -5,7 +5,7 @@ import android.os.Bundle;
 
 import com.swift.akc.R;
 
-public class SplashScreenActivity extends BaseAppCompactActivity {
+public class SplashScreenActivity extends BaseAppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

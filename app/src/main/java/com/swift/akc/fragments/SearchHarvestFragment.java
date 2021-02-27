@@ -11,14 +11,14 @@ import androidx.annotation.Nullable;
 import com.swift.akc.R;
 import com.swift.akc.extras.Constants;
 
-public class HarvestEntryFragment extends BaseFragment {
+public class SearchHarvestFragment extends BaseFragment {
 
-    public HarvestEntryFragment() {
+    public SearchHarvestFragment() {
 
     }
 
-    public static HarvestEntryFragment newInstance(String title) {
-        HarvestEntryFragment comingSoonFragment = new HarvestEntryFragment();
+    public static SearchHarvestFragment newInstance(String title) {
+        SearchHarvestFragment comingSoonFragment = new SearchHarvestFragment();
         Bundle bundle = new Bundle();
         bundle.putString(Constants.INTENT_PARAM_TITLE, title);
         comingSoonFragment.setArguments(bundle);
