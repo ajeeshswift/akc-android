@@ -1,7 +1,6 @@
 package com.swift.akc.interceptor;
 
 import com.swift.akc.extras.Storage;
-import com.swift.akc.network.ApiEndpoint;
 import java.io.IOException;
 import okhttp3.Interceptor;
 import okhttp3.Request;

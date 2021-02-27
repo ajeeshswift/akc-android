@@ -17,7 +17,6 @@ import com.swift.akc.R;
 import com.swift.akc.network.ApiEndpoint;
 import com.swift.akc.network.data.HarvestVO;
 import org.json.JSONObject;
-
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;

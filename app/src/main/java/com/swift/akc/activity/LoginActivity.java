@@ -6,16 +6,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import androidx.annotation.Nullable;
-
 import com.rx2androidnetworking.Rx2AndroidNetworking;
 import com.swift.akc.R;
+import com.swift.akc.extras.Storage;
 import com.swift.akc.network.ApiEndpoint;
 import com.swift.akc.network.data.AdminVO;
-
 import org.json.JSONObject;
-
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -34,7 +31,9 @@ public class LoginActivity extends BaseAppCompatActivity implements View.OnClick
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ac_login);
         username = findViewById(R.id.userName);
+        username.setText("Admin");
         password = findViewById(R.id.password);
+        password.setText("1955");
         login = findViewById(R.id.login);
         login.setOnClickListener(this);
     }
@@ -42,8 +41,7 @@ public class LoginActivity extends BaseAppCompatActivity implements View.OnClick
     @Override
     public void onClick(View view) {
         if(view.getId() == R.id.login) {
-            //loginApiCall();
-            goToLandingPageActivity();
+            loginApiCall();
         }
     }
 
@@ -71,6 +69,7 @@ public class LoginActivity extends BaseAppCompatActivity implements View.OnClick
                     @Override
                     public void onNext(AdminVO object) {
                         Toast.makeText(LoginActivity.this, "Success", Toast.LENGTH_LONG).show();
+                        Storage.save(getApplicationContext(), object);
                         goToLandingPageActivity();
                     }
 
