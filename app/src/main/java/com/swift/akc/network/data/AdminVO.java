@@ -2,11 +2,6 @@ package com.swift.akc.network.data;
 
 import java.util.Date;
 
-import lombok.Getter;
-import lombok.Setter;
-
-@Getter
-@Setter
 public class AdminVO {
 
     private int id;
