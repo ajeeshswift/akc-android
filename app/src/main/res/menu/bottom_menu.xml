@@ -2,12 +2,13 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/algorithm"
-        android:title="Algorithm"
-        android:icon="@drawable/ic_launcher_background"/>
+        android:title="Harvest"
+        android:icon="@drawable/tractor"/>
     <item
         android:id="@+id/course"
-        android:title="Course"
+        android:title="Forecasting"
         android:icon="@drawable/ic_launcher_background"/>
+
     <item
         android:id="@+id/profile"
         android:title="Profile"

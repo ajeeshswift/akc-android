@@ -74,16 +74,18 @@ public class LandingPageActivity extends AppCompatActivity implements BottomNavi
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        Fragment fragment;
+        //Fragment fragment;
         switch (item.getItemId()) {
             case R.id.algorithm:
                 displayView(FRAGMENT_HARVEST_ENTRY, "Harvest Entry", true);
                 break;
             case R.id.course:
-                displayView(FRAGMENT_HARVEST_ENTRY, "Harvest Entry", true);
+                //displayView(FRAGMENT_HARVEST_ENTRY, "Harvest Entry", true);
+                startActivity(new Intent(LandingPageActivity.this, HarvestVisitActivity.class));
                 break;
             case R.id.profile:
-                displayView(FRAGMENT_HARVEST_ENTRY, "Harvest Entry", true);
+                //displayView(FRAGMENT_HARVEST_ENTRY, "Harvest Entry", true);
+                startActivity(new Intent(LandingPageActivity.this, HarvestingForcastActivity.class));
                 break;
         }
         return true;
