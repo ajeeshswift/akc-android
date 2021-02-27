@@ -41,7 +41,8 @@ public class LoginActivity extends BaseAppCompatActivity implements View.OnClick
     @Override
     public void onClick(View view) {
         if(view.getId() == R.id.login) {
-            loginApiCall();
+            //loginApiCall();
+            goToLandingPageActivity();
         }
     }
 

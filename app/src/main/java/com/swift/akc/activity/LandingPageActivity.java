@@ -52,33 +52,11 @@ public class LandingPageActivity extends BaseAppCompatActivity implements Bottom
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.harvestentry:
-                startActivity(new Intent(LandingPageActivity.this, HarvestEntryActivity.class));
-                break;
-            case R.id.harvestvisit:
-                startActivity(new Intent(LandingPageActivity.this, HarvestVisitActivity.class));
-                break;
-            case R.id.harvestforcasting:
-                startActivity(new Intent(LandingPageActivity.this, HarvestingForcastActivity.class));
-                break;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        //Fragment fragment;
         switch (item.getItemId()) {
+            case R.id.ic_home:
+                displayView(FRAGMENT_HOME, "Home", true);
+                break;
             case R.id.algorithm:
                 Storage.selectedMenu = EntryType.HARVEST_VISIT_ENTRY;
                 displayView(FRAGMENT_HARVEST_FARM_SEARCH, "Harvest Entry", true);
