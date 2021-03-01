@@ -3,13 +3,6 @@ package com.swift.akc.network.data;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.Date;
-
-import lombok.Getter;
-import lombok.Setter;
-
-@Getter
-@Setter
 public class HarvestVisitVO {
 
     @Expose
