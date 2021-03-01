@@ -20,7 +20,9 @@ import androidx.annotation.Nullable;
 import com.rx2androidnetworking.Rx2AndroidNetworking;
 import com.swift.akc.R;
 import com.swift.akc.activity.HarvestVisitActivity;
+import com.swift.akc.activity.LandingPageActivity;
 import com.swift.akc.extras.Constants;
+import com.swift.akc.extras.EntryType;
 import com.swift.akc.extras.Storage;
 import com.swift.akc.helper.ui.DatePickerView;
 import com.swift.akc.network.ApiEndpoint;
@@ -150,6 +152,7 @@ public class HarvestVisitEntryFragment extends BaseFragment implements View.OnCl
                     @Override
                     public void onNext(HarvestVO object) {
                         Toast.makeText(getActivity(), "Successfully Added", Toast.LENGTH_LONG).show();
+
                     }
 
                     @Override
