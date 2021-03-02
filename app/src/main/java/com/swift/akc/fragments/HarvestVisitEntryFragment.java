@@ -1,12 +1,14 @@
 package com.swift.akc.fragments;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -24,6 +26,7 @@ import com.swift.akc.activity.LandingPageActivity;
 import com.swift.akc.extras.Constants;
 import com.swift.akc.extras.EntryType;
 import com.swift.akc.extras.Storage;
+import com.swift.akc.helper.ui.CloseKeyboard;
 import com.swift.akc.helper.ui.DatePickerView;
 import com.swift.akc.network.ApiEndpoint;
 import com.swift.akc.network.data.HarvestVO;
@@ -84,6 +87,7 @@ public class HarvestVisitEntryFragment extends BaseFragment implements View.OnCl
         submit.setOnClickListener(this);
 
 
+
         //Creating the instance of ArrayAdapter containing list of fruit names
         ArrayAdapter<String> adapter = new ArrayAdapter<String>
                 (getActivity(), android.R.layout.select_dialog_item, fruits);
@@ -115,6 +119,8 @@ public class HarvestVisitEntryFragment extends BaseFragment implements View.OnCl
 
     @Override
     public void onClick(View view){
+        CloseKeyboard closeKeyboard = new CloseKeyboard();
+        closeKeyboard.closeKeyboard();
         if(view.getId() == R.id.submit){
             harvestVisitEntryAPICall();
         }
