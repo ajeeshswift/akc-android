@@ -13,16 +13,12 @@ import androidx.annotation.Nullable;
 
 import com.rx2androidnetworking.Rx2AndroidNetworking;
 import com.swift.akc.R;
-import com.swift.akc.activity.HarvestEntryActivity;
 import com.swift.akc.activity.LandingPageActivity;
 import com.swift.akc.extras.Constants;
 import com.swift.akc.extras.EntryType;
 import com.swift.akc.extras.Storage;
 import com.swift.akc.network.ApiEndpoint;
 import com.swift.akc.network.data.HarvestFarmVO;
-import com.swift.akc.network.data.HarvestVO;
-
-import org.json.JSONObject;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -58,12 +54,13 @@ public class HarvestFarmSearchFragment extends BaseFragment implements View.OnCl
     }
 
     @Override
-    public void onClick(View view){
-        if(view.getId() == R.id.submit) {
+    public void onClick(View view) {
+        if (view.getId() == R.id.submit) {
             harvestVisitEntryPageAPICall();
         }
     }
-    private void harvestVisitEntryPageAPICall(){
+
+    private void harvestVisitEntryPageAPICall() {
         showLoading();
         Rx2AndroidNetworking.get(ApiEndpoint.FARMER_DETAILS_API)
                 .addPathParameter("farmNo", farmno.getText().toString())
@@ -76,6 +73,7 @@ public class HarvestFarmSearchFragment extends BaseFragment implements View.OnCl
                     public void onSubscribe(Disposable d) {
 
                     }
+
                     @Override
                     public void onNext(HarvestFarmVO harvestFarmVO) {
                         Storage.selectedHarvestFarm = harvestFarmVO;
@@ -97,7 +95,7 @@ public class HarvestFarmSearchFragment extends BaseFragment implements View.OnCl
     }
 
     public void openNextFragment() {
-        if(Storage.selectedMenu.equals(EntryType.HARVEST_FORECASTING_ENTRY)) {
+        if (Storage.selectedMenu.equals(EntryType.HARVEST_FORECASTING_ENTRY)) {
             switchFragment(LandingPageActivity.FRAGMENT_HARVEST_FORECASTING_ENTRY, "Harvest Entry", true);
             return;
         }
