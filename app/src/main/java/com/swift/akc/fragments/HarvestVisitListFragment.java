@@ -51,15 +51,15 @@ public class HarvestVisitListFragment extends BaseFragment {
 
     @NonNull
     @Nullable
-    public void onViewCreated(@NonNull View view, @io.reactivex.annotations.Nullable Bundle savedInstanceState){
-        super.onViewCreated(view,savedInstanceState);
+    public void onViewCreated(@NonNull View view, @io.reactivex.annotations.Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         mAdapter = new HarvestVisitListAdapter(getActivity());
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         mRecyclerView.setAdapter(mAdapter);
         getHarvestList();
     }
 
-    public void getHarvestList(){
+    public void getHarvestList() {
         showLoading();
         Rx2AndroidNetworking
                 .get(ApiEndpoint.HARVEST_VISIT_LIST_API)

@@ -24,7 +24,7 @@ public class BaseFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bundle bundle = getArguments();
-        if(bundle != null) {
+        if (bundle != null) {
             mTitle = bundle.getString(Constants.INTENT_PARAM_TITLE);
         }
     }
@@ -48,29 +48,28 @@ public class BaseFragment extends Fragment {
 
     public void switchFragment(int fragment, String title, boolean addToBackStack) {
         LandingPageActivity landingPageActivity = (LandingPageActivity) getActivity();
-        if(null != landingPageActivity) {
+        if (null != landingPageActivity) {
             landingPageActivity.displayView(fragment, title, addToBackStack);
         }
     }
 
     public void showLoading() {
         BaseAppCompatActivity appCompatActivity = (BaseAppCompatActivity) getActivity();
-        if(appCompatActivity != null) {
+        if (appCompatActivity != null) {
             appCompatActivity.showLoading();
         }
     }
 
-
     public void hideLoading() {
         BaseAppCompatActivity appCompatActivity = (BaseAppCompatActivity) getActivity();
-        if(appCompatActivity != null) {
+        if (appCompatActivity != null) {
             appCompatActivity.hideLoading();
         }
     }
 
     public void showApiError(Throwable e) {
         BaseAppCompatActivity appCompatActivity = (BaseAppCompatActivity) getActivity();
-        if(appCompatActivity != null) {
+        if (appCompatActivity != null) {
             appCompatActivity.showApiError(e);
         }
     }

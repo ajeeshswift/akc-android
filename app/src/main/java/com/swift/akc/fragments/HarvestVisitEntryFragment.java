@@ -19,10 +19,7 @@ import androidx.annotation.Nullable;
 
 import com.rx2androidnetworking.Rx2AndroidNetworking;
 import com.swift.akc.R;
-import com.swift.akc.activity.HarvestVisitActivity;
-import com.swift.akc.activity.LandingPageActivity;
 import com.swift.akc.extras.Constants;
-import com.swift.akc.extras.EntryType;
 import com.swift.akc.extras.Storage;
 import com.swift.akc.helper.ui.DatePickerView;
 import com.swift.akc.network.ApiEndpoint;
@@ -36,10 +33,10 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class HarvestVisitEntryFragment extends BaseFragment implements View.OnClickListener  {
+public class HarvestVisitEntryFragment extends BaseFragment implements View.OnClickListener {
 
-    EditText sowingDate,sapQuantity,harvestQuantity,
-            ownUse,soldQuantity,soldRate,totalIncome,harvestDate;
+    EditText sowingDate, sapQuantity, harvestQuantity,
+            ownUse, soldQuantity, soldRate, totalIncome, harvestDate;
     Button submit;
     TextView tvw;
     DatePickerDialog picker;
@@ -69,20 +66,19 @@ public class HarvestVisitEntryFragment extends BaseFragment implements View.OnCl
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        String[] fruits = {"Apple","Apple1","Apple2","Apple3","Apple4","Apple5", "Banana", "Cherry", "Date", "Grape", "Kiwi", "Mango", "Pear"};
-        tvw             = (TextView)mParentView.findViewById(R.id.textView1);
-        plantOrSeed     = (AutoCompleteTextView)mParentView.findViewById(R.id.autoCompletePlantsseed);
-        harvestDate     = (EditText)mParentView.findViewById(R.id.harvestdate);
-        sowingDate      = (EditText)mParentView.findViewById(R.id.sowingdate);
-        sapQuantity     = (EditText)mParentView.findViewById(R.id.sapplingquantity);
-        harvestQuantity = (EditText)mParentView.findViewById(R.id.harvestquantity);
-        ownUse          = (EditText)mParentView.findViewById(R.id.ownhomeuse);
-        soldQuantity    = (EditText)mParentView.findViewById(R.id.soldquantity);
-        soldRate        = (EditText)mParentView.findViewById(R.id.soldrate);
-        totalIncome     = (EditText)mParentView.findViewById(R.id.totalincome);
-        submit          = (Button) mParentView.findViewById(R.id.submit);
+        String[] fruits = {"Apple", "Apple1", "Apple2", "Apple3", "Apple4", "Apple5", "Banana", "Cherry", "Date", "Grape", "Kiwi", "Mango", "Pear"};
+        tvw = (TextView) mParentView.findViewById(R.id.textView1);
+        plantOrSeed = (AutoCompleteTextView) mParentView.findViewById(R.id.autoCompletePlantsseed);
+        harvestDate = (EditText) mParentView.findViewById(R.id.harvestdate);
+        sowingDate = (EditText) mParentView.findViewById(R.id.sowingdate);
+        sapQuantity = (EditText) mParentView.findViewById(R.id.sapplingquantity);
+        harvestQuantity = (EditText) mParentView.findViewById(R.id.harvestquantity);
+        ownUse = (EditText) mParentView.findViewById(R.id.ownhomeuse);
+        soldQuantity = (EditText) mParentView.findViewById(R.id.soldquantity);
+        soldRate = (EditText) mParentView.findViewById(R.id.soldrate);
+        totalIncome = (EditText) mParentView.findViewById(R.id.totalincome);
+        submit = (Button) mParentView.findViewById(R.id.submit);
         submit.setOnClickListener(this);
-
 
         //Creating the instance of ArrayAdapter containing list of fruit names
         ArrayAdapter<String> adapter = new ArrayAdapter<String>
@@ -92,7 +88,6 @@ public class HarvestVisitEntryFragment extends BaseFragment implements View.OnCl
         plantOrSeed.setThreshold(1);//will start working from first character
         plantOrSeed.setAdapter(adapter);//setting the adapter data into the AutoCompleteTextView
         plantOrSeed.setTextColor(Color.RED);
-
 
         harvestDate.setInputType(InputType.TYPE_NULL);
         harvestDate.setOnClickListener(new View.OnClickListener() {
@@ -114,27 +109,26 @@ public class HarvestVisitEntryFragment extends BaseFragment implements View.OnCl
     }
 
     @Override
-    public void onClick(View view){
-        if(view.getId() == R.id.submit){
+    public void onClick(View view) {
+        if (view.getId() == R.id.submit) {
             harvestVisitEntryAPICall();
         }
     }
 
-    private void harvestVisitEntryAPICall(){
+    private void harvestVisitEntryAPICall() {
         JSONObject params = new JSONObject();
-        try{
+        try {
             //params.put("plantOrSeed",plantOrSeed.getText().toString());
             params.put("sowingDate", DateUtils.convertDateFormat(sowingDate.getText().toString()));
-            params.put("sapQuantity",sapQuantity.getText().toString());
+            params.put("sapQuantity", sapQuantity.getText().toString());
             params.put("harvestDate", DateUtils.convertDateFormat(harvestDate.getText().toString()));
-            params.put("harvestQuantity",harvestQuantity.getText().toString());
-            params.put("ownUseQuantity",ownUse.getText().toString());
-            params.put("soldQuantity",soldQuantity.getText().toString());
-            params.put("soldRate",soldRate.getText().toString());
-            params.put("totalIncome",totalIncome.getText().toString());
+            params.put("harvestQuantity", harvestQuantity.getText().toString());
+            params.put("ownUseQuantity", ownUse.getText().toString());
+            params.put("soldQuantity", soldQuantity.getText().toString());
+            params.put("soldRate", soldRate.getText().toString());
+            params.put("totalIncome", totalIncome.getText().toString());
             params.put("farmId", Storage.selectedHarvestFarm.getFarmId());
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         showLoading();
@@ -149,6 +143,7 @@ public class HarvestVisitEntryFragment extends BaseFragment implements View.OnCl
                     public void onSubscribe(Disposable d) {
 
                     }
+
                     @Override
                     public void onNext(HarvestVO object) {
                         Toast.makeText(getActivity(), "Successfully Added", Toast.LENGTH_LONG).show();
