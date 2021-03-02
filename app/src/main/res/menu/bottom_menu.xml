@@ -18,6 +18,11 @@
         android:icon="@drawable/rain_cloud"/>
 
     <item
+        android:id="@+id/harvestlist"
+        android:title="Harvest List"
+        android:icon="@drawable/rain_cloud" />
+
+    <item
         android:id="@+id/profile"
         android:title="Profile"
         android:icon="@drawable/ic_person_holo_dark"/>

@@ -25,7 +25,9 @@ import com.swift.akc.fragments.ComingSoonFragment;
 import com.swift.akc.fragments.HarvestFarmSearchFragment;
 import com.swift.akc.fragments.HarvestForecastingEntryFragment;
 import com.swift.akc.fragments.HarvestVisitEntryFragment;
+import com.swift.akc.fragments.HarvestVisitListFragment;
 import com.swift.akc.fragments.HomeFragment;
+import com.swift.akc.fragments.ProfileFragment;
 
 public class LandingPageActivity extends BaseAppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
     private ProgressDialog mProgressDialog;
@@ -37,6 +39,10 @@ public class LandingPageActivity extends BaseAppCompatActivity implements Bottom
     public static final int FRAGMENT_HARVEST_VISIT_ENTRY = 3;
 
     public static final int FRAGMENT_HARVEST_FORECASTING_ENTRY = 4;
+
+    public static final int FRAGMENT_HARVEST_VISIT_LIST = 5;
+
+    public static final int FRAGMENT_PROFILE = 6;
 
     Toolbar mToolbar;
 
@@ -65,9 +71,13 @@ public class LandingPageActivity extends BaseAppCompatActivity implements Bottom
                 Storage.selectedMenu = EntryType.HARVEST_FORECASTING_ENTRY;
                 displayView(FRAGMENT_HARVEST_FARM_SEARCH, "Harvest Entry", true);
                 break;
+            case R.id.harvestlist:
+                Storage.selectedMenu = EntryType.HARVEST_VISIT_LIST;
+                displayView(FRAGMENT_HARVEST_VISIT_LIST, "Harvest Entry", true);
+                break;
             case R.id.profile:
-                Storage.selectedMenu = "PROFILE";
-                displayView(FRAGMENT_HOME, "Harvest Entry", true);
+                Storage.selectedMenu = EntryType.HARVEST_PROFILE;
+                displayView(FRAGMENT_PROFILE, "Harvest Entry", true);
                 break;
         }
         return true;
@@ -88,7 +98,13 @@ public class LandingPageActivity extends BaseAppCompatActivity implements Bottom
             case FRAGMENT_HARVEST_VISIT_ENTRY:
                 fragment = HarvestVisitEntryFragment.newInstance(aTitle);
                 break;
-            default:
+            case FRAGMENT_HARVEST_VISIT_LIST:
+                fragment = HarvestVisitListFragment.newInstance(aTitle);
+                break;
+            case FRAGMENT_PROFILE:
+                fragment = ProfileFragment.newInstance(aTitle);
+                break;
+            default :
                 fragment = ComingSoonFragment.newInstance(aTitle);
                 break;
         }

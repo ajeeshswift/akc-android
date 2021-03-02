@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/sapQuantity"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="SAPPLING QTY"
+        android:layout_marginHorizontal="45dp"
+        android:layout_marginTop="20dp" />
+
+    <TextView
+        android:id="@+id/sowingDate"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="SAPPLING QTY"
+        android:layout_marginHorizontal="45dp"
+        android:layout_marginTop="20dp" />
+
+    <TextView
+        android:id="@+id/harvestDate"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <TextView
+        android:id="@+id/harvestQuantity"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <TextView
+        android:id="@+id/ownUseQuantity"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <TextView
+        android:id="@+id/soldQuantity"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <TextView
+        android:id="@+id/soldRate"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <TextView
+        android:id="@+id/totalIncome"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

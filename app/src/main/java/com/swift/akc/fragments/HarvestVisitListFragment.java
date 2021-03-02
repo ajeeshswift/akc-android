@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.rx2androidnetworking.Rx2AndroidNetworking;
 import com.swift.akc.R;
-import com.swift.akc.adapters.HarvestVisitAdapter;
+import com.swift.akc.adapters.HarvestVisitListAdapter;
 import com.swift.akc.extras.Constants;
 import com.swift.akc.network.ApiEndpoint;
 import com.swift.akc.network.data.HarvestVisitListVO;
@@ -24,7 +24,7 @@ import io.reactivex.schedulers.Schedulers;
 
 public class HarvestVisitListFragment extends BaseFragment {
 
-    private HarvestVisitAdapter mAdapter;
+    private HarvestVisitListAdapter mAdapter;
 
     private RecyclerView mRecyclerView;
 
@@ -53,7 +53,7 @@ public class HarvestVisitListFragment extends BaseFragment {
     @Nullable
     public void onViewCreated(@NonNull View view, @io.reactivex.annotations.Nullable Bundle savedInstanceState){
         super.onViewCreated(view,savedInstanceState);
-        mAdapter = new HarvestVisitAdapter(getActivity());
+        mAdapter = new HarvestVisitListAdapter(getActivity());
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         mRecyclerView.setAdapter(mAdapter);
         getHarvestList();
@@ -62,7 +62,7 @@ public class HarvestVisitListFragment extends BaseFragment {
     public void getHarvestList(){
         showLoading();
         Rx2AndroidNetworking
-                .get(ApiEndpoint.HARVEST_API)
+                .get(ApiEndpoint.HARVEST_VISIT_LIST_API)
                 .build()
                 .getObjectObservable(HarvestVisitListVO.class)
                 .subscribeOn(Schedulers.io())
