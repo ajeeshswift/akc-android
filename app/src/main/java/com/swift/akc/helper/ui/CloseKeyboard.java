@@ -6,7 +6,7 @@ import android.view.inputmethod.InputMethodManager;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public  class  CloseKeyboard extends AppCompatActivity {
+public class CloseKeyboard extends AppCompatActivity {
 
     public void closeKeyboard() {
         View view = this.getCurrentFocus();
