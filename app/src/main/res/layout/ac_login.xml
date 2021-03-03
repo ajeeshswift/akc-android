@@ -9,21 +9,20 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="match_parent">
 
-        >
         <ImageView
-            android:layout_weight="4"
-            android:src="@drawable/ic_login"
-            android:scaleType="centerCrop"
             android:layout_width="match_parent"
-            android:layout_height="0dp" />
+            android:layout_height="510dp"
+            android:layout_weight="4"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_login" />
 
         <View
-            android:background="@drawable/login"
             android:layout_width="match_parent"
             android:layout_height="101dp"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:background="@drawable/login" />
     </LinearLayout>
 
 
@@ -78,5 +77,6 @@
             android:layout_height="40dp" />
 
     </LinearLayout>
+
 
 </RelativeLayout>

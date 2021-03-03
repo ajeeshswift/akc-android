@@ -52,6 +52,8 @@ dependencies {
     implementation 'com.amitshekhar.android:rx2-android-networking:1.0.2'
     compileOnly 'org.projectlombok:lombok:1.18.12'
     annotationProcessor 'org.projectlombok:lombok:1.18.12' //or v. 1.16.2 in your case.
+    implementation "androidx.cardview:cardview:1.0.0"
+
 
 
 }

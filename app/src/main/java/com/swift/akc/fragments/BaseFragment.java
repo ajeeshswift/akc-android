@@ -1,9 +1,12 @@
 package com.swift.akc.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -71,6 +74,15 @@ public class BaseFragment extends Fragment {
         BaseAppCompatActivity appCompatActivity = (BaseAppCompatActivity) getActivity();
         if (appCompatActivity != null) {
             appCompatActivity.showApiError(e);
+        }
+    }
+
+    public void closeKeyboard() {
+        BaseAppCompatActivity appCompatActivity = (BaseAppCompatActivity) getActivity();
+        View view = appCompatActivity.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager) appCompatActivity.getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
     }
 }

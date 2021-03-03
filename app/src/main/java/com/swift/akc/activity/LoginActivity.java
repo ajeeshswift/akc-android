@@ -3,6 +3,7 @@ package com.swift.akc.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -37,6 +38,8 @@ public class LoginActivity extends BaseAppCompatActivity implements View.OnClick
         login = findViewById(R.id.login);
         login.setOnClickListener(this);
     }
+
+
 
     @Override
     public void onClick(View view) {

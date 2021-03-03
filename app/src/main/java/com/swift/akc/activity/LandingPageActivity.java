@@ -2,6 +2,7 @@ package com.swift.akc.activity;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -9,6 +10,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -146,4 +149,6 @@ public class LandingPageActivity extends BaseAppCompatActivity implements Bottom
             ft.addToBackStack(backStateName);
         ft.commit();
     }
+
+
 }

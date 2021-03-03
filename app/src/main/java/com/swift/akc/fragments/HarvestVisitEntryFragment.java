@@ -93,15 +93,18 @@ public class HarvestVisitEntryFragment extends BaseFragment implements View.OnCl
         harvestDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                closeKeyboard();
                 DatePickerView datePickerView = new DatePickerView();
                 datePickerView.setDatePickerView(getActivity(), harvestDate);
             }
         });
 
+
         sowingDate.setInputType(InputType.TYPE_NULL);
         sowingDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                closeKeyboard();
                 DatePickerView datePickerView = new DatePickerView();
                 datePickerView.setDatePickerView(getActivity(), sowingDate);
             }
