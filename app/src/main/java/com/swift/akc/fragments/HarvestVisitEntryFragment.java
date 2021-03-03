@@ -1,6 +1,7 @@
 package com.swift.akc.fragments;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.InputType;
@@ -19,14 +20,19 @@ import androidx.annotation.Nullable;
 
 import com.rx2androidnetworking.Rx2AndroidNetworking;
 import com.swift.akc.R;
+import com.swift.akc.activity.LandingPageActivity;
 import com.swift.akc.extras.Constants;
 import com.swift.akc.extras.Storage;
+import com.swift.akc.extras.UIValidation;
 import com.swift.akc.helper.ui.DatePickerView;
 import com.swift.akc.network.ApiEndpoint;
 import com.swift.akc.network.data.HarvestVO;
 import com.swift.akc.utils.DateUtils;
 
 import org.json.JSONObject;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -42,6 +48,9 @@ public class HarvestVisitEntryFragment extends BaseFragment implements View.OnCl
     DatePickerDialog picker;
     AutoCompleteTextView plantOrSeed;
     String Dest;
+
+    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+    String currentDate = sdf.format(new Date());
 
     public HarvestVisitEntryFragment() {
 
@@ -78,6 +87,7 @@ public class HarvestVisitEntryFragment extends BaseFragment implements View.OnCl
         soldRate = (EditText) mParentView.findViewById(R.id.soldrate);
         totalIncome = (EditText) mParentView.findViewById(R.id.totalincome);
         submit = (Button) mParentView.findViewById(R.id.submit);
+        plantOrSeed.requestFocus();
         submit.setOnClickListener(this);
 
         //Creating the instance of ArrayAdapter containing list of fruit names
@@ -90,6 +100,7 @@ public class HarvestVisitEntryFragment extends BaseFragment implements View.OnCl
         plantOrSeed.setTextColor(Color.RED);
 
         harvestDate.setInputType(InputType.TYPE_NULL);
+        harvestDate.setText(currentDate);
         harvestDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -99,6 +110,7 @@ public class HarvestVisitEntryFragment extends BaseFragment implements View.OnCl
         });
 
         sowingDate.setInputType(InputType.TYPE_NULL);
+        sowingDate.setText(currentDate);
         sowingDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -116,50 +128,78 @@ public class HarvestVisitEntryFragment extends BaseFragment implements View.OnCl
     }
 
     private void harvestVisitEntryAPICall() {
-        JSONObject params = new JSONObject();
-        try {
-            //params.put("plantOrSeed",plantOrSeed.getText().toString());
-            params.put("sowingDate", DateUtils.convertDateFormat(sowingDate.getText().toString()));
-            params.put("sapQuantity", sapQuantity.getText().toString());
-            params.put("harvestDate", DateUtils.convertDateFormat(harvestDate.getText().toString()));
-            params.put("harvestQuantity", harvestQuantity.getText().toString());
-            params.put("ownUseQuantity", ownUse.getText().toString());
-            params.put("soldQuantity", soldQuantity.getText().toString());
-            params.put("soldRate", soldRate.getText().toString());
-            params.put("totalIncome", totalIncome.getText().toString());
-            params.put("farmId", Storage.selectedHarvestFarm.getFarmId());
-        } catch (Exception e) {
-            e.printStackTrace();
+        UIValidation uiValidation = new UIValidation();
+
+        if (sowingDate.getText().toString().matches("")) {
+            uiValidation.validateFields(getActivity(), sowingDate, sowingDate.getText().toString(), "Choose Sowing Date");
+        } else if (sapQuantity.getText().toString().matches("")) {
+            uiValidation.validateFields(getActivity(), sapQuantity, sapQuantity.getText().toString(), "Enter Sappling Quantity");
+        } else if (harvestDate.getText().toString().matches("")) {
+            uiValidation.validateFields(getActivity(), harvestDate, harvestDate.getText().toString(), "Choose Harvest Date");
+        } else if (harvestQuantity.getText().toString().matches("")) {
+            uiValidation.validateFields(getActivity(), harvestQuantity, harvestQuantity.getText().toString(), "Enter Harvest Quantity");
+        } else if (ownUse.getText().toString().matches("")) {
+            uiValidation.validateFields(getActivity(), ownUse, ownUse.getText().toString(), "Enter Own Use");
+        } else if (soldQuantity.getText().toString().matches("")) {
+            uiValidation.validateFields(getActivity(), soldQuantity, soldQuantity.getText().toString(), "Enter Sold Quantity");
+        } else if (soldRate.getText().toString().matches("")) {
+            uiValidation.validateFields(getActivity(), soldRate, soldRate.getText().toString(), "Enter Sold Rate");
+        } else if (totalIncome.getText().toString().matches("")) {
+            uiValidation.validateFields(getActivity(), totalIncome, totalIncome.getText().toString(), "Enter Total Income");
+        } else {
+            JSONObject params = new JSONObject();
+            try {
+                //params.put("plantOrSeed",plantOrSeed.getText().toString());
+                params.put("sowingDate", DateUtils.convertDateFormat(sowingDate.getText().toString()));
+                params.put("sapQuantity", sapQuantity.getText().toString());
+                params.put("harvestDate", DateUtils.convertDateFormat(harvestDate.getText().toString()));
+                params.put("harvestQuantity", harvestQuantity.getText().toString());
+                params.put("ownUseQuantity", ownUse.getText().toString());
+                params.put("soldQuantity", soldQuantity.getText().toString());
+                params.put("soldRate", soldRate.getText().toString());
+                params.put("totalIncome", totalIncome.getText().toString());
+                params.put("farmId", Storage.selectedHarvestFarm.getFarmId());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            showLoading();
+            Rx2AndroidNetworking.post(ApiEndpoint.HARVEST_API)
+                    .addJSONObjectBody(params)
+                    .build()
+                    .getObjectObservable(HarvestVO.class)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Observer<HarvestVO>() {
+                        @Override
+                        public void onSubscribe(Disposable d) {
+
+                        }
+
+                        @Override
+                        public void onNext(HarvestVO object) {
+                            Toast.makeText(getActivity(), "Successfully Added", Toast.LENGTH_LONG).show();
+                            harvestDate.setText(currentDate);
+                            sowingDate.setText(currentDate);
+                            sapQuantity.setText("");
+                            harvestQuantity.setText("");
+                            ownUse.setText("");
+                            soldQuantity.setText("");
+                            soldRate.setText("");
+                            totalIncome.setText("");
+                            switchFragment(LandingPageActivity.FRAGMENT_HARVEST_FARM_SEARCH,"Harvest Entry", true);
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            Toast.makeText(getActivity(), " ", Toast.LENGTH_LONG).show();
+                            hideLoading();
+                        }
+
+                        @Override
+                        public void onComplete() {
+                            hideLoading();
+                        }
+                    });
         }
-        showLoading();
-        Rx2AndroidNetworking.post(ApiEndpoint.HARVEST_API)
-                .addJSONObjectBody(params)
-                .build()
-                .getObjectObservable(HarvestVO.class)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<HarvestVO>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-
-                    }
-
-                    @Override
-                    public void onNext(HarvestVO object) {
-                        Toast.makeText(getActivity(), "Successfully Added", Toast.LENGTH_LONG).show();
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        Toast.makeText(getActivity(), " ", Toast.LENGTH_LONG).show();
-                        hideLoading();
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        hideLoading();
-                    }
-                });
     }
 }

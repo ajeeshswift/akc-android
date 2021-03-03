@@ -1,6 +1,7 @@
 package com.swift.akc.fragments;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.LayoutInflater;
@@ -16,8 +17,12 @@ import androidx.annotation.Nullable;
 
 import com.rx2androidnetworking.Rx2AndroidNetworking;
 import com.swift.akc.R;
+import com.swift.akc.activity.LandingPageActivity;
+import com.swift.akc.activity.LoginActivity;
 import com.swift.akc.extras.Constants;
 import com.swift.akc.extras.Storage;
+import com.swift.akc.extras.UIValidation;
+import com.swift.akc.helper.ui.DatePickerView;
 import com.swift.akc.network.ApiEndpoint;
 import com.swift.akc.network.data.HarvestForcastingVO;
 import com.swift.akc.utils.DateUtils;
@@ -35,6 +40,9 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 public class HarvestForecastingEntryFragment extends BaseFragment implements View.OnClickListener {
+
+    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+    String currentDate = sdf.format(new Date());
 
     public HarvestForecastingEntryFragment() {
 
@@ -64,31 +72,22 @@ public class HarvestForecastingEntryFragment extends BaseFragment implements Vie
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        villagename = (EditText) mParentView.findViewById(R.id.villagename);
+//        villagename = (EditText) mParentView.findViewById(R.id.villagename);
         crop = (EditText) mParentView.findViewById(R.id.crop);
         seedsown = (EditText) mParentView.findViewById(R.id.seedsown);
         cultivation = (EditText) mParentView.findViewById(R.id.cultivation);
         sowingdate = (EditText) mParentView.findViewById(R.id.sowingdate);
         submit = (Button) mParentView.findViewById(R.id.submit);
+        crop.requestFocus();
         submit.setOnClickListener(this);
 
         sowingdate.setInputType(InputType.TYPE_NULL);
+        sowingdate.setText(currentDate);
         sowingdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final Calendar cldr = Calendar.getInstance();
-                int day = cldr.get(Calendar.DAY_OF_MONTH);
-                int month = cldr.get(Calendar.MONTH);
-                int year = cldr.get(Calendar.YEAR);
-
-                picker = new DatePickerDialog(getActivity(),
-                        new DatePickerDialog.OnDateSetListener() {
-                            @Override
-                            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                                sowingdate.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
-                            }
-                        }, year, month, day);
-                picker.show();
+                DatePickerView datePickerView = new DatePickerView();
+                datePickerView.setDatePickerView(getActivity(), sowingdate);
             }
         });
     }
@@ -101,49 +100,66 @@ public class HarvestForecastingEntryFragment extends BaseFragment implements Vie
     }
 
     private void harvestingforcastAPICall() {
-        JSONObject params = new JSONObject();
-        try {
-            params.put("plantId", crop.getText().toString());
-            params.put("seeds", seedsown.getText().toString());
-            params.put("area", cultivation.getText().toString());
-            params.put("cropShowingDate", DateUtils.convertDateFormat(sowingdate.getText().toString()));
-            params.put("farmId", 1);
-            params.put("uid", 1);
-            params.put("date", new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date()));
-            params.put("time", new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date()));
-            params.put("farmId", Storage.selectedHarvestFarm.getFarmId());
-        } catch (Exception e) {
-            e.printStackTrace();
+        UIValidation uiValidation = new UIValidation();
+
+        if (crop.getText().toString().matches("")) {
+            uiValidation.validateFields(getActivity(), crop, crop.getText().toString(), "Select Correct Crop");
+        } else if (seedsown.getText().toString().matches("")) {
+            uiValidation.validateFields(getActivity(), seedsown, seedsown.getText().toString(), "Enter Seeds Own Quantity");
+        } else if (cultivation.getText().toString().matches("")) {
+            uiValidation.validateFields(getActivity(), cultivation, cultivation.getText().toString(), "Enter Cultivation");
+        } else if (sowingdate.getText().toString().matches("")) {
+            uiValidation.validateFields(getActivity(), sowingdate, sowingdate.getText().toString(), "Choose Sowing Date");
+        } else {
+            JSONObject params = new JSONObject();
+            try {
+                params.put("plantId", crop.getText().toString());
+                params.put("seeds", seedsown.getText().toString());
+                params.put("area", cultivation.getText().toString());
+                params.put("cropShowingDate", DateUtils.convertDateFormat(sowingdate.getText().toString()));
+                params.put("farmId", Storage.selectedHarvestFarm.getFarmId());
+                params.put("uid", 1);
+                params.put("date", new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date()));
+                params.put("time", new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date()));
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            Rx2AndroidNetworking.post(ApiEndpoint.HARVEST_FORECAST_API)
+                    .addJSONObjectBody(params)
+                    .build()
+                    .getObjectObservable(HarvestForcastingVO.class)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Observer<HarvestForcastingVO>() {
+                        @Override
+                        public void onSubscribe(Disposable d) {
+
+                        }
+
+                        @Override
+                        public void onNext(HarvestForcastingVO object) {
+                            Toast.makeText(getActivity(), "Successfully Added", Toast.LENGTH_LONG).show();
+                            crop.setText("");
+                            seedsown.setText("");
+                            cultivation.setText("");
+                            sowingdate.setText(currentDate);
+                            switchFragment(LandingPageActivity.FRAGMENT_HARVEST_FARM_SEARCH, "Harvest Forcasting Entry", true);
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            hideLoading();
+                            showApiError(e);
+
+                        }
+
+                        @Override
+                        public void onComplete() {
+                            hideLoading();
+                        }
+                    });
         }
-
-        Rx2AndroidNetworking.post(ApiEndpoint.HARVEST_FORECAST_API)
-                .addJSONObjectBody(params)
-                .build()
-                .getObjectObservable(HarvestForcastingVO.class)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<HarvestForcastingVO>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-
-                    }
-
-                    @Override
-                    public void onNext(HarvestForcastingVO object) {
-                        Toast.makeText(getActivity(), "Successfully Added", Toast.LENGTH_LONG).show();
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        hideLoading();
-                        showApiError(e);
-
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        hideLoading();
-                    }
-                });
     }
 }
