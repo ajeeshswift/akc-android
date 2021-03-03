@@ -1,6 +1,9 @@
 package com.swift.akc.activity;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 
@@ -15,4 +18,5 @@ public class MainActivity extends LandingPageActivity {
         setContentView(R.layout.main_activity);
         c=findViewById(R.id.c);
     }
+
 }

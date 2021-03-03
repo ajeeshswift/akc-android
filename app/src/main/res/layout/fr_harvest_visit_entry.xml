@@ -24,6 +24,8 @@
                 android:ems="10"
                 android:text=""
                 android:hint="Plant / Seed"
+                android:imeOptions="actionDone"
+                android:singleLine="true"
                 android:background="@drawable/edit_text_border">
                 <requestFocus />
             </AutoCompleteTextView>
@@ -36,6 +38,8 @@
                 android:layout_marginTop="25dp"
                 android:background="@drawable/edit_text_border"
                 android:hint="Sowing Date"
+                android:imeOptions="actionDone"
+                android:singleLine="true"
                 android:paddingHorizontal="15dp" />
             <EditText
                 android:id="@+id/sapplingquantity"
