@@ -6,4 +6,5 @@
     <color name="colorWhite">#ffffff</color>
     <color name="colorTransparent">#ffffff</color>
     <color name="colorNavBackground">#DCDCDC</color>
+    <color name="colorAutocomplete">#454343</color>
 </resources>

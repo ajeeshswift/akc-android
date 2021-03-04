@@ -166,7 +166,7 @@ public class HarvestVisitEntryFragment extends BaseFragment implements TextWatch
         } else {
             JSONObject params = new JSONObject();
             try {
-                params.put("plantOrSeed",plantOrSeed.getText().toString());
+                params.put("plantOrSeed",plantSeedVO.getId());
                 params.put("sowingDate", DateUtils.convertDateFormat(sowingDate.getText().toString()));
                 params.put("sapQuantity", sapQuantity.getText().toString());
                 params.put("harvestDate", DateUtils.convertDateFormat(harvestDate.getText().toString()));
@@ -242,6 +242,7 @@ public class HarvestVisitEntryFragment extends BaseFragment implements TextWatch
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         plantSeedVO = (PlantSeedVO) parent.getItemAtPosition(position);
+        plantOrSeed.setText(plantSeedVO.getFloraName());
     }
 
     private void autoCompletePlantOrSeed(String query) {
