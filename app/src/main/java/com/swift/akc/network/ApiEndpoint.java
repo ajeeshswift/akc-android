@@ -10,6 +10,8 @@ public final class ApiEndpoint {
 
     public static final String FARMER_DETAILS_API = BASE_URL +"/harvest/farmDetails/{farmNo}";
 
+    public static final String FLORA_AUTOCOMPLETE_API = BASE_URL +"/floraController/getFlora";
+
     public static final String HARVEST_API = BASE_URL + "/harvest/harvestEntry";
 
     public static final String HARVEST_FORECAST_API = BASE_URL + "/harvestForcasting";

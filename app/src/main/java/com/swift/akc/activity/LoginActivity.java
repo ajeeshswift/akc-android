@@ -44,8 +44,8 @@ public class LoginActivity extends BaseAppCompatActivity implements View.OnClick
     @Override
     public void onClick(View view) {
         if(view.getId() == R.id.login) {
-            //loginApiCall();
-            goToLandingPageActivity();
+            loginApiCall();
+            //goToLandingPageActivity();
         }
     }
 
@@ -58,6 +58,7 @@ public class LoginActivity extends BaseAppCompatActivity implements View.OnClick
         } catch (Exception e) {
             e.printStackTrace();
         }
+        showLoading();
         Rx2AndroidNetworking.post(ApiEndpoint.LOGIN_API)
                 .addJSONObjectBody(params)
                 .build()

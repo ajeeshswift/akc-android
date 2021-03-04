@@ -4,10 +4,13 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.InputType;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -21,25 +24,32 @@ import androidx.annotation.Nullable;
 import com.rx2androidnetworking.Rx2AndroidNetworking;
 import com.swift.akc.R;
 import com.swift.akc.activity.LandingPageActivity;
+import com.swift.akc.adapters.PlantSeedListAdapter;
 import com.swift.akc.extras.Constants;
 import com.swift.akc.extras.Storage;
 import com.swift.akc.extras.UIValidation;
 import com.swift.akc.helper.ui.DatePickerView;
 import com.swift.akc.network.ApiEndpoint;
+import com.swift.akc.network.data.HarvestFarmVO;
 import com.swift.akc.network.data.HarvestVO;
+import com.swift.akc.network.data.PlantSeedListVO;
+import com.swift.akc.network.data.PlantSeedVO;
 import com.swift.akc.utils.DateUtils;
 
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class HarvestVisitEntryFragment extends BaseFragment implements View.OnClickListener {
+public class HarvestVisitEntryFragment extends BaseFragment implements TextWatcher,
+        View.OnClickListener, AdapterView.OnItemClickListener {
 
     EditText sowingDate, sapQuantity, harvestQuantity,
             ownUse, soldQuantity, soldRate, totalIncome, harvestDate;
@@ -51,6 +61,10 @@ public class HarvestVisitEntryFragment extends BaseFragment implements View.OnCl
 
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     String currentDate = sdf.format(new Date());
+
+    private PlantSeedListAdapter mAdapter;
+
+    private PlantSeedVO plantSeedVO;
 
     public HarvestVisitEntryFragment() {
 
@@ -77,7 +91,12 @@ public class HarvestVisitEntryFragment extends BaseFragment implements View.OnCl
         super.onViewCreated(view, savedInstanceState);
         String[] fruits = {"Apple", "Apple1", "Apple2", "Apple3", "Apple4", "Apple5", "Banana", "Cherry", "Date", "Grape", "Kiwi", "Mango", "Pear"};
         tvw = (TextView) mParentView.findViewById(R.id.textView1);
-        plantOrSeed = (AutoCompleteTextView) mParentView.findViewById(R.id.autoCompletePlantsseed);
+        plantOrSeed = mParentView.findViewById(R.id.autoCompletePlantsseed);
+        plantOrSeed.addTextChangedListener(this);
+        plantOrSeed.setOnItemClickListener(this);
+        plantOrSeed.setThreshold(1);
+        mAdapter = new PlantSeedListAdapter(getActivity(), R.layout.item_autocomplete, new ArrayList<>());
+        plantOrSeed.setAdapter(mAdapter);
         harvestDate = (EditText) mParentView.findViewById(R.id.harvestdate);
         sowingDate = (EditText) mParentView.findViewById(R.id.sowingdate);
         sapQuantity = (EditText) mParentView.findViewById(R.id.sapplingquantity);
@@ -87,17 +106,7 @@ public class HarvestVisitEntryFragment extends BaseFragment implements View.OnCl
         soldRate = (EditText) mParentView.findViewById(R.id.soldrate);
         totalIncome = (EditText) mParentView.findViewById(R.id.totalincome);
         submit = (Button) mParentView.findViewById(R.id.submit);
-        plantOrSeed.requestFocus();
         submit.setOnClickListener(this);
-
-        //Creating the instance of ArrayAdapter containing list of fruit names
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>
-                (getActivity(), android.R.layout.select_dialog_item, fruits);
-        //Getting the instance of AutoCompleteTextView
-
-        plantOrSeed.setThreshold(1);//will start working from first character
-        plantOrSeed.setAdapter(adapter);//setting the adapter data into the AutoCompleteTextView
-        plantOrSeed.setTextColor(Color.RED);
 
         harvestDate.setInputType(InputType.TYPE_NULL);
         harvestDate.setText(currentDate);
@@ -121,6 +130,11 @@ public class HarvestVisitEntryFragment extends BaseFragment implements View.OnCl
                 datePickerView.setDatePickerView(getActivity(), sowingDate);
             }
         });
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
     }
 
     @Override
@@ -152,7 +166,7 @@ public class HarvestVisitEntryFragment extends BaseFragment implements View.OnCl
         } else {
             JSONObject params = new JSONObject();
             try {
-                //params.put("plantOrSeed",plantOrSeed.getText().toString());
+                params.put("plantOrSeed",plantOrSeed.getText().toString());
                 params.put("sowingDate", DateUtils.convertDateFormat(sowingDate.getText().toString()));
                 params.put("sapQuantity", sapQuantity.getText().toString());
                 params.put("harvestDate", DateUtils.convertDateFormat(harvestDate.getText().toString()));
@@ -205,4 +219,60 @@ public class HarvestVisitEntryFragment extends BaseFragment implements View.OnCl
                     });
         }
     }
+
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+        if (plantOrSeed.isPerformingCompletion()) {
+            // An item has been selected from the list. Ignore.
+            return;
+        }
+        autoCompletePlantOrSeed(s.toString());
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
+
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        plantSeedVO = (PlantSeedVO) parent.getItemAtPosition(position);
+    }
+
+    private void autoCompletePlantOrSeed(String query) {
+        Rx2AndroidNetworking.get(ApiEndpoint.FLORA_AUTOCOMPLETE_API)
+                .addQueryParameter("query", query)
+                .build()
+                .getObjectObservable(PlantSeedListVO.class)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<PlantSeedListVO>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(PlantSeedListVO plantSeedListVO) {
+                        mAdapter.refresh(plantSeedListVO.getData());
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        showApiError(e);
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        hideLoading();
+                    }
+                });
+    }
+
+
 }
