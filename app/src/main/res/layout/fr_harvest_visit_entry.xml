@@ -23,7 +23,6 @@
                 android:layout_marginTop="15dp"
                 android:paddingHorizontal="15dp"
                 android:ems="10"
-                android:text=""
                 android:hint="Plant / Seed"
                 android:imeOptions="actionDone"
                 android:singleLine="true"
