@@ -49,6 +49,7 @@ public class HarvestFarmSearchFragment extends BaseFragment implements View.OnCl
         mParentView = inflater.inflate(R.layout.fr_harvest_farm_search, container, false);
         farmno = mParentView.findViewById(R.id.farmno);
         submit = mParentView.findViewById(R.id.submit);
+        farmno.requestFocus();
         submit.setOnClickListener(this);
         return mParentView;
     }
@@ -77,7 +78,7 @@ public class HarvestFarmSearchFragment extends BaseFragment implements View.OnCl
                     @Override
                     public void onNext(HarvestFarmVO harvestFarmVO) {
                         Storage.selectedHarvestFarm = harvestFarmVO;
-                        Toast.makeText(getActivity(), "Successfully Added", Toast.LENGTH_LONG).show();
+                        //Toast.makeText(getActivity(), "", Toast.LENGTH_LONG).show();
                         openNextFragment();
                     }
 

@@ -26,6 +26,7 @@ import com.swift.akc.extras.EntryType;
 import com.swift.akc.extras.Storage;
 import com.swift.akc.fragments.ComingSoonFragment;
 import com.swift.akc.fragments.HarvestFarmSearchFragment;
+import com.swift.akc.fragments.HarvestFilterFragment;
 import com.swift.akc.fragments.HarvestForecastingEntryFragment;
 import com.swift.akc.fragments.HarvestVisitEntryFragment;
 import com.swift.akc.fragments.HarvestVisitListFragment;
@@ -47,6 +48,8 @@ public class LandingPageActivity extends BaseAppCompatActivity implements Bottom
 
     public static final int FRAGMENT_PROFILE = 6;
 
+    public static final int FRAGMENT_HARVEST_FILTER = 7;
+
     Toolbar mToolbar;
 
     @Override
@@ -58,6 +61,7 @@ public class LandingPageActivity extends BaseAppCompatActivity implements Bottom
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(this);
         displayView(FRAGMENT_HOME, "Home", true);
+        //displayView(FRAGMENT_HARVEST_VISIT_LIST, "Home", true);
     }
 
     @Override
@@ -106,6 +110,9 @@ public class LandingPageActivity extends BaseAppCompatActivity implements Bottom
                 break;
             case FRAGMENT_PROFILE:
                 fragment = ProfileFragment.newInstance(aTitle);
+                break;
+            case FRAGMENT_HARVEST_FILTER:
+                fragment = HarvestFilterFragment.newInstance(aTitle);
                 break;
             default :
                 fragment = ComingSoonFragment.newInstance(aTitle);

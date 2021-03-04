@@ -2,6 +2,9 @@ package com.swift.akc.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -12,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.rx2androidnetworking.Rx2AndroidNetworking;
 import com.swift.akc.R;
+import com.swift.akc.activity.LandingPageActivity;
 import com.swift.akc.adapters.HarvestVisitListAdapter;
 import com.swift.akc.extras.Constants;
 import com.swift.akc.network.ApiEndpoint;
@@ -38,6 +42,12 @@ public class HarvestVisitListFragment extends BaseFragment {
         bundle.putString(Constants.INTENT_PARAM_TITLE, title);
         comingSoonFragment.setArguments(bundle);
         return comingSoonFragment;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
     }
 
     @Nullable
@@ -89,5 +99,19 @@ public class HarvestVisitListFragment extends BaseFragment {
                     }
                 });
 
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.filter_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == R.id.icon_filter) {
+            switchFragment(LandingPageActivity.FRAGMENT_HARVEST_FILTER, "Filter", true);
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
