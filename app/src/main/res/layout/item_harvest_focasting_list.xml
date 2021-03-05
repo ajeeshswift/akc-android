@@ -8,7 +8,7 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="225dp"
+        android:layout_height="150dp"
         android:layout_margin="5dp"
         android:layout_marginTop="5dp"
         app:cardCornerRadius="10dp"
@@ -27,34 +27,14 @@
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
                 <TextView
-                    android:id="@+id/sapQuantityLabel"
-                    android:text="SAPPLING QTY"
-                    android:layout_width="175dp"
-                    android:layout_height="20dp"
-                    android:layout_marginHorizontal="5dp"
-                    android:layout_marginTop="5dp" />
-
-                <TextView
-                    android:id="@+id/sapQuantity"
-                    android:layout_width="215dp"
-                    android:layout_height="20dp"
-                    android:layout_marginHorizontal="5dp"
-                    android:layout_marginTop="5dp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-                <TextView
-                    android:id="@+id/sowingDateLabel"
-                    android:text="SOWING DATE"
+                    android:id="@+id/formerLabel"
+                    android:text="FARMER NAME"
                     android:layout_width="175dp"
                     android:layout_height="20dp"
                     android:layout_marginHorizontal="5dp"
                     android:layout_marginTop="5dp" />
                 <TextView
-                    android:id="@+id/sowingDate"
+                    android:id="@+id/farm"
                     android:layout_width="215dp"
                     android:layout_height="20dp"
                     android:layout_marginHorizontal="5dp"
@@ -67,15 +47,15 @@
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
                 <TextView
-                    android:id="@+id/harvestDateLabel"
-                    android:text="HARVEST DATE"
+                    android:id="@+id/plantorseedLabel"
+                    android:text="PLANTS / SEED"
                     android:layout_width="175dp"
                     android:layout_height="20dp"
                     android:layout_marginHorizontal="5dp"
                     android:layout_marginTop="5dp" />
 
                 <TextView
-                    android:id="@+id/harvestDate"
+                    android:id="@+id/plant"
                     android:layout_width="215dp"
                     android:layout_height="20dp"
                     android:layout_marginHorizontal="5dp"
@@ -87,15 +67,15 @@
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
                 <TextView
-                    android:id="@+id/harvestQuantityLabel"
-                    android:text="HARVEST QTY"
+                    android:id="@+id/seedLabel"
+                    android:text="SEEDS SOWN IN KG"
                     android:layout_width="175dp"
                     android:layout_height="20dp"
                     android:layout_marginHorizontal="5dp"
                     android:layout_marginTop="5dp" />
 
                 <TextView
-                    android:id="@+id/harvestQuantity"
+                    android:id="@+id/seeds"
                     android:layout_width="215dp"
                     android:layout_height="20dp"
                     android:layout_marginHorizontal="5dp"
@@ -104,35 +84,18 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
                 <TextView
-                    android:id="@+id/ownUseQuantityLabel"
-                    android:text="OWNUSE QTY"
+                    android:id="@+id/areaLabel"
+                    android:text="AREA UNDER CULTIVATION"
                     android:layout_width="175dp"
                     android:layout_height="20dp"
                     android:layout_marginHorizontal="5dp"
                     android:layout_marginTop="5dp" />
 
                 <TextView
-                    android:id="@+id/ownUseQuantity"
-                    android:layout_width="215dp"
-                    android:layout_height="20dp"
-                    android:layout_marginTop="5dp"
-                    android:paddingHorizontal="5dp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <TextView
-                    android:id="@+id/soldQuantityLabel"
-                    android:text="SOLD QTY"
-                    android:layout_width="175dp"
-                    android:layout_height="20dp"
-                    android:layout_marginHorizontal="5dp"
-                    android:layout_marginTop="5dp" />
-                <TextView
-                    android:id="@+id/soldQuantity"
+                    android:id="@+id/area"
                     android:layout_width="215dp"
                     android:layout_height="20dp"
                     android:layout_marginHorizontal="5dp"
@@ -141,39 +104,24 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
                 <TextView
-                    android:id="@+id/soldRateLabel"
-                    android:text="SOLD RATE"
+                    android:id="@+id/cropDateLabel"
+                    android:text="CROP DATE"
                     android:layout_width="175dp"
                     android:layout_height="20dp"
                     android:layout_marginHorizontal="5dp"
                     android:layout_marginTop="5dp" />
+
                 <TextView
-                    android:id="@+id/soldRate"
+                    android:id="@+id/cropDate"
                     android:layout_width="215dp"
                     android:layout_height="20dp"
                     android:layout_marginHorizontal="5dp"
                     android:layout_marginTop="5dp" />
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <TextView
-                    android:id="@+id/totalIncomeLabel"
-                    android:text="TOTAL INCOME"
-                    android:layout_width="175dp"
-                    android:layout_height="20dp"
-                    android:layout_marginHorizontal="5dp"
-                    android:layout_marginTop="5dp" />
-                <TextView
-                    android:id="@+id/totalIncome"
-                    android:layout_width="215dp"
-                    android:layout_height="20dp"
-                    android:layout_marginHorizontal="5dp"
-                    android:layout_marginTop="5dp" />
-            </LinearLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 

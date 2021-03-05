@@ -18,5 +18,7 @@ public final class ApiEndpoint {
 
     public static final String HARVEST_VISIT_LIST_API = BASE_URL + "/harvest/harvestList";
 
+    public static final String HARVEST_VISIT_BET_DATE_API = BASE_URL + "/harvest/harvestListBetDate/{harvestDateFrom}/{harvestDateTo}";
 
+    public static final String HARVEST_FORCASTING_LIST_API = BASE_URL + "/harvestForcastingList";
 }

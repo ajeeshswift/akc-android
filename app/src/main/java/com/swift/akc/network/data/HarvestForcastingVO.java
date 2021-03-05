@@ -23,6 +23,22 @@ public class HarvestForcastingVO {
     @SerializedName("date")
     private String date;
 
+    @Expose
+    @SerializedName("farm_id")
+    private String farm;
+
+    @Expose
+    @SerializedName("plant_id")
+    private String plant;
+
+    @Expose
+    @SerializedName("seeds")
+    private String seeds;
+
+    @Expose
+    @SerializedName("time")
+    private String time;
+
     public int getForcastId() {
         return forcastId;
     }
@@ -53,5 +69,37 @@ public class HarvestForcastingVO {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public String getFarm() {
+        return farm;
+    }
+
+    public void setFarm(String farm) {
+        this.farm = farm;
+    }
+
+    public String getPlant() {
+        return plant;
+    }
+
+    public void setPlant(String plant) {
+        this.plant = plant;
+    }
+
+    public String getSeeds() {
+        return seeds;
+    }
+
+    public void setSeeds(String seeds) {
+        this.seeds = seeds;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 }

@@ -2,9 +2,6 @@ package com.swift.akc.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -15,29 +12,28 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.rx2androidnetworking.Rx2AndroidNetworking;
 import com.swift.akc.R;
-import com.swift.akc.activity.LandingPageActivity;
-import com.swift.akc.adapters.HarvestVisitListAdapter;
+import com.swift.akc.adapters.HarvestForecastingListAdapter;
 import com.swift.akc.extras.Constants;
 import com.swift.akc.network.ApiEndpoint;
-import com.swift.akc.network.data.HarvestVisitListVO;
+import com.swift.akc.network.data.HarvestForcastingListVO;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class HarvestVisitListFragment extends BaseFragment {
+public class HarvestForecastingListFragment extends BaseFragment {
 
-    private HarvestVisitListAdapter mAdapter;
+    private HarvestForecastingListAdapter mAdapter;
 
     private RecyclerView mRecyclerView;
 
-    public HarvestVisitListFragment() {
+    public HarvestForecastingListFragment() {
 
     }
 
-    public static HarvestVisitListFragment newInstance(String title) {
-        HarvestVisitListFragment comingSoonFragment = new HarvestVisitListFragment();
+    public static HarvestForecastingListFragment newInstance(String title) {
+        HarvestForecastingListFragment comingSoonFragment = new HarvestForecastingListFragment();
         Bundle bundle = new Bundle();
         bundle.putString(Constants.INTENT_PARAM_TITLE, title);
         comingSoonFragment.setArguments(bundle);
@@ -54,51 +50,51 @@ public class HarvestVisitListFragment extends BaseFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        mParentView = inflater.inflate(R.layout.fr_harvest_visit, container, false);
+        mParentView = inflater.inflate(R.layout.fr_harvest_forcasting, container, false);
         mRecyclerView = mParentView.findViewById(R.id.recycler_view);
         return mParentView;
-    }
-
-    @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        inflater.inflate(R.menu.filter_menu, menu);
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId() == R.id.icon_filter) {
-            switchFragment(LandingPageActivity.FRAGMENT_HARVEST_FILTER, "Filter", true);
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     @NonNull
     @Nullable
     public void onViewCreated(@NonNull View view, @io.reactivex.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mAdapter = new HarvestVisitListAdapter(getActivity());
+        mAdapter = new HarvestForecastingListAdapter(getActivity());
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         mRecyclerView.setAdapter(mAdapter);
-        getHarvestList();
+        getHarvestForcastingList();
     }
 
-    public void getHarvestList() {
+//    @Override
+//    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+//        inflater.inflate(R.menu.filter_menu, menu);
+//        super.onCreateOptionsMenu(menu, inflater);
+//    }
+//
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        if(item.getItemId() == R.id.icon_filter) {
+//            switchFragment(LandingPageActivity.FRAGMENT_HARVEST_FILTER, "Filter", true);
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
+
+    public void getHarvestForcastingList() {
         showLoading();
         Rx2AndroidNetworking
-                .get(ApiEndpoint.HARVEST_VISIT_LIST_API)
+                .get(ApiEndpoint.HARVEST_FORCASTING_LIST_API)
                 .build()
-                .getObjectObservable(HarvestVisitListVO.class)
+                .getObjectObservable(HarvestForcastingListVO.class)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<HarvestVisitListVO>() {
+                .subscribe(new Observer<HarvestForcastingListVO>() {
                     @Override
                     public void onSubscribe(Disposable d) {
 
                     }
 
                     @Override
-                    public void onNext(HarvestVisitListVO listVO) {
+                    public void onNext(HarvestForcastingListVO listVO) {
                         mAdapter.refresh(listVO.getData());
                     }
 

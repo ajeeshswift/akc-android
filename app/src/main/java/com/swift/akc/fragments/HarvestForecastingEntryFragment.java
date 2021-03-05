@@ -1,14 +1,16 @@
 package com.swift.akc.fragments;
 
 import android.app.DatePickerDialog;
-import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.InputType;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -18,19 +20,21 @@ import androidx.annotation.Nullable;
 import com.rx2androidnetworking.Rx2AndroidNetworking;
 import com.swift.akc.R;
 import com.swift.akc.activity.LandingPageActivity;
-import com.swift.akc.activity.LoginActivity;
+import com.swift.akc.adapters.PlantSeedListAdapter;
 import com.swift.akc.extras.Constants;
 import com.swift.akc.extras.Storage;
 import com.swift.akc.extras.UIValidation;
 import com.swift.akc.helper.ui.DatePickerView;
 import com.swift.akc.network.ApiEndpoint;
 import com.swift.akc.network.data.HarvestForcastingVO;
+import com.swift.akc.network.data.PlantSeedListVO;
+import com.swift.akc.network.data.PlantSeedVO;
 import com.swift.akc.utils.DateUtils;
 
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
@@ -39,10 +43,20 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class HarvestForecastingEntryFragment extends BaseFragment implements View.OnClickListener {
+public class HarvestForecastingEntryFragment extends BaseFragment implements TextWatcher,
+        View.OnClickListener, AdapterView.OnItemClickListener {
 
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     String currentDate = sdf.format(new Date());
+
+    EditText seedsown, cultivation, sowingdate;
+    AutoCompleteTextView crop;
+    DatePickerDialog picker;
+    Button submit;
+
+    private PlantSeedListAdapter mAdapter;
+
+    private PlantSeedVO plantSeedVO;
 
     public HarvestForecastingEntryFragment() {
 
@@ -55,10 +69,6 @@ public class HarvestForecastingEntryFragment extends BaseFragment implements Vie
         comingSoonFragment.setArguments(bundle);
         return comingSoonFragment;
     }
-
-    EditText villagename, crop, seedsown, cultivation, sowingdate;
-    DatePickerDialog picker;
-    Button submit;
 
     @Nullable
     @Override
@@ -73,7 +83,14 @@ public class HarvestForecastingEntryFragment extends BaseFragment implements Vie
         super.onViewCreated(view, savedInstanceState);
 
 //        villagename = (EditText) mParentView.findViewById(R.id.villagename);
-        crop = (EditText) mParentView.findViewById(R.id.crop);
+        //crop = (EditText) mParentView.findViewById(R.id.crop);
+
+        crop = mParentView.findViewById(R.id.autoCompletecrop);
+        crop.addTextChangedListener(this);
+        crop.setOnItemClickListener(this);
+        crop.setThreshold(1);
+        mAdapter = new PlantSeedListAdapter(getActivity(), R.layout.item_autocomplete, new ArrayList<>());
+        crop.setAdapter(mAdapter);
         seedsown = (EditText) mParentView.findViewById(R.id.seedsown);
         cultivation = (EditText) mParentView.findViewById(R.id.cultivation);
         sowingdate = (EditText) mParentView.findViewById(R.id.sowingdate);
@@ -95,30 +112,45 @@ public class HarvestForecastingEntryFragment extends BaseFragment implements Vie
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.submit) {
-            harvestingforcastAPICall();
+            validate();
         }
     }
 
-    private void harvestingforcastAPICall() {
-        UIValidation uiValidation = new UIValidation();
-
+    private void validate() {
         if (crop.getText().toString().matches("")) {
-            uiValidation.validateFields(getActivity(), crop, crop.getText().toString(), "Select Correct Crop");
-        } else if (seedsown.getText().toString().matches("")) {
-            uiValidation.validateFields(getActivity(), seedsown, seedsown.getText().toString(), "Enter Seeds Own Quantity");
-        } else if (cultivation.getText().toString().matches("")) {
-            uiValidation.validateFields(getActivity(), cultivation, cultivation.getText().toString(), "Enter Cultivation");
-        } else if (sowingdate.getText().toString().matches("")) {
-            uiValidation.validateFields(getActivity(), sowingdate, sowingdate.getText().toString(), "Choose Sowing Date");
-        } else {
+            crop.setError("Enter Plant / Seed");
+            crop.requestFocus();
+            return;
+        }
+
+        if (seedsown.getText().toString().matches("")) {
+            seedsown.setError("Enter Seed Sown in Kg's");
+            seedsown.requestFocus();
+            return;
+        }
+
+        if (cultivation.getText().toString().matches("")) {
+            cultivation.setError("Enter Area Under Cultivation");
+            cultivation.requestFocus();
+            return;
+        }
+
+        if (sowingdate.getText().toString().matches("")) {
+            sowingdate.setError("Choose Sowing Date");
+            sowingdate.requestFocus();
+            return;
+        }
+        harvestingforcastAPICall();
+    }
+
+    private void harvestingforcastAPICall() {
             JSONObject params = new JSONObject();
             try {
-                params.put("plantId", crop.getText().toString());
+                params.put("plantId", plantSeedVO.getId());
                 params.put("seeds", seedsown.getText().toString());
                 params.put("area", cultivation.getText().toString());
                 params.put("cropShowingDate", DateUtils.convertDateFormat(sowingdate.getText().toString()));
                 params.put("farmId", Storage.selectedHarvestFarm.getFarmId());
-                params.put("uid", 1);
                 params.put("date", new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date()));
                 params.put("time", new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date()));
 
@@ -161,5 +193,59 @@ public class HarvestForecastingEntryFragment extends BaseFragment implements Vie
                         }
                     });
         }
+
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+        if (crop.isPerformingCompletion()) {
+            // An item has been selected from the list. Ignore.
+            return;
+        }
+        autoCompletePlantOrSeed(s.toString());
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
+
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        plantSeedVO = (PlantSeedVO) parent.getItemAtPosition(position);
+        crop.setText(plantSeedVO.getFloraName());
+    }
+
+    private void autoCompletePlantOrSeed(String query) {
+        Rx2AndroidNetworking.get(ApiEndpoint.FLORA_AUTOCOMPLETE_API)
+                .addQueryParameter("query", query)
+                .build()
+                .getObjectObservable(PlantSeedListVO.class)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<PlantSeedListVO>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(PlantSeedListVO plantSeedListVO) {
+                        mAdapter.refresh(plantSeedListVO.getData());
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        showApiError(e);
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        hideLoading();
+                    }
+                });
     }
 }
