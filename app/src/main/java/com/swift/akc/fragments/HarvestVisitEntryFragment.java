@@ -145,42 +145,66 @@ public class HarvestVisitEntryFragment extends BaseFragment implements TextWatch
     }
 
     private void validate() {
-        if(sowingDate.getText().toString().matches("")) {
+        if (plantOrSeed.getText().toString().matches("")) {
+            plantOrSeed.setError("Enter Plant/Seed Name");
+            plantOrSeed.requestFocus();
+            return;
+        }
+
+        if (sowingDate.getText().toString().matches("")) {
             sowingDate.setError("Choose Sowing Date");
             sowingDate.requestFocus();
+            return;
+        }
+
+        if (sapQuantity.getText().toString().matches("")) {
+            sapQuantity.setError("Enter Sappling QTY");
+            sapQuantity.requestFocus();
+            return;
+        }
+
+        if (harvestDate.getText().toString().matches("")) {
+            harvestDate.setError("Choose Harvest Date");
+            harvestDate.requestFocus();
+            return;
+        }
+
+        if (harvestQuantity.getText().toString().matches("")) {
+            harvestQuantity.setError("Choose Harvest QTY");
+            harvestQuantity.requestFocus();
+            return;
+        }
+
+        if (ownUse.getText().toString().matches("")) {
+            ownUse.setError("Enter Own Use");
+            ownUse.requestFocus();
+            return;
+        }
+
+        if (soldQuantity.getText().toString().matches("")) {
+            soldQuantity.setError("Enter Sold QTY");
+            soldQuantity.requestFocus();
+            return;
+        }
+
+        if (soldRate.getText().toString().matches("")) {
+            soldRate.setError("Enter Sold Rate");
+            soldRate.requestFocus();
+            return;
+        }
+
+        if (totalIncome.getText().toString().matches("")) {
+            totalIncome.setError("Enter Total Income");
+            totalIncome.requestFocus();
             return;
         }
         harvestVisitEntryAPICall();
     }
 
-    /*private void harvestVisitEntryAPICall() {
-        UIValidation uiValidation = new UIValidation();
-
-        if (sowingDate.getText().toString().matches("")) {
-            uiValidation.validateFields(getActivity(), sowingDate, sowingDate.getText().toString(), "Choose Sowing Date");
-        } else if (sapQuantity.getText().toString().matches("")) {
-            uiValidation.validateFields(getActivity(), sapQuantity, sapQuantity.getText().toString(), "Enter Sappling Quantity");
-        } else if (harvestDate.getText().toString().matches("")) {
-            uiValidation.validateFields(getActivity(), harvestDate, harvestDate.getText().toString(), "Choose Harvest Date");
-        } else if (harvestQuantity.getText().toString().matches("")) {
-            uiValidation.validateFields(getActivity(), harvestQuantity, harvestQuantity.getText().toString(), "Enter Harvest Quantity");
-        } else if (ownUse.getText().toString().matches("")) {
-            uiValidation.validateFields(getActivity(), ownUse, ownUse.getText().toString(), "Enter Own Use");
-        } else if (soldQuantity.getText().toString().matches("")) {
-            uiValidation.validateFields(getActivity(), soldQuantity, soldQuantity.getText().toString(), "Enter Sold Quantity");
-        } else if (soldRate.getText().toString().matches("")) {
-            uiValidation.validateFields(getActivity(), soldRate, soldRate.getText().toString(), "Enter Sold Rate");
-        } else if (totalIncome.getText().toString().matches("")) {
-            uiValidation.validateFields(getActivity(), totalIncome, totalIncome.getText().toString(), "Enter Total Income");
-        } else {
-
-        }
-    }*/
-
     private void harvestVisitEntryAPICall() {
         JSONObject params = new JSONObject();
         try {
-            params.put("plantOrSeed",plantSeedVO.getId());
+            params.put("plantOrSeed", plantSeedVO.getId());
             params.put("sowingDate", DateUtils.convertDateFormat(sowingDate.getText().toString()));
             params.put("sapQuantity", sapQuantity.getText().toString());
             params.put("harvestDate", DateUtils.convertDateFormat(harvestDate.getText().toString()));
@@ -217,7 +241,7 @@ public class HarvestVisitEntryFragment extends BaseFragment implements TextWatch
                         soldQuantity.setText("");
                         soldRate.setText("");
                         totalIncome.setText("");
-                        switchFragment(LandingPageActivity.FRAGMENT_HARVEST_FARM_SEARCH,"Harvest Entry", true);
+                        switchFragment(LandingPageActivity.FRAGMENT_HARVEST_FARM_SEARCH, "Harvest Entry", true);
                     }
 
                     @Override

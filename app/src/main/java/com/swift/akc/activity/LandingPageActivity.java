@@ -2,20 +2,11 @@ package com.swift.akc.activity;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -28,6 +19,7 @@ import com.swift.akc.fragments.ComingSoonFragment;
 import com.swift.akc.fragments.HarvestFarmSearchFragment;
 import com.swift.akc.fragments.HarvestFilterFragment;
 import com.swift.akc.fragments.HarvestForecastingEntryFragment;
+import com.swift.akc.fragments.HarvestForecastingListFragment;
 import com.swift.akc.fragments.HarvestVisitEntryFragment;
 import com.swift.akc.fragments.HarvestVisitListFragment;
 import com.swift.akc.fragments.HomeFragment;
@@ -49,6 +41,8 @@ public class LandingPageActivity extends BaseAppCompatActivity implements Bottom
     public static final int FRAGMENT_PROFILE = 6;
 
     public static final int FRAGMENT_HARVEST_FILTER = 7;
+
+    public static final int FRAGMENT_HARVEST_FORCASTING_LIST = 8;
 
     Toolbar mToolbar;
 
@@ -78,10 +72,14 @@ public class LandingPageActivity extends BaseAppCompatActivity implements Bottom
                 Storage.selectedMenu = EntryType.HARVEST_FORECASTING_ENTRY;
                 displayView(FRAGMENT_HARVEST_FARM_SEARCH, "Harvest Entry", true);
                 break;
-            case R.id.harvestlist:
-                Storage.selectedMenu = EntryType.HARVEST_VISIT_LIST;
-                displayView(FRAGMENT_HARVEST_VISIT_LIST, "Harvest Entry", true);
-                break;
+//            case R.id.harvestlist:
+//                Storage.selectedMenu = EntryType.HARVEST_VISIT_LIST;
+//                displayView(FRAGMENT_HARVEST_VISIT_LIST, "Harvest Entry", true);
+//                break;
+//            case R.id.harvestForcastinglist:
+//                Storage.selectedMenu = EntryType.HARVEST_FORCASTING_LIST;
+//                displayView(FRAGMENT_HARVEST_FORCASTING_LIST, "Harvest Entry", true);
+//                break;
             case R.id.profile:
                 Storage.selectedMenu = EntryType.HARVEST_PROFILE;
                 displayView(FRAGMENT_PROFILE, "Harvest Entry", true);
@@ -107,6 +105,9 @@ public class LandingPageActivity extends BaseAppCompatActivity implements Bottom
                 break;
             case FRAGMENT_HARVEST_VISIT_LIST:
                 fragment = HarvestVisitListFragment.newInstance(aTitle);
+                break;
+            case FRAGMENT_HARVEST_FORCASTING_LIST:
+                fragment = HarvestForecastingListFragment.newInstance(aTitle);
                 break;
             case FRAGMENT_PROFILE:
                 fragment = ProfileFragment.newInstance(aTitle);

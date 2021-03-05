@@ -14,10 +14,15 @@
         android:title="Forecasting"
         android:icon="@drawable/rain_cloud" />
 
-    <item
-        android:id="@+id/harvestlist"
-        android:title="Harvest List"
-        android:icon="@drawable/rain_cloud" />
+<!--    <item-->
+<!--        android:id="@+id/harvestlist"-->
+<!--        android:title="Harvest List"-->
+<!--        android:icon="@drawable/rain_cloud" />-->
+
+<!--    <item-->
+<!--        android:id="@+id/harvestForcastinglist"-->
+<!--        android:title="Harvest Forcasting List"-->
+<!--        android:icon="@drawable/rain_cloud" />-->
 
     <item
         android:id="@+id/profile"

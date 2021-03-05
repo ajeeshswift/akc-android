@@ -12,5 +12,9 @@ public final class EntryType {
 
     public static final String HARVEST_VISIT_LIST = "harvest_visit_list";
 
+    public static final String HARVEST_FORCASTING_LIST = "harvest_forcasting_list";
+
     public static final String HARVEST_PROFILE = "harvest_profile";
+
+
 }

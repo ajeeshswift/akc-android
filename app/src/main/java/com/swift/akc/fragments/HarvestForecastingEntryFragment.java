@@ -112,22 +112,38 @@ public class HarvestForecastingEntryFragment extends BaseFragment implements Tex
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.submit) {
-            harvestingforcastAPICall();
+            validate();
         }
     }
 
-    private void harvestingforcastAPICall() {
-        UIValidation uiValidation = new UIValidation();
-
+    private void validate() {
         if (crop.getText().toString().matches("")) {
-            uiValidation.validateFields(getActivity(), crop, crop.getText().toString(), "Select Correct Crop");
-        } else if (seedsown.getText().toString().matches("")) {
-            uiValidation.validateFields(getActivity(), seedsown, seedsown.getText().toString(), "Enter Seeds Own Quantity");
-        } else if (cultivation.getText().toString().matches("")) {
-            uiValidation.validateFields(getActivity(), cultivation, cultivation.getText().toString(), "Enter Cultivation");
-        } else if (sowingdate.getText().toString().matches("")) {
-            uiValidation.validateFields(getActivity(), sowingdate, sowingdate.getText().toString(), "Choose Sowing Date");
-        } else {
+            crop.setError("Enter Plant / Seed");
+            crop.requestFocus();
+            return;
+        }
+
+        if (seedsown.getText().toString().matches("")) {
+            seedsown.setError("Enter Seed Sown in Kg's");
+            seedsown.requestFocus();
+            return;
+        }
+
+        if (cultivation.getText().toString().matches("")) {
+            cultivation.setError("Enter Area Under Cultivation");
+            cultivation.requestFocus();
+            return;
+        }
+
+        if (sowingdate.getText().toString().matches("")) {
+            sowingdate.setError("Choose Sowing Date");
+            sowingdate.requestFocus();
+            return;
+        }
+        harvestingforcastAPICall();
+    }
+
+    private void harvestingforcastAPICall() {
             JSONObject params = new JSONObject();
             try {
                 params.put("plantId", plantSeedVO.getId());
@@ -135,7 +151,6 @@ public class HarvestForecastingEntryFragment extends BaseFragment implements Tex
                 params.put("area", cultivation.getText().toString());
                 params.put("cropShowingDate", DateUtils.convertDateFormat(sowingdate.getText().toString()));
                 params.put("farmId", Storage.selectedHarvestFarm.getFarmId());
-                params.put("uid", 1);
                 params.put("date", new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date()));
                 params.put("time", new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date()));
 
@@ -178,7 +193,6 @@ public class HarvestForecastingEntryFragment extends BaseFragment implements Tex
                         }
                     });
         }
-    }
 
     @Override
     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
