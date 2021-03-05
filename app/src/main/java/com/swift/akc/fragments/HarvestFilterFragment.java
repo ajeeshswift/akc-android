@@ -21,6 +21,7 @@ import com.swift.akc.extras.UIValidation;
 import com.swift.akc.helper.ui.DatePickerView;
 import com.swift.akc.network.ApiEndpoint;
 import com.swift.akc.network.data.HarvestVO;
+import com.swift.akc.network.data.HarvestVisitListVO;
 import com.swift.akc.utils.DateUtils;
 
 import org.json.JSONObject;
@@ -125,17 +126,17 @@ public class HarvestFilterFragment extends BaseFragment  implements View.OnClick
             Rx2AndroidNetworking.post(ApiEndpoint.HARVEST_VISIT_BET_DATE_API)
                     .addJSONObjectBody(params)
                     .build()
-                    .getObjectObservable(HarvestVO.class)
+                    .getObjectObservable(HarvestVisitListVO.class)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Observer<HarvestVO>() {
+                    .subscribe(new Observer<HarvestVisitListVO>() {
                         @Override
                         public void onSubscribe(Disposable d) {
 
                         }
 
                         @Override
-                        public void onNext(HarvestVO object) {
+                        public void onNext(HarvestVisitListVO object) {
                             Toast.makeText(getActivity(), "Successfully Added", Toast.LENGTH_LONG).show();
                             DateFrom.setText(currentDate);
                             DateTo.setText(currentDate);

@@ -11,7 +11,7 @@
     <TextView
         android:id="@+id/sapQuantity"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="15dp"
         android:text="SAPPLING QTY"
         android:layout_marginHorizontal="45dp"
         android:layout_marginTop="20dp" />
@@ -19,7 +19,7 @@
     <TextView
         android:id="@+id/sowingDate"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="15dp"
         android:text="SAPPLING QTY"
         android:layout_marginHorizontal="45dp"
         android:layout_marginTop="20dp" />
@@ -27,31 +27,49 @@
     <TextView
         android:id="@+id/harvestDate"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="15dp"
+        android:text="HARVEST DATE"
+        android:layout_marginHorizontal="45dp"
+        android:layout_marginTop="20dp" />
 
     <TextView
         android:id="@+id/harvestQuantity"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="15dp"
+        android:text="HARVEST QTY"
+        android:layout_marginHorizontal="45dp"
+        android:layout_marginTop="20dp" />
 
     <TextView
         android:id="@+id/ownUseQuantity"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="15dp"
+        android:text="OWN USE QTY"
+        android:layout_marginHorizontal="45dp"
+        android:layout_marginTop="20dp" />
 
     <TextView
         android:id="@+id/soldQuantity"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="15dp"
+        android:text="SOLD QTY"
+        android:layout_marginHorizontal="45dp"
+        android:layout_marginTop="20dp" />
 
     <TextView
         android:id="@+id/soldRate"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="15dp"
+        android:text="SOLD RATE"
+        android:layout_marginHorizontal="45dp"
+        android:layout_marginTop="20dp" />
 
     <TextView
         android:id="@+id/totalIncome"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="15dp"
+        android:text="TOTAL INCOME"
+        android:layout_marginHorizontal="45dp"
+        android:layout_marginTop="20dp" />
 
 </LinearLayout>

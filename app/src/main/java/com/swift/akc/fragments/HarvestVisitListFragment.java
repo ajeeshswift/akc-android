@@ -54,9 +54,23 @@ public class HarvestVisitListFragment extends BaseFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        mParentView = inflater.inflate(R.layout.fr_harvest_visit, container, false);
+        mParentView = inflater.inflate(R.layout.item_harvest_list, container, false);
         mRecyclerView = mParentView.findViewById(R.id.recycler_view);
         return mParentView;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.filter_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == R.id.icon_filter) {
+            switchFragment(LandingPageActivity.FRAGMENT_HARVEST_FILTER, "Filter", true);
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @NonNull
@@ -99,19 +113,5 @@ public class HarvestVisitListFragment extends BaseFragment {
                     }
                 });
 
-    }
-
-    @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        inflater.inflate(R.menu.filter_menu, menu);
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId() == R.id.icon_filter) {
-            switchFragment(LandingPageActivity.FRAGMENT_HARVEST_FILTER, "Filter", true);
-        }
-        return super.onOptionsItemSelected(item);
     }
 }
