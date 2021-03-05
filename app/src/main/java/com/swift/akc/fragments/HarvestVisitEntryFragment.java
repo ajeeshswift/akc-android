@@ -166,7 +166,7 @@ public class HarvestVisitEntryFragment extends BaseFragment implements TextWatch
         } else {
             JSONObject params = new JSONObject();
             try {
-                params.put("plantOrSeed",plantSeedVO.getId());
+                params.put("floraId",plantSeedVO.getId());
                 params.put("sowingDate", DateUtils.convertDateFormat(sowingDate.getText().toString()));
                 params.put("sapQuantity", sapQuantity.getText().toString());
                 params.put("harvestDate", DateUtils.convertDateFormat(harvestDate.getText().toString()));
@@ -176,6 +176,7 @@ public class HarvestVisitEntryFragment extends BaseFragment implements TextWatch
                 params.put("soldRate", soldRate.getText().toString());
                 params.put("totalIncome", totalIncome.getText().toString());
                 params.put("farmId", Storage.selectedHarvestFarm.getFarmId());
+                params.put("villageId",Storage.selectedHarvestFarm.getVillageId());
             } catch (Exception e) {
                 e.printStackTrace();
             }
