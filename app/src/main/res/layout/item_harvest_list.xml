@@ -8,7 +8,7 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="225dp"
+        android:layout_height="300dp"
         android:layout_margin="5dp"
         android:layout_marginTop="5dp"
         app:cardCornerRadius="10dp"
@@ -21,6 +21,66 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/farmerNameLabel"
+                    android:text="FARMER NAME"
+                    android:layout_width="175dp"
+                    android:layout_height="20dp"
+                    android:layout_marginHorizontal="5dp"
+                    android:layout_marginTop="5dp" />
+
+                <TextView
+                    android:id="@+id/farmerName"
+                    android:layout_width="215dp"
+                    android:layout_height="20dp"
+                    android:layout_marginHorizontal="5dp"
+                    android:layout_marginTop="5dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/villNameLabel"
+                    android:text="VILLAGE NAME"
+                    android:layout_width="175dp"
+                    android:layout_height="20dp"
+                    android:layout_marginHorizontal="5dp"
+                    android:layout_marginTop="5dp" />
+
+                <TextView
+                    android:id="@+id/villName"
+                    android:layout_width="215dp"
+                    android:layout_height="20dp"
+                    android:layout_marginHorizontal="5dp"
+                    android:layout_marginTop="5dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/plantSeedLabel"
+                    android:text="PLANT / SEED"
+                    android:layout_width="175dp"
+                    android:layout_height="20dp"
+                    android:layout_marginHorizontal="5dp"
+                    android:layout_marginTop="5dp" />
+
+                <TextView
+                    android:id="@+id/plantORseed"
+                    android:layout_width="215dp"
+                    android:layout_height="20dp"
+                    android:layout_marginHorizontal="5dp"
+                    android:layout_marginTop="5dp" />
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"

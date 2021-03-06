@@ -111,7 +111,6 @@
                 android:background="@drawable/edit_text_border"
                 android:hint="Total Income"
                 android:imeOptions="actionDone"
-                android:editable="false"
                 android:paddingHorizontal="15dp" />
             <Button
                 android:id="@+id/submit"
