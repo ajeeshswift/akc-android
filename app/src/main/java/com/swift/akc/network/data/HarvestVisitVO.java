@@ -43,6 +43,18 @@ public class HarvestVisitVO {
     @SerializedName("totalIncome")
     private String totalIncome;
 
+    @Expose
+    @SerializedName("farmName")
+    private String farmName;
+
+    @Expose
+    @SerializedName("villName")
+    private String villName;
+
+    @Expose
+    @SerializedName("floraName")
+    private String floraName;
+
     public int getHarvestVisitId() {
         return harvestVisitId;
     }
@@ -114,4 +126,30 @@ public class HarvestVisitVO {
     public void setTotalIncome(String totalIncome) {
         this.totalIncome = totalIncome;
     }
+
+    public String getVillName() {
+        return villName;
+    }
+
+    public void setVillName(String villName) {
+        this.villName = villName;
+    }
+
+    public String getFarmName() {
+        return farmName;
+    }
+
+    public void setFarmName(String farmName) {
+        this.farmName = farmName;
+    }
+
+    public String getFloraName() {
+        return floraName;
+    }
+
+    public void setFloraName(String floraName) {
+        this.floraName = floraName;
+    }
+
+
 }
