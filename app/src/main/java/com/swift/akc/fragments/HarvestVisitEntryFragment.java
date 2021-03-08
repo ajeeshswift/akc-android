@@ -204,7 +204,7 @@ public class HarvestVisitEntryFragment extends BaseFragment implements TextWatch
     private void harvestVisitEntryAPICall() {
         JSONObject params = new JSONObject();
         try {
-            params.put("plantOrSeed", plantSeedVO.getId());
+            params.put("floraId", plantSeedVO.getId());
             params.put("sowingDate", DateUtils.convertDateFormat(sowingDate.getText().toString()));
             params.put("sapQuantity", sapQuantity.getText().toString());
             params.put("harvestDate", DateUtils.convertDateFormat(harvestDate.getText().toString()));

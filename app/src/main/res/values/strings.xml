@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">ASHAKIRAN COMMUNITY</string>
+    <color name="fontBackground">#0D2B43</color>
 <!--    <string name="harvestentry">Harvest Entry</string> -->
 <!--    <string name="harvestvisit">Harvest Visit</string>-->
 <!--    <string name="harvestforcasting">Harvest Forcasting</string>-->

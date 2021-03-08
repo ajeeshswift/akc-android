@@ -8,6 +8,6 @@
     android:fitsSystemWindows="true"
     app:layout_scrollFlags="scroll|snap|enterAlways"
     app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-    android:background="@color/colorPrimary">
+    android:background="#E8E2E2">
 
 </androidx.appcompat.widget.Toolbar>

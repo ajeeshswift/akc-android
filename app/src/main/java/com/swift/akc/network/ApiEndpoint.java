@@ -4,7 +4,7 @@ public final class ApiEndpoint {
 
     private ApiEndpoint() {}
 
-    private static final String BASE_URL = "http://192.168.0.110:8080";
+    private static final String BASE_URL = "http://172.16.0.5:8080";
 
     public static final String LOGIN_API = BASE_URL + "/login/userValidation";
 
@@ -20,5 +20,5 @@ public final class ApiEndpoint {
 
     public static final String HARVEST_VISIT_BET_DATE_API = BASE_URL + "/harvest/harvestListBetDate/{harvestDateFrom}/{harvestDateTo}";
 
-    public static final String HARVEST_FORCASTING_LIST_API = BASE_URL + "/harvestForcastingList";
+    public static final String HARVEST_FORCASTING_LIST_API = BASE_URL + "/harvestForcastingDetails";
 }
