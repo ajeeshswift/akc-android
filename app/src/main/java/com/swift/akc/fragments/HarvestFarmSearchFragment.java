@@ -57,8 +57,18 @@ public class HarvestFarmSearchFragment extends BaseFragment implements View.OnCl
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.submit) {
-            harvestVisitEntryPageAPICall();
+            validate();
         }
+    }
+
+    private void validate() {
+        if (farmno.getText().toString().matches("")) {
+            farmno.setError("Enter Farmer Number");
+            farmno.requestFocus();
+            return;
+        }
+
+        harvestVisitEntryPageAPICall();
     }
 
     private void harvestVisitEntryPageAPICall() {

@@ -42,6 +42,9 @@ public class HarvestVisitListAdapter extends RecyclerView.Adapter<HarvestVisitLi
     @Override
     public void onBindViewHolder(@NonNull HarvestVisitListAdapter.HarvestEntryViewHolder holder, int position) {
         HarvestVisitVO harvestVisitVO = harvestVisitVOList.get(position);
+        holder.farmerName.setText(harvestVisitVO.getFarmName());
+        holder.villName.setText(harvestVisitVO.getVillName());
+        holder.plantORseed.setText(harvestVisitVO.getFloraName());
         holder.sapQuantity.setText(harvestVisitVO.getSapQuantity());
         holder.sowingDate.setText(harvestVisitVO.getSowingDate());
         holder.harvestDate.setText(harvestVisitVO.getHarvestDate());
@@ -58,9 +61,12 @@ public class HarvestVisitListAdapter extends RecyclerView.Adapter<HarvestVisitLi
     }
 
     public static class HarvestEntryViewHolder extends RecyclerView.ViewHolder {
-        TextView sapQuantity,sowingDate,harvestDate,harvestQuantity,ownUseQuantity,soldQuantity,soldRate,totalIncome;
+        TextView farmerName,villName,plantORseed,sapQuantity,sowingDate,harvestDate,harvestQuantity,ownUseQuantity,soldQuantity,soldRate,totalIncome;
         public HarvestEntryViewHolder(View view) {
             super(view);
+            farmerName = view.findViewById(R.id.farmerName);
+            villName = view.findViewById(R.id.villName);
+            plantORseed = view.findViewById(R.id.plantORseed);
             sapQuantity = view.findViewById(R.id.sapQuantity);
             sowingDate = view.findViewById(R.id.sowingDate);
             harvestDate = view.findViewById(R.id.harvestDate);
