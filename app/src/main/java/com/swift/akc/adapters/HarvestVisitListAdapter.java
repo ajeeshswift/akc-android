@@ -64,7 +64,7 @@ public class HarvestVisitListAdapter extends RecyclerView.Adapter<HarvestVisitLi
         TextView farmerName,villName,plantORseed,sapQuantity,sowingDate,harvestDate,harvestQuantity,ownUseQuantity,soldQuantity,soldRate,totalIncome;
         public HarvestEntryViewHolder(View view) {
             super(view);
-            farmerName = view.findViewById(R.id.farmerName);
+            farmerName = view.findViewById(R.id.farm);
             villName = view.findViewById(R.id.villName);
             plantORseed = view.findViewById(R.id.plantORseed);
             sapQuantity = view.findViewById(R.id.sapQuantity);
