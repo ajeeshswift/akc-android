@@ -4,7 +4,7 @@ public final class ApiEndpoint {
 
     private ApiEndpoint() {}
 
-    private static final String BASE_URL = "http://172.16.0.5:8080";
+    private static final String BASE_URL = "http://172.16.0.7:8080";
 
     public static final String LOGIN_API = BASE_URL + "/login/userValidation";
 
