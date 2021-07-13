@@ -34,7 +34,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class HarvestFilterFragment extends BaseFragment  implements View.OnClickListener {
+public class HarvestFilterFragment extends BaseFragment implements View.OnClickListener {
 
     public HarvestFilterFragment() {
 
@@ -111,7 +111,7 @@ public class HarvestFilterFragment extends BaseFragment  implements View.OnClick
             uiValidation.validateFields(getActivity(), DateFrom, DateFrom.getText().toString(), "Choose Sowing Date");
         } else if (DateTo.getText().toString().matches("")) {
             uiValidation.validateFields(getActivity(), DateTo, DateTo.getText().toString(), "Choose Harvest Date");
-        }  else {
+        } else {
             JSONObject params = new JSONObject();
             try {
                 //params.put("plantOrSeed",plantOrSeed.getText().toString());
@@ -140,7 +140,7 @@ public class HarvestFilterFragment extends BaseFragment  implements View.OnClick
                             Toast.makeText(getActivity(), "Successfully Added", Toast.LENGTH_LONG).show();
                             DateFrom.setText(currentDate);
                             DateTo.setText(currentDate);
-                            switchFragment(LandingPageActivity.FRAGMENT_HARVEST_FILTER,"Harvest Entry", true);
+                            switchFragment(LandingPageActivity.FRAGMENT_HARVEST_FILTER, "Harvest Entry", true);
                         }
 
                         @Override
@@ -156,8 +156,4 @@ public class HarvestFilterFragment extends BaseFragment  implements View.OnClick
                     });
         }
     }
-
-
-
-
 }
