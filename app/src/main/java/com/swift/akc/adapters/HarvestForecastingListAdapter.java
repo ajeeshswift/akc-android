@@ -14,6 +14,7 @@ import com.swift.akc.network.data.HarvestForcastingVO;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class HarvestForecastingListAdapter extends RecyclerView.Adapter<HarvestForecastingListAdapter.HarvestForcastingViewHolder>{
@@ -49,10 +50,11 @@ public class HarvestForecastingListAdapter extends RecyclerView.Adapter<HarvestF
         holder.area.setText(harvestForcastingVO.getForcastArea());
         holder.cropDate.setText(harvestForcastingVO.getCropDate());
         //holder.date.setText(harvestForcastingVO.getDate());
-        holder.farm.setText(harvestForcastingVO.getFarm());
         holder.plant.setText(harvestForcastingVO.getPlant());
         holder.seeds.setText(harvestForcastingVO.getSeeds());
         //holder.time.setText(harvestForcastingVO.getTime());
+        holder.farm.setText(harvestForcastingVO.getFarmerName());
+        holder.villName.setText(harvestForcastingVO.getVillName());
     }
 
     @Override
@@ -61,16 +63,18 @@ public class HarvestForecastingListAdapter extends RecyclerView.Adapter<HarvestF
     }
 
     public static class HarvestForcastingViewHolder extends RecyclerView.ViewHolder {
-        TextView area,cropDate,date,farm,plant,seeds,time;
+        TextView area,cropDate,date,farm,plant,seeds,time,farmerName,villName;
         public HarvestForcastingViewHolder(View view) {
             super(view);
             area = view.findViewById(R.id.area);
             cropDate = view.findViewById(R.id.cropDate);
             //date = view.findViewById(R.id.date);
-            farm = view.findViewById(R.id.farm);
+            farm = view.findViewById(R.id.farmerName);
             plant = view.findViewById(R.id.plant);
             seeds = view.findViewById(R.id.seeds);
             //time = view.findViewById(R.id.time);
+            farmerName = view.findViewById(R.id.farmerName);
+            villName = view.findViewById(R.id.villName);
         }
     }
 }
