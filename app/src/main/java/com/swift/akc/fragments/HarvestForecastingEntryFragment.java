@@ -1,14 +1,18 @@
 package com.swift.akc.fragments;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,6 +25,9 @@ import com.rx2androidnetworking.Rx2AndroidNetworking;
 import com.swift.akc.R;
 import com.swift.akc.activity.LandingPageActivity;
 import com.swift.akc.adapters.PlantSeedListAdapter;
+import com.swift.akc.database.CommonUtil;
+import com.swift.akc.database.DatabaseHelper;
+import com.swift.akc.database.DatabaseUtil;
 import com.swift.akc.extras.Constants;
 import com.swift.akc.extras.Storage;
 import com.swift.akc.extras.UIValidation;
@@ -36,6 +43,7 @@ import org.json.JSONObject;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import io.reactivex.Observer;
@@ -53,11 +61,13 @@ public class HarvestForecastingEntryFragment extends BaseFragment implements Tex
     AutoCompleteTextView crop;
     DatePickerDialog picker;
     Button submit;
-
+    Boolean mynetwork;
+    Context context;
     private PlantSeedListAdapter mAdapter;
 
     private PlantSeedVO plantSeedVO;
-
+    List<String> myplantorSeed;
+    ArrayAdapter<String> mylistPlantSeed;
     public HarvestForecastingEntryFragment() {
 
     }
@@ -81,16 +91,31 @@ public class HarvestForecastingEntryFragment extends BaseFragment implements Tex
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        context = getActivity();
 
 //        villagename = (EditText) mParentView.findViewById(R.id.villagename);
         //crop = (EditText) mParentView.findViewById(R.id.crop);
 
+        CommonUtil.databaseUtil = new DatabaseUtil(context);
+        CommonUtil.databaseUtil.open();
+        CommonUtil.databaseHelper = new DatabaseHelper(context);
+        CommonUtil.pref = getActivity().getSharedPreferences(CommonUtil.MyPreferances, Context.MODE_PRIVATE);
+
         crop = mParentView.findViewById(R.id.autoCompletecrop);
-        crop.addTextChangedListener(this);
+//        crop.addTextChangedListener(this);
+//        crop.setOnItemClickListener(this);
+//        crop.setThreshold(1);
+//        mAdapter = new PlantSeedListAdapter(getActivity(), R.layout.item_autocomplete, new ArrayList<>());
+//        crop.setAdapter(mAdapter);
+
+        myplantorSeed = CommonUtil.databaseUtil.getPlantseed();
+
+        mylistPlantSeed = new ArrayAdapter<String>(getActivity(),R.layout.support_simple_spinner_dropdown_item,myplantorSeed);
+        crop.setAdapter(mylistPlantSeed);
         crop.setOnItemClickListener(this);
         crop.setThreshold(1);
-        mAdapter = new PlantSeedListAdapter(getActivity(), R.layout.item_autocomplete, new ArrayList<>());
-        crop.setAdapter(mAdapter);
+
+
         seedsown = (EditText) mParentView.findViewById(R.id.seedsown);
         cultivation = (EditText) mParentView.findViewById(R.id.cultivation);
         sowingdate = (EditText) mParentView.findViewById(R.id.sowingdate);
@@ -100,6 +125,10 @@ public class HarvestForecastingEntryFragment extends BaseFragment implements Tex
 
         sowingdate.setInputType(InputType.TYPE_NULL);
         sowingdate.setText(currentDate);
+
+        mynetwork = CommonUtil.pref.getBoolean("NetworkCon",false);
+
+
         sowingdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -144,6 +173,21 @@ public class HarvestForecastingEntryFragment extends BaseFragment implements Tex
     }
 
     private void harvestingforcastAPICall() {
+        int plantId                 =  plantSeedVO.getId();
+        String seeds                =  seedsown.getText().toString();
+        String area                 =  cultivation.getText().toString();
+        String cropShowingDate      =  DateUtils.convertDateFormat(sowingdate.getText().toString());
+        int farmId                  =  Storage.selectedHarvestFarm.getFarmId();
+        String date                 =  new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+        String time                 =  new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
+        String currentDateTimeString = java.text.DateFormat.getDateTimeInstance().format(new Date());
+
+
+        if (mynetwork) {
+        CommonUtil.databaseUtil.addHarvestForcasting(plantId,seeds,area,
+                cropShowingDate,farmId,date,time,
+                currentDateTimeString,"0");
+
             JSONObject params = new JSONObject();
             try {
                 params.put("plantId", plantSeedVO.getId());
@@ -172,6 +216,7 @@ public class HarvestForecastingEntryFragment extends BaseFragment implements Tex
 
                         @Override
                         public void onNext(HarvestForcastingVO object) {
+                        //    CommonUtil.databaseUtil.updateHarvestForecasting(plantId,"1");
                             Toast.makeText(getActivity(), "Successfully Added", Toast.LENGTH_LONG).show();
                             crop.setText("");
                             seedsown.setText("");
@@ -192,6 +237,15 @@ public class HarvestForecastingEntryFragment extends BaseFragment implements Tex
                             hideLoading();
                         }
                     });
+
+
+        Toast.makeText(context,"Saved Successfully",Toast.LENGTH_SHORT).show();
+
+
+    }
+        else {
+
+        }
         }
 
     @Override
@@ -201,11 +255,11 @@ public class HarvestForecastingEntryFragment extends BaseFragment implements Tex
 
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
-        if (crop.isPerformingCompletion()) {
-            // An item has been selected from the list. Ignore.
-            return;
-        }
-        autoCompletePlantOrSeed(s.toString());
+//        if (crop.isPerformingCompletion()) {
+//            // An item has been selected from the list. Ignore.
+//            return;
+//        }
+//        autoCompletePlantOrSeed(s.toString());
     }
 
     @Override
@@ -215,8 +269,8 @@ public class HarvestForecastingEntryFragment extends BaseFragment implements Tex
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        plantSeedVO = (PlantSeedVO) parent.getItemAtPosition(position);
-        crop.setText(plantSeedVO.getFloraName());
+       // plantSeedVO = (PlantSeedVO) parent.getItemAtPosition(position);
+        crop.setText(mylistPlantSeed.getItem(position));
     }
 
     private void autoCompletePlantOrSeed(String query) {

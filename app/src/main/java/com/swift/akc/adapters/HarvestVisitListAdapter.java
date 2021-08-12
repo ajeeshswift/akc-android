@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 import com.swift.akc.R;
 import com.swift.akc.network.data.HarvestVisitVO;
@@ -25,6 +26,8 @@ public class HarvestVisitListAdapter extends RecyclerView.Adapter<HarvestVisitLi
     public HarvestVisitListAdapter(Activity context) {
         this.mContext = context;
     }
+
+
 
     public void refresh(List<HarvestVisitVO> harvestVisitVOList) {
         this.harvestVisitVOList = harvestVisitVOList;
@@ -63,7 +66,7 @@ public class HarvestVisitListAdapter extends RecyclerView.Adapter<HarvestVisitLi
     public static class HarvestEntryViewHolder extends RecyclerView.ViewHolder {
         TextView farmerName,villName,plantORseed,sapQuantity,sowingDate,harvestDate,harvestQuantity,ownUseQuantity,soldQuantity,soldRate,totalIncome;
         public HarvestEntryViewHolder(View view) {
-            super(view);
+           super(view);
             farmerName = view.findViewById(R.id.farm);
             villName = view.findViewById(R.id.villName);
             plantORseed = view.findViewById(R.id.plantORseed);
