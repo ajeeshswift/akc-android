@@ -47,6 +47,23 @@ public class HarvestForcastingVO {
     @SerializedName("villName")
     private String villName;
 
+    public HarvestForcastingVO(int forcastId, String forcastArea,
+                               String cropDate, String date, String farm, String plant,
+                               String seeds, String time, String farmerName, String villName) {
+        this.forcastId      = forcastId;
+        this.forcastArea    = forcastArea;
+        this.cropDate       = cropDate;
+        this.date           = date;
+        this.farm           = farm;
+        this.plant          = plant;
+        this.seeds          = seeds;
+        this.time           = time;
+        this.farmerName     = farmerName;
+        this.villName       = villName;
+
+
+    }
+
     public int getForcastId() {
         return forcastId;
     }

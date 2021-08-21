@@ -5,29 +5,26 @@ import android.app.ProgressDialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.Toast;
-
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.androidnetworking.error.ANError;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.swift.akc.R;
 import com.swift.akc.beans.ErrorInfoBean;
-import com.swift.akc.extras.Storage;
 
-import org.json.JSONObject;
 
 public class BaseAppCompatActivity extends AppCompatActivity {
 
     private ProgressDialog mProgressDialog;
 
+
+
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
 
     public void showLoading() {
