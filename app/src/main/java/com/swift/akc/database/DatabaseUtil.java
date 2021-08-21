@@ -69,6 +69,11 @@ public class DatabaseUtil {
             DatabaseHelper.STATUS
     };
 
+    public static final  String[] FARM_FLORA_SQL_TABLE_FIELD={
+            DatabaseHelper.SQL_PLANT_ID,
+            DatabaseHelper.SQL_PLANT_NAME
+    };
+
 
 
 
@@ -98,7 +103,7 @@ public class DatabaseUtil {
 
     public long addHarvest(int floraId, String strsowingDate, String strsapQuantity, String strharvestDate, String strharvestQuantity,
                            String strownUseQuantity, String strsoldQuantity,
-                           String strsoldRate, String strtotalIncome, int strfarmId, String currentdate) {
+                           String strsoldRate, String strtotalIncome, String strfarmId, String currentdate) {
         values.clear();
         values.put(DatabaseHelper.FARM_ID,strfarmId);
         values.put(DatabaseHelper.DTM,currentdate);
@@ -182,7 +187,7 @@ public class DatabaseUtil {
         values.put(DatabaseHelper.SQL_FARM_NAME,strFarmName);
         values.put(DatabaseHelper.SQL_FARM_ID,strFarmId);
         values.put(DatabaseHelper.SQL_FARM_NO,strFarmno);
-        values.put(DatabaseHelper.SQL_VILLAGE_ID,strVillageName);
+        values.put(DatabaseHelper.SQL_VILLAGE_NAME,strVillageName);
         values.put(DatabaseHelper.SQL_VILLAGE_ID,strVillageId);
         return db.insert(DatabaseHelper.FARM_VILLAGE_SQL_TABLE,null,values);
     }
@@ -232,12 +237,9 @@ public class DatabaseUtil {
     }
 
     public Cursor getFarmId(String strfarmno) {
-
         String abc = DatabaseHelper.SQL_FARM_NO + "='" + strfarmno +"'";
-
-        return db.query(DatabaseHelper.FARM_VILLAGE_SQL_TABLE,FARM_VILLAGE_SQL_TABLE_FIELD,abc,null,null,null,null);
-
-
+        return db.query(DatabaseHelper.FARM_VILLAGE_SQL_TABLE,FARM_VILLAGE_SQL_TABLE_FIELD,abc,null,
+                null,null,null);
     }
 
     public List<String> getPlantseed() {
@@ -256,4 +258,39 @@ public class DatabaseUtil {
             return mypslist;
 
     }
+
+    public Cursor getPlantseedbyName(String item) {
+        String abc = DatabaseHelper.SQL_PLANT_NAME + "='" + item +"'";
+        return db.query(DatabaseHelper.FARM_FLORA_SQL_TABLE,FARM_FLORA_SQL_TABLE_FIELD,abc,null,
+                null,null,null);
+    }
+
+    public Cursor getFarmbyId(String strfarmno) {
+        String abc = DatabaseHelper.SQL_FARM_ID + "='" + strfarmno +"'";
+        return db.query(DatabaseHelper.FARM_VILLAGE_SQL_TABLE,FARM_VILLAGE_SQL_TABLE_FIELD,abc,null,
+                null,null,null);
+    }
+
+    public Cursor getPlantseebydid(String item) {
+        String abc = DatabaseHelper.SQL_PLANT_ID + "='" + item +"'";
+        return db.query(DatabaseHelper.FARM_FLORA_SQL_TABLE,FARM_FLORA_SQL_TABLE_FIELD,abc,null,
+                null,null,null);
+    }
+
+    public Cursor getHarvestVisitListbyStatus(){
+
+        String abc = DatabaseHelper.STATUS + "='" + "0" +"'";
+        return db.query(DatabaseHelper.HARVEST_TABLE,MY_HARVEST_FIELD,abc,null,
+                null,null,null);
+
+
+    }
+
+    public Cursor getHarvestForcastingbystatus() {
+        String abc = DatabaseHelper.STATUS + "='" + "0" +"'";
+
+        return db.query(DatabaseHelper.HARVEST_FORCASTING_TABLE,MY_HARVEST_FORECASTING_FIELD,abc,null,null,null,null);
+    }
+
+
 }

@@ -78,6 +78,8 @@ public class HarvestVisitEntryFragment extends BaseFragment implements TextWatch
     String strMyfarmid;
     List<String> myplantorSeed;
     ArrayAdapter<String> mylistPlantSeed;
+    int strMyplantId;
+
     public HarvestVisitEntryFragment() {
 
     }
@@ -133,6 +135,8 @@ public class HarvestVisitEntryFragment extends BaseFragment implements TextWatch
 
         mynetwork = CommonUtil.pref.getBoolean("NetworkCon",false);
         strMyfarmid  = CommonUtil.pref.getString("FARMID","0");
+        Log.e("TestingFarm", ""+ strMyfarmid);
+
 
        myplantorSeed = CommonUtil.databaseUtil.getPlantseed();
 
@@ -237,7 +241,7 @@ public class HarvestVisitEntryFragment extends BaseFragment implements TextWatch
     }
 
     private void harvestVisitEntryAPICall() {
-        int floraId = Integer.parseInt(strMyfarmid);
+        int floraId =strMyplantId;
         String strsowingDate =  DateUtils.convertDateFormat(sowingDate.getText().toString());
         String strsapQuantity = sapQuantity.getText().toString();
         String strharvestDate =DateUtils.convertDateFormat(harvestDate.getText().toString());
@@ -246,22 +250,21 @@ public class HarvestVisitEntryFragment extends BaseFragment implements TextWatch
         String strsoldQuantity = soldQuantity.getText().toString();
         String strsoldRate =soldRate.getText().toString();
         String strtotalIncome = totalIncome.getText().toString();
-        int strfarmId = Storage.selectedHarvestFarm.getFarmId();
+       // String strfarmId =strMyfarmid;
+      //  int strfarmId = Storage.selectedHarvestFarm.getFarmId();
+
         String currentDateTimeString = java.text.DateFormat.getDateTimeInstance().format(new Date());
+        CommonUtil.databaseUtil.addHarvest(floraId,strsowingDate,strsapQuantity,
+                strharvestDate,strharvestQuantity,strownUseQuantity,strsoldQuantity,
+                strsoldRate,strtotalIncome,strMyfarmid,currentDateTimeString);
 
 
 
         if (mynetwork) {
 
-            CommonUtil.databaseUtil.addHarvest(floraId,strsowingDate,strsapQuantity,
-                    strharvestDate,strharvestQuantity,strownUseQuantity,strsoldQuantity,
-                    strsoldRate,strtotalIncome,strfarmId,currentDateTimeString);
-
-
-        } else {
             JSONObject params = new JSONObject();
             try {
-                params.put("floraId", plantSeedVO.getId());
+                params.put("floraId", strMyplantId);
                 params.put("sowingDate", DateUtils.convertDateFormat(sowingDate.getText().toString()));
                 params.put("sapQuantity", sapQuantity.getText().toString());
                 params.put("harvestDate", DateUtils.convertDateFormat(harvestDate.getText().toString()));
@@ -270,7 +273,7 @@ public class HarvestVisitEntryFragment extends BaseFragment implements TextWatch
                 params.put("soldQuantity", soldQuantity.getText().toString());
                 params.put("soldRate", soldRate.getText().toString());
                 params.put("totalIncome", totalIncome.getText().toString());
-                params.put("farmId", Storage.selectedHarvestFarm.getFarmId());
+                params.put("farmId", strMyfarmid);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -313,7 +316,21 @@ public class HarvestVisitEntryFragment extends BaseFragment implements TextWatch
                             hideLoading();
                         }
                     });
+        } else{
+            Toast.makeText(getActivity(), "Successfully Added", Toast.LENGTH_LONG).show();
+            harvestDate.setText(currentDate);
+            sowingDate.setText(currentDate);
+            sapQuantity.setText("");
+            harvestQuantity.setText("");
+            ownUse.setText("");
+            soldQuantity.setText("");
+            soldRate.setText("");
+            totalIncome.setText("");
+
+            switchFragment(LandingPageActivity.FRAGMENT_HARVEST_FARM_SEARCH, "Harvest Entry", true);
+
         }
+
     }
 
     @Override
@@ -340,6 +357,13 @@ public class HarvestVisitEntryFragment extends BaseFragment implements TextWatch
 
 //        plantSeedVO = (PlantSeedVO) parent.getItemAtPosition(position);
         plantOrSeed.setText(mylistPlantSeed.getItem(position));
+
+        Cursor mycusr = CommonUtil.databaseUtil.getPlantseedbyName(mylistPlantSeed.getItem(position));
+
+        if(mycusr.getCount() >0 && mycusr.moveToFirst()){
+            strMyplantId= mycusr.getInt(mycusr.getColumnIndexOrThrow(DatabaseHelper.SQL_PLANT_ID));
+        }
+
 
     }
 

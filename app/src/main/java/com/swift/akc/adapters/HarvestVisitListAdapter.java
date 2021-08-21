@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -56,6 +57,9 @@ public class HarvestVisitListAdapter extends RecyclerView.Adapter<HarvestVisitLi
         holder.soldQuantity.setText(harvestVisitVO.getSoldQuantity());
         holder.soldRate.setText(harvestVisitVO.getSoldRate());
         holder.totalIncome.setText(harvestVisitVO.getTotalIncome());
+
+        holder.imgStatus.setImageResource(R.drawable.green_dot);
+
     }
 
     @Override
@@ -64,7 +68,10 @@ public class HarvestVisitListAdapter extends RecyclerView.Adapter<HarvestVisitLi
     }
 
     public static class HarvestEntryViewHolder extends RecyclerView.ViewHolder {
-        TextView farmerName,villName,plantORseed,sapQuantity,sowingDate,harvestDate,harvestQuantity,ownUseQuantity,soldQuantity,soldRate,totalIncome;
+        TextView farmerName,villName,plantORseed,sapQuantity,sowingDate,harvestDate,
+                harvestQuantity,ownUseQuantity,soldQuantity,soldRate,totalIncome;
+        ImageView imgStatus;
+
         public HarvestEntryViewHolder(View view) {
            super(view);
             farmerName = view.findViewById(R.id.farm);
@@ -78,6 +85,8 @@ public class HarvestVisitListAdapter extends RecyclerView.Adapter<HarvestVisitLi
             soldQuantity = view.findViewById(R.id.soldQuantity);
             soldRate = view.findViewById(R.id.soldRate);
             totalIncome = view.findViewById(R.id.totalIncome);
+            imgStatus = view.findViewById(R.id.img_status);
+
         }
     }
 }

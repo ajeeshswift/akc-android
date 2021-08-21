@@ -81,7 +81,7 @@
                 android:layout_marginTop="15dp"
                 android:background="@drawable/edit_text_border"
                 android:hint="Own/Home Use"
-                android:inputType="number"
+                android:inputType="numberDecimal"
                 android:paddingHorizontal="15dp" />
             <EditText
                 android:id="@+id/soldquantity"

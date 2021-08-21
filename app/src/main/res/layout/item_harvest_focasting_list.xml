@@ -136,10 +136,16 @@
 
                 <TextView
                     android:id="@+id/cropDate"
-                    android:layout_width="215dp"
+                    android:layout_width="165dp"
                     android:layout_height="20dp"
                     android:layout_marginHorizontal="5dp"
                     android:layout_marginTop="5dp" />
+                <ImageView
+                    android:id="@+id/img_status"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/red_dot"/>
+
             </LinearLayout>
 
             <LinearLayout

@@ -3,6 +3,7 @@ package com.swift.akc.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -20,13 +21,19 @@ import com.swift.akc.extras.Storage;
 import com.swift.akc.network.ApiEndpoint;
 import com.swift.akc.network.data.AdminVO;
 import com.swift.akc.network.data.FarmVillageListVO;
+import com.swift.akc.network.data.HarvestForcastingVO;
+import com.swift.akc.network.data.HarvestVO;
 import com.swift.akc.network.data.HarvestVisitListVO;
 import com.swift.akc.network.data.PlantSeedListVO;
 import com.swift.akc.network.retrofit.ApiInterface;
 import com.swift.akc.network.retrofit.RetrofitClinetInstance;
+import com.swift.akc.utils.DateUtils;
 
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observer;
@@ -65,9 +72,9 @@ public class LoginActivity extends BaseAppCompatActivity implements View.OnClick
         CommonUtil.pref = context.getSharedPreferences(CommonUtil.MyPreferances,MODE_PRIVATE);
 
         username = findViewById(R.id.userName);
-    //    username.setText("Admin");
+          username.setText("Admin");
         password = findViewById(R.id.password);
-   //     password.setText("1955");
+         password.setText("1955");
         login = findViewById(R.id.login);
         login.setOnClickListener(this);
 
@@ -76,8 +83,165 @@ public class LoginActivity extends BaseAppCompatActivity implements View.OnClick
 
         if(CommonUtil.isOnline(context)){
             getFarmDetails();
-            getPlantDaetils();
+             getPlantDaetils();
+
+             // sending offlinne data to the server
+
+            SendHarvestVisitEntry();
+            sendForcastingEntry();
+
+            Toast.makeText(context," Internet Connected Successfully",Toast.LENGTH_LONG).show();
+        } else{
+            Toast.makeText(context,"No Internet Connection",Toast.LENGTH_LONG).show();
+
         }
+
+    }
+
+    private void sendForcastingEntry() {
+
+        Cursor cur =  CommonUtil.databaseUtil.getHarvestForcastingbystatus();
+
+        if (cur.moveToFirst()) {
+            try {
+                do {
+                    String farm = cur.getString(cur.getColumnIndexOrThrow(DatabaseHelper.FORECAST_FARM_ID));
+                    String forcastArea = cur.getString(cur.getColumnIndexOrThrow(DatabaseHelper.FORECAST_CULTIVATION));
+                    int plant = cur.getInt(cur.getColumnIndexOrThrow(DatabaseHelper.FORECAST_PLANT_SEED));
+                    String date = cur.getString(cur.getColumnIndexOrThrow(DatabaseHelper.FORECAST_ENTRY_DATE));
+                    String time = cur.getString(cur.getColumnIndexOrThrow(DatabaseHelper.FORECAST_ENTRY_TIME));
+                    String cropDate = cur.getString(cur.getColumnIndexOrThrow(DatabaseHelper.FORECAST_SOWING_DATE));
+                    String seeds = cur.getString(cur.getColumnIndexOrThrow(DatabaseHelper.FORECAST_SOWING_KG));
+
+                    JSONObject params = new JSONObject();
+                    try {
+                        params.put("plantId",plant);
+                        params.put("seeds", seeds);
+                        params.put("area", forcastArea);
+                        params.put("cropShowingDate", DateUtils.convertDateFormat(cropDate));
+                        params.put("farmId", farm);
+                        params.put("date", date);
+                        params.put("time", time);
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    Rx2AndroidNetworking.post(ApiEndpoint.HARVEST_FORECAST_API)
+                            .addJSONObjectBody(params)
+                            .build()
+                            .getObjectObservable(HarvestForcastingVO.class)
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(new Observer<HarvestForcastingVO>() {
+                                @Override
+                                public void onSubscribe(Disposable d) {
+
+                                }
+
+                                @Override
+                                public void onNext(HarvestForcastingVO object) {
+                                      CommonUtil.databaseUtil.updateHarvestForecasting(plant,"1");
+
+                                }
+
+                                @Override
+                                public void onError(Throwable e) {
+
+                                }
+
+                                @Override
+                                public void onComplete() {
+                                    hideLoading();
+                                }
+                            });
+
+
+
+
+                } while (cur.moveToNext());
+            } catch (IllegalArgumentException e) {
+                e.printStackTrace();
+            }
+        }
+
+
+    }
+
+    private void SendHarvestVisitEntry() {
+
+
+        Cursor cur = CommonUtil.databaseUtil.getHarvestVisitListbyStatus();
+
+        if (cur.moveToFirst()) {
+
+            try {
+                do {
+                    String florastid = cur.getString(cur.getColumnIndexOrThrow(DatabaseHelper.FARM_ID));
+                    int plantseed = cur.getInt(cur.getColumnIndexOrThrow(DatabaseHelper.PLANTSEED));
+                    String sowing_date = cur.getString(cur.getColumnIndexOrThrow(DatabaseHelper.SOWING_DATE));
+                    String slapping_qty = cur.getString(cur.getColumnIndexOrThrow(DatabaseHelper.SAPPLING_QUANTITY));
+                    String harvest_date = cur.getString(cur.getColumnIndexOrThrow(DatabaseHelper.HARVEST_DATE));
+                    String harvest_qty = cur.getString(cur.getColumnIndexOrThrow(DatabaseHelper.HARVEST_QUANTITY));
+                    String home_use = cur.getString(cur.getColumnIndexOrThrow(DatabaseHelper.OWN_HOME_USE));
+                    String sold_qty = cur.getString(cur.getColumnIndexOrThrow(DatabaseHelper.SOLD_QUANTITY));
+                    String sold_rate = cur.getString(cur.getColumnIndexOrThrow(DatabaseHelper.SOLD_RATE));
+                    String total_income = cur.getString(cur.getColumnIndexOrThrow(DatabaseHelper.TOTAL_INCOME));
+                    String status = cur.getString(cur.getColumnIndexOrThrow(DatabaseHelper.STATUS));
+
+                    JSONObject params = new JSONObject();
+
+                    try {
+                        params.put("floraId", plantseed);
+                        params.put("sowingDate", sowing_date);
+                        params.put("sapQuantity", slapping_qty);
+                        params.put("harvestDate",harvest_date);
+                        params.put("harvestQuantity", harvest_qty);
+                        params.put("ownUseQuantity", home_use);
+                        params.put("soldQuantity", sold_qty);
+                        params.put("soldRate", sold_rate);
+                        params.put("totalIncome", total_income);
+                        params.put("farmId", florastid);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    showLoading();
+                    Rx2AndroidNetworking.post(ApiEndpoint.HARVEST_API)
+                            .addJSONObjectBody(params)
+                            .build()
+                            .getObjectObservable(HarvestVO.class)
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(new Observer<HarvestVO>() {
+                                @Override
+                                public void onSubscribe(Disposable d) {
+
+                                }
+
+                                @Override
+                                public void onNext(HarvestVO object) {
+                                    CommonUtil.databaseUtil.updateHarevest(plantseed);
+
+                                }
+
+                                @Override
+                                public void onError(Throwable e) {
+                                    hideLoading();
+                                }
+
+                                @Override
+                                public void onComplete() {
+                                    hideLoading();
+                                }
+                            });
+                } while (cur.moveToNext());
+            } catch (IllegalArgumentException e) {
+                e.printStackTrace();
+            }
+        }
+
+
+
 
     }
 
@@ -101,8 +265,6 @@ public class LoginActivity extends BaseAppCompatActivity implements View.OnClick
                         for(int i=0; i <plantSeedListVO.getData().size(); i++){
                             int strPlantId           = plantSeedListVO.getData().get(i).getId();
                             String strPlantName      = plantSeedListVO.getData().get(i).getFloraName();
-
-                            Log.e("From Server","" + i+ strPlantId +" FNo" + strPlantName);
 
 
                             if(!CommonUtil.databaseUtil.hasPlantVD(strPlantId)) {
@@ -140,6 +302,7 @@ public class LoginActivity extends BaseAppCompatActivity implements View.OnClick
 //
 //            @Override
 //            public void onFailure(Call<ResponseBody> call, Throwable t) {
+//                Log.e("API Error",""+t.toString());
 //
 //            }
 //        });
@@ -170,17 +333,12 @@ public class LoginActivity extends BaseAppCompatActivity implements View.OnClick
                             int strFarmId            = farmVillageListVO.getData().get(i).getFarmId();
                             String strFarmName       = farmVillageListVO.getData().get(i).getFarmName();
 
-                            Log.e("From Server","" + i+ strVillageName +" FNo" + strFarmno +" ID" + strFarmId + strFarmName);
 
 
                             if(!CommonUtil.databaseUtil.hasFarmVD(strFarmId,strFarmDetailId)) {
                                 CommonUtil.databaseUtil.addFarmVillageDetails(strVillageName, strVillageId,
                                         strFarmno, strFarmId, strFarmName,strFarmDetailId);
 
-                                Log.e("Edgar","Added");
-
-                            } else{
-                                Log.e("Edgar","not Added");
 
                             }
 
@@ -208,7 +366,7 @@ public class LoginActivity extends BaseAppCompatActivity implements View.OnClick
     public void onClick(View view) {
         if(view.getId() == R.id.login) {
             // check internet connection
-            if(!CommonUtil.isOnline(context)) {
+            if(CommonUtil.isOnline(context)) {
 
                 SharedPreferences.Editor sharedEditor = CommonUtil.pref.edit();
                 sharedEditor.putBoolean("NetworkCon",true);
@@ -228,7 +386,6 @@ public class LoginActivity extends BaseAppCompatActivity implements View.OnClick
                 String sm = username.getText().toString().trim();
                 String pw = password.getText().toString().trim();
 
-                Log.e("Testing"," "+ sm + "dshk "+ pw + "Us"+ strUsername  + "Pwd "+ strPassword);
 
 
                 if(sm.equals(strUsername)&&pw.equals(strPassword)){

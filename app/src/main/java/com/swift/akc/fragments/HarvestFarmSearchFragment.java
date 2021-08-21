@@ -91,18 +91,13 @@ public class HarvestFarmSearchFragment extends BaseFragment implements View.OnCl
 
             String farmid = cur.getString(cur.getColumnIndexOrThrow(DatabaseHelper.SQL_FARM_ID));
             String farmname = cur.getString(cur.getColumnIndexOrThrow(DatabaseHelper.SQL_FARM_NAME));
-
-            Log.e("Testing",""+ farmid + "farm name" + farmname);
-
             SharedPreferences.Editor sharedEditor = CommonUtil.pref.edit();
             sharedEditor.putString("FARMID",farmid);
             sharedEditor.apply();
             openNextFragment();
-
           //  switchFragment(LandingPageActivity.FRAGMENT_HARVEST_VISIT_ENTRY, "Harvest Entry", true);
-
         }else{
-            Log.e("Testing",""+cur.getCount());
+            Toast.makeText(context,"No Data Available Please try again later",Toast.LENGTH_LONG).show();
         }
 
 

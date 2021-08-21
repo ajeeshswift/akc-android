@@ -16,6 +16,15 @@ public class AdminVO {
     private String isAdmin;
     private String isReturn;
     private String userName;
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
     private String token;
 
     public int getId() {

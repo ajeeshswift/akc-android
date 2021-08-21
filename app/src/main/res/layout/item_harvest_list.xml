@@ -31,6 +31,8 @@
                     android:text="FARMER NAME"
                     android:layout_width="175dp"
                     android:layout_height="20dp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
                     android:layout_marginHorizontal="5dp"
                     android:layout_marginTop="5dp" />
 
@@ -38,6 +40,7 @@
                     android:id="@+id/farm"
                     android:layout_width="215dp"
                     android:layout_height="20dp"
+                    android:textColor="@color/black"
                     android:layout_marginHorizontal="5dp"
                     android:layout_marginTop="5dp" />
             </LinearLayout>
@@ -51,6 +54,8 @@
                     android:text="VILLAGE NAME"
                     android:layout_width="175dp"
                     android:layout_height="20dp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
                     android:layout_marginHorizontal="5dp"
                     android:layout_marginTop="5dp" />
 
@@ -58,6 +63,7 @@
                     android:id="@+id/villName"
                     android:layout_width="215dp"
                     android:layout_height="20dp"
+                    android:textColor="@color/black"
                     android:layout_marginHorizontal="5dp"
                     android:layout_marginTop="5dp" />
             </LinearLayout>
@@ -71,6 +77,8 @@
                     android:text="PLANT / SEED"
                     android:layout_width="175dp"
                     android:layout_height="20dp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
                     android:layout_marginHorizontal="5dp"
                     android:layout_marginTop="5dp" />
 
@@ -78,6 +86,7 @@
                     android:id="@+id/plantORseed"
                     android:layout_width="215dp"
                     android:layout_height="20dp"
+                    android:textColor="@color/black"
                     android:layout_marginHorizontal="5dp"
                     android:layout_marginTop="5dp" />
             </LinearLayout>
@@ -91,6 +100,8 @@
                     android:text="SAPPLING QTY"
                     android:layout_width="175dp"
                     android:layout_height="20dp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
                     android:layout_marginHorizontal="5dp"
                     android:layout_marginTop="5dp" />
 
@@ -98,6 +109,7 @@
                     android:id="@+id/sapQuantity"
                     android:layout_width="215dp"
                     android:layout_height="20dp"
+                    android:textColor="@color/black"
                     android:layout_marginHorizontal="5dp"
                     android:layout_marginTop="5dp" />
             </LinearLayout>
@@ -111,12 +123,15 @@
                     android:text="SOWING DATE"
                     android:layout_width="175dp"
                     android:layout_height="20dp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
                     android:layout_marginHorizontal="5dp"
                     android:layout_marginTop="5dp" />
                 <TextView
                     android:id="@+id/sowingDate"
                     android:layout_width="215dp"
                     android:layout_height="20dp"
+                    android:textColor="@color/black"
                     android:layout_marginHorizontal="5dp"
                     android:layout_marginTop="5dp" />
 
@@ -131,6 +146,8 @@
                     android:text="HARVEST DATE"
                     android:layout_width="175dp"
                     android:layout_height="20dp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
                     android:layout_marginHorizontal="5dp"
                     android:layout_marginTop="5dp" />
 
@@ -138,6 +155,7 @@
                     android:id="@+id/harvestDate"
                     android:layout_width="215dp"
                     android:layout_height="20dp"
+                    android:textColor="@color/black"
                     android:layout_marginHorizontal="5dp"
                     android:layout_marginTop="5dp" />
             </LinearLayout>
@@ -151,6 +169,8 @@
                     android:text="HARVEST QTY"
                     android:layout_width="175dp"
                     android:layout_height="20dp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
                     android:layout_marginHorizontal="5dp"
                     android:layout_marginTop="5dp" />
 
@@ -158,6 +178,7 @@
                     android:id="@+id/harvestQuantity"
                     android:layout_width="215dp"
                     android:layout_height="20dp"
+                    android:textColor="@color/black"
                     android:layout_marginHorizontal="5dp"
                     android:layout_marginTop="5dp" />
             </LinearLayout>
@@ -170,6 +191,8 @@
                     android:text="OWNUSE QTY"
                     android:layout_width="175dp"
                     android:layout_height="20dp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
                     android:layout_marginHorizontal="5dp"
                     android:layout_marginTop="5dp" />
 
@@ -177,6 +200,7 @@
                     android:id="@+id/ownUseQuantity"
                     android:layout_width="215dp"
                     android:layout_height="20dp"
+                    android:textColor="@color/black"
                     android:layout_marginTop="5dp"
                     android:paddingHorizontal="5dp" />
             </LinearLayout>
@@ -189,12 +213,15 @@
                     android:text="SOLD QTY"
                     android:layout_width="175dp"
                     android:layout_height="20dp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
                     android:layout_marginHorizontal="5dp"
                     android:layout_marginTop="5dp" />
                 <TextView
                     android:id="@+id/soldQuantity"
                     android:layout_width="215dp"
                     android:layout_height="20dp"
+                    android:textColor="@color/black"
                     android:layout_marginHorizontal="5dp"
                     android:layout_marginTop="5dp" />
             </LinearLayout>
@@ -207,12 +234,15 @@
                     android:text="SOLD RATE"
                     android:layout_width="175dp"
                     android:layout_height="20dp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
                     android:layout_marginHorizontal="5dp"
                     android:layout_marginTop="5dp" />
                 <TextView
                     android:id="@+id/soldRate"
                     android:layout_width="215dp"
                     android:layout_height="20dp"
+                    android:textColor="@color/black"
                     android:layout_marginHorizontal="5dp"
                     android:layout_marginTop="5dp" />
             </LinearLayout>
@@ -225,14 +255,23 @@
                     android:text="TOTAL INCOME"
                     android:layout_width="175dp"
                     android:layout_height="20dp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
                     android:layout_marginHorizontal="5dp"
                     android:layout_marginTop="5dp" />
                 <TextView
                     android:id="@+id/totalIncome"
-                    android:layout_width="215dp"
+                    android:layout_width="165dp"
                     android:layout_height="20dp"
+                    android:textColor="@color/black"
                     android:layout_marginHorizontal="5dp"
                     android:layout_marginTop="5dp" />
+
+                <ImageView
+                    android:id="@+id/img_status"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/red_dot"/>
             </LinearLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>

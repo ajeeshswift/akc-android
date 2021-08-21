@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -35,6 +35,7 @@ public class HarvestForecastingListAdapterSql extends RecyclerView.Adapter<Harve
     ArrayList<String> mycropDate = new ArrayList<>();
     ArrayList<String> myseeds = new ArrayList<>();
     ArrayList<String> mystatus = new ArrayList<>();
+    ArrayList<String> myVillagearea = new ArrayList<>();
 
 
     public HarvestForecastingListAdapterSql(FragmentActivity activity,
@@ -43,7 +44,7 @@ public class HarvestForecastingListAdapterSql extends RecyclerView.Adapter<Harve
                                             ArrayList<String> myplant, ArrayList<String> mydate,
                                             ArrayList<String> mytime, ArrayList<String> mycropDate,
                                             ArrayList<String> myseeds,
-                                            ArrayList<String> mystatus) {
+                                            ArrayList<String> mystatus, ArrayList<String> myVillagearea) {
         this.mContext = activity;
         this.myforcastid = myforcastid;
         this.myfarm = myfarm;
@@ -54,6 +55,7 @@ public class HarvestForecastingListAdapterSql extends RecyclerView.Adapter<Harve
         this.mycropDate = mycropDate;
         this.myseeds = myseeds;
         this.mystatus = mystatus;
+        this.myVillagearea = myVillagearea;
 
 
     }
@@ -76,14 +78,15 @@ public class HarvestForecastingListAdapterSql extends RecyclerView.Adapter<Harve
         holder.plant.setText(myplant.get(position));
         holder.seeds.setText(myseeds.get(position));
         holder.farm.setText(myfarm.get(position));
-        holder.villName.setText("My Village");
-        String mystatsus =mystatus.get(position);
+        holder.villName.setText(myVillagearea.get(position));
 
-       if(mystatsus.equals("1")){
-           holder.btnStatus.setText("Online");
-       } else{
-           holder.btnStatus.setText("Offline");
-       }
+
+        if(mystatus.get(position).equals("0")){
+            holder.imgStatus.setImageResource(R.drawable.red_dot);
+        } else{
+            holder.imgStatus.setImageResource(R.drawable.green_dot);
+
+        }
 
     }
 
@@ -94,7 +97,7 @@ public class HarvestForecastingListAdapterSql extends RecyclerView.Adapter<Harve
 
     public static class HarvestForcastingViewHolder extends RecyclerView.ViewHolder {
         TextView area,cropDate,date,farm,plant,seeds,time,farmerName,villName;
-        Button btnStatus;
+        ImageView imgStatus;
         public HarvestForcastingViewHolder(View view) {
             super(view);
             area = view.findViewById(R.id.area);
@@ -106,8 +109,7 @@ public class HarvestForecastingListAdapterSql extends RecyclerView.Adapter<Harve
             //time = view.findViewById(R.id.time);
             farmerName = view.findViewById(R.id.farmerName);
             villName = view.findViewById(R.id.villName);
-            btnStatus = view.findViewById(R.id.buttonstatus);
-
+            imgStatus = view.findViewById(R.id.img_status);
         }
     }
 }

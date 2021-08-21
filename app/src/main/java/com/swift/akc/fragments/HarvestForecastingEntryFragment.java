@@ -68,6 +68,9 @@ public class HarvestForecastingEntryFragment extends BaseFragment implements Tex
     private PlantSeedVO plantSeedVO;
     List<String> myplantorSeed;
     ArrayAdapter<String> mylistPlantSeed;
+
+    int strMyplantId;
+    String strmyFarmid;
     public HarvestForecastingEntryFragment() {
 
     }
@@ -127,7 +130,7 @@ public class HarvestForecastingEntryFragment extends BaseFragment implements Tex
         sowingdate.setText(currentDate);
 
         mynetwork = CommonUtil.pref.getBoolean("NetworkCon",false);
-
+        strmyFarmid = CommonUtil.pref.getString("FARMID","0");
 
         sowingdate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -173,28 +176,28 @@ public class HarvestForecastingEntryFragment extends BaseFragment implements Tex
     }
 
     private void harvestingforcastAPICall() {
-        int plantId                 =  plantSeedVO.getId();
+      //  int plantId                 =  plantSeedVO.getId();
         String seeds                =  seedsown.getText().toString();
         String area                 =  cultivation.getText().toString();
         String cropShowingDate      =  DateUtils.convertDateFormat(sowingdate.getText().toString());
-        int farmId                  =  Storage.selectedHarvestFarm.getFarmId();
+        int farmId                  = Integer.parseInt(strmyFarmid);
         String date                 =  new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
         String time                 =  new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
         String currentDateTimeString = java.text.DateFormat.getDateTimeInstance().format(new Date());
 
-
-        if (mynetwork) {
-        CommonUtil.databaseUtil.addHarvestForcasting(plantId,seeds,area,
+        CommonUtil.databaseUtil.addHarvestForcasting(strMyplantId,seeds,area,
                 cropShowingDate,farmId,date,time,
                 currentDateTimeString,"0");
+        if (mynetwork) {
 
             JSONObject params = new JSONObject();
             try {
-                params.put("plantId", plantSeedVO.getId());
+                params.put("plantId",strMyplantId);
                 params.put("seeds", seedsown.getText().toString());
                 params.put("area", cultivation.getText().toString());
                 params.put("cropShowingDate", DateUtils.convertDateFormat(sowingdate.getText().toString()));
-                params.put("farmId", Storage.selectedHarvestFarm.getFarmId());
+                params.put("farmId", farmId);
+//                params.put("farmId", Storage.selectedHarvestFarm.getFarmId());
                 params.put("date", new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date()));
                 params.put("time", new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date()));
 
@@ -216,7 +219,7 @@ public class HarvestForecastingEntryFragment extends BaseFragment implements Tex
 
                         @Override
                         public void onNext(HarvestForcastingVO object) {
-                        //    CommonUtil.databaseUtil.updateHarvestForecasting(plantId,"1");
+                            CommonUtil.databaseUtil.updateHarvestForecasting(strMyplantId,"1");
                             Toast.makeText(getActivity(), "Successfully Added", Toast.LENGTH_LONG).show();
                             crop.setText("");
                             seedsown.setText("");
@@ -241,11 +244,7 @@ public class HarvestForecastingEntryFragment extends BaseFragment implements Tex
 
         Toast.makeText(context,"Saved Successfully",Toast.LENGTH_SHORT).show();
 
-
     }
-        else {
-
-        }
         }
 
     @Override
@@ -271,6 +270,12 @@ public class HarvestForecastingEntryFragment extends BaseFragment implements Tex
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
        // plantSeedVO = (PlantSeedVO) parent.getItemAtPosition(position);
         crop.setText(mylistPlantSeed.getItem(position));
+        Cursor mycusr = CommonUtil.databaseUtil.getPlantseedbyName(mylistPlantSeed.getItem(position));
+
+        if(mycusr.getCount() >0 && mycusr.moveToFirst()){
+            strMyplantId= mycusr.getInt(mycusr.getColumnIndexOrThrow(DatabaseHelper.SQL_PLANT_ID));
+        }
+
     }
 
     private void autoCompletePlantOrSeed(String query) {

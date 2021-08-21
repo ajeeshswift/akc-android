@@ -17,6 +17,7 @@ import com.rx2androidnetworking.Rx2AndroidNetworking;
 import com.swift.akc.R;
 import com.swift.akc.adapters.HarvestForecastingListAdapter;
 import com.swift.akc.adapters.HarvestForecastingListAdapterSql;
+import com.swift.akc.adapters.HarvestVisitListAdapter;
 import com.swift.akc.database.CommonUtil;
 import com.swift.akc.database.DatabaseHelper;
 import com.swift.akc.database.DatabaseUtil;
@@ -40,6 +41,7 @@ public class HarvestForecastingListFragment extends BaseFragment {
     private RecyclerView mRecyclerView;
 
     Context context;
+    Boolean mynetwork;
 
     public HarvestForecastingListFragment() {
 
@@ -70,6 +72,7 @@ public class HarvestForecastingListFragment extends BaseFragment {
         CommonUtil.databaseUtil.open();
         CommonUtil.databaseHelper = new DatabaseHelper(context);
         CommonUtil.pref = getActivity().getSharedPreferences(CommonUtil.MyPreferances, Context.MODE_PRIVATE);
+        mynetwork = CommonUtil.pref.getBoolean("NetworkCon",false);
 
         return mParentView;
     }
@@ -89,6 +92,8 @@ public class HarvestForecastingListFragment extends BaseFragment {
         ArrayList<Integer> myforcastid = new ArrayList<>();
         ArrayList<String> myfarm = new ArrayList<>();
         ArrayList<String> myforcastarea = new ArrayList<>();
+        ArrayList<String> myVillagearea = new ArrayList<>();
+
         ArrayList<String> myplant = new ArrayList<>();
         ArrayList<String> mydate = new ArrayList<>();
         ArrayList<String> mytime = new ArrayList<>();
@@ -96,47 +101,70 @@ public class HarvestForecastingListFragment extends BaseFragment {
         ArrayList<String> myseeds = new ArrayList<>();
         ArrayList<String> mystatus = new ArrayList<>();
 
-
-        if(cur.moveToFirst()){
-            try {
-                do {
-                    int forcastId = cur.getInt(cur.getColumnIndexOrThrow(DatabaseHelper.ID_CL));
-                    String farm = cur.getString(cur.getColumnIndexOrThrow(DatabaseHelper.FORECAST_FARM_ID));
-                    String forcastArea = cur.getString(cur.getColumnIndexOrThrow(DatabaseHelper.FORECAST_CULTIVATION));
-                    String plant = cur.getString(cur.getColumnIndexOrThrow(DatabaseHelper.FORECAST_PLANT_SEED));
-                    String date = cur.getString(cur.getColumnIndexOrThrow(DatabaseHelper.FORECAST_ENTRY_DATE));
-                    String time = cur.getString(cur.getColumnIndexOrThrow(DatabaseHelper.FORECAST_ENTRY_TIME));
-                    String cropDate = cur.getString(cur.getColumnIndexOrThrow(DatabaseHelper.FORECAST_SOWING_DATE));
-                    String seeds = cur.getString(cur.getColumnIndexOrThrow(DatabaseHelper.FORECAST_SOWING_KG));
-                    String status = cur.getString(cur.getColumnIndexOrThrow(DatabaseHelper.STATUS));
+        if(!mynetwork) {
 
 
+            if (cur.moveToFirst()) {
+                try {
+                    do {
+                        int forcastId = cur.getInt(cur.getColumnIndexOrThrow(DatabaseHelper.ID_CL));
+                        String farm = cur.getString(cur.getColumnIndexOrThrow(DatabaseHelper.FORECAST_FARM_ID));
+                        String forcastArea = cur.getString(cur.getColumnIndexOrThrow(DatabaseHelper.FORECAST_CULTIVATION));
+                        String plant = cur.getString(cur.getColumnIndexOrThrow(DatabaseHelper.FORECAST_PLANT_SEED));
+                        String date = cur.getString(cur.getColumnIndexOrThrow(DatabaseHelper.FORECAST_ENTRY_DATE));
+                        String time = cur.getString(cur.getColumnIndexOrThrow(DatabaseHelper.FORECAST_ENTRY_TIME));
+                        String cropDate = cur.getString(cur.getColumnIndexOrThrow(DatabaseHelper.FORECAST_SOWING_DATE));
+                        String seeds = cur.getString(cur.getColumnIndexOrThrow(DatabaseHelper.FORECAST_SOWING_KG));
+                        String status = cur.getString(cur.getColumnIndexOrThrow(DatabaseHelper.STATUS));
 
-                    myforcastid.add(forcastId);
-                    myfarm.add(farm);
-                    myforcastarea.add(forcastArea);
-                    myplant.add(plant);
-                    mydate.add(date);
-                    mytime.add(time);
-                    mycropDate.add(cropDate);
-                    myseeds.add(seeds);
-                    mystatus.add(status);
+                        Cursor cussr = CommonUtil.databaseUtil.getFarmbyId(farm);
+                        if (cussr.moveToFirst()) {
 
-                    Log.e("Testing",""+forcastId);
-                    Log.e("Testing",""+myforcastid.size());
+                            String farmname = cussr.getString(cussr.getColumnIndexOrThrow(DatabaseHelper.SQL_FARM_NAME));
+                            String villagename = cussr.getString(cussr.getColumnIndexOrThrow(DatabaseHelper.SQL_VILLAGE_NAME));
+
+                            myfarm.add(farmname);
+                            myVillagearea.add(villagename);
+
+                        }
+                        Cursor curp = CommonUtil.databaseUtil.getPlantseebydid(plant);
+                        if (curp.moveToFirst()) {
+
+                            String strplantseed = curp.getString(curp.getColumnIndexOrThrow(DatabaseHelper.SQL_PLANT_NAME));
+                            myplant.add(strplantseed);
+
+                        }
 
 
+                        myforcastarea.add(forcastArea);
+                        myforcastid.add(forcastId);
+                        mydate.add(date);
+                        mytime.add(time);
+                        mycropDate.add(cropDate);
+                        myseeds.add(seeds);
+                        mystatus.add(status);
 
-                } while (cur.moveToNext());
-            } catch (IllegalArgumentException e){
-                e.printStackTrace();
+                        Log.e("Testing", "" + forcastId);
+                        Log.e("Testing", "" + myforcastid.size());
+
+
+                    } while (cur.moveToNext());
+                } catch (IllegalArgumentException e) {
+                    e.printStackTrace();
+                }
             }
-        }
 
-        HarvestForecastingListAdapterSql adapterSql = new HarvestForecastingListAdapterSql(getActivity(), myforcastid,
-                myfarm,myforcastarea,myplant,mydate,mytime,mycropDate,myseeds,mystatus);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-        mRecyclerView.setAdapter(adapterSql);
+            HarvestForecastingListAdapterSql adapterSql = new HarvestForecastingListAdapterSql(getActivity(), myforcastid,
+                    myfarm, myforcastarea, myplant, mydate, mytime, mycropDate, myseeds, mystatus, myVillagearea);
+            mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+            mRecyclerView.setAdapter(adapterSql);
+        } else{
+            mAdapter = new HarvestForecastingListAdapter(getActivity());
+
+            mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+            mRecyclerView.setAdapter(mAdapter);
+            getHarvestForcastingList();
+        }
 //        getHarvestForcastingList();
     }
 
