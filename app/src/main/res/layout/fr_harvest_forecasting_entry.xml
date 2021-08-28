@@ -30,7 +30,7 @@
         android:layout_marginTop="15dp"
         android:background="@drawable/edit_text_border"
         android:hint="Seed Sown in Kg's"
-        android:inputType="number"
+        android:inputType="numberDecimal"
         android:paddingHorizontal="15dp" />
 
 
@@ -42,7 +42,7 @@
         android:layout_marginTop="15dp"
         android:background="@drawable/edit_text_border"
         android:hint="Area Under Cultivation"
-        android:inputType="number"
+        android:inputType="numberDecimal"
         android:paddingHorizontal="15dp" />
 
     <EditText

@@ -325,12 +325,18 @@ public class LoginActivity extends BaseAppCompatActivity implements View.OnClick
                             int strFarmId            = farmVillageListVO.getData().get(i).getFarmId();
                             String strFarmName       = farmVillageListVO.getData().get(i).getFarmName();
 
+                            Log.e("Testing",""+ strFarmName);
+
 
 
                             if(!CommonUtil.databaseUtil.hasFarmVD(strFarmId,strFarmDetailId)) {
                                 CommonUtil.databaseUtil.addFarmVillageDetails(strVillageName, strVillageId,
                                         strFarmno, strFarmId, strFarmName,strFarmDetailId);
+                                Log.e("Testing 1",""+ strFarmName);
 
+
+                            } else{
+                                Log.e("Testing 2",""+ strFarmName);
 
                             }
 

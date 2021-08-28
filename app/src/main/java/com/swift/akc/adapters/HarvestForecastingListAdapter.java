@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -55,6 +56,7 @@ public class HarvestForecastingListAdapter extends RecyclerView.Adapter<HarvestF
         //holder.time.setText(harvestForcastingVO.getTime());
         holder.farm.setText(harvestForcastingVO.getFarmerName());
         holder.villName.setText(harvestForcastingVO.getVillName());
+        holder.imgStatus.setImageResource(R.drawable.green_dot);
     }
 
     @Override
@@ -64,6 +66,7 @@ public class HarvestForecastingListAdapter extends RecyclerView.Adapter<HarvestF
 
     public static class HarvestForcastingViewHolder extends RecyclerView.ViewHolder {
         TextView area,cropDate,date,farm,plant,seeds,time,farmerName,villName;
+        ImageView imgStatus;
         public HarvestForcastingViewHolder(View view) {
             super(view);
             area = view.findViewById(R.id.area);
@@ -75,6 +78,7 @@ public class HarvestForecastingListAdapter extends RecyclerView.Adapter<HarvestF
             //time = view.findViewById(R.id.time);
             farmerName = view.findViewById(R.id.farmerName);
             villName = view.findViewById(R.id.villName);
+            imgStatus = view.findViewById(R.id.img_status);
         }
     }
 }

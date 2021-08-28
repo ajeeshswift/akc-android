@@ -51,7 +51,7 @@
                 android:layout_marginTop="15dp"
                 android:background="@drawable/edit_text_border"
                 android:hint="Sappling Quantity"
-                android:inputType="number"
+                android:inputType="numberDecimal"
                 android:paddingHorizontal="15dp" />
             <EditText
                 android:id="@+id/harvestdate"
@@ -71,7 +71,7 @@
                 android:layout_marginTop="15dp"
                 android:background="@drawable/edit_text_border"
                 android:hint="Harvest Quantity"
-                android:inputType="number"
+                android:inputType="numberDecimal"
                 android:paddingHorizontal="15dp" />
             <EditText
                 android:id="@+id/ownhomeuse"
@@ -91,7 +91,7 @@
                 android:layout_marginTop="15dp"
                 android:background="@drawable/edit_text_border"
                 android:hint="Sold Quantity"
-                android:inputType="number"
+                android:inputType="numberDecimal"
                 android:paddingHorizontal="15dp" />
             <EditText
                 android:id="@+id/soldrate"
@@ -101,7 +101,7 @@
                 android:layout_marginTop="15dp"
                 android:background="@drawable/edit_text_border"
                 android:hint="Sold @ Rate"
-                android:inputType="number"
+                android:inputType="numberDecimal"
                 android:imeOptions="actionDone"
                 android:paddingHorizontal="15dp" />
             <EditText

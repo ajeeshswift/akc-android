@@ -25,11 +25,13 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:weightSum="2"
                 android:orientation="horizontal">
                 <TextView
                     android:id="@+id/farmerNameLabel"
                     android:text="FARMER NAME"
-                    android:layout_width="175dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="20dp"
                     android:textColor="@color/black"
                     android:textStyle="bold"
@@ -38,7 +40,8 @@
 
                 <TextView
                     android:id="@+id/farm"
-                    android:layout_width="215dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="20dp"
                     android:textColor="@color/black"
                     android:layout_marginHorizontal="5dp"
@@ -48,11 +51,14 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:weightSum="2"
+
                 android:orientation="horizontal">
                 <TextView
                     android:id="@+id/villNameLabel"
                     android:text="VILLAGE NAME"
-                    android:layout_width="175dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="20dp"
                     android:textColor="@color/black"
                     android:textStyle="bold"
@@ -61,7 +67,8 @@
 
                 <TextView
                     android:id="@+id/villName"
-                    android:layout_width="215dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="20dp"
                     android:textColor="@color/black"
                     android:layout_marginHorizontal="5dp"
@@ -71,11 +78,14 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:weightSum="2"
+
                 android:orientation="horizontal">
                 <TextView
                     android:id="@+id/plantSeedLabel"
                     android:text="PLANT / SEED"
-                    android:layout_width="175dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="20dp"
                     android:textColor="@color/black"
                     android:textStyle="bold"
@@ -84,7 +94,8 @@
 
                 <TextView
                     android:id="@+id/plantORseed"
-                    android:layout_width="215dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="20dp"
                     android:textColor="@color/black"
                     android:layout_marginHorizontal="5dp"
@@ -94,11 +105,14 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:weightSum="2"
+
                 android:orientation="horizontal">
                 <TextView
                     android:id="@+id/sapQuantityLabel"
                     android:text="SAPPLING QTY"
-                    android:layout_width="175dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="20dp"
                     android:textColor="@color/black"
                     android:textStyle="bold"
@@ -107,7 +121,8 @@
 
                 <TextView
                     android:id="@+id/sapQuantity"
-                    android:layout_width="215dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="20dp"
                     android:textColor="@color/black"
                     android:layout_marginHorizontal="5dp"
@@ -117,11 +132,14 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:weightSum="2"
+
                 android:orientation="horizontal">
                 <TextView
                     android:id="@+id/sowingDateLabel"
                     android:text="SOWING DATE"
-                    android:layout_width="175dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="20dp"
                     android:textColor="@color/black"
                     android:textStyle="bold"
@@ -129,7 +147,8 @@
                     android:layout_marginTop="5dp" />
                 <TextView
                     android:id="@+id/sowingDate"
-                    android:layout_width="215dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="20dp"
                     android:textColor="@color/black"
                     android:layout_marginHorizontal="5dp"
@@ -140,11 +159,14 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:weightSum="2"
+
                 android:orientation="horizontal">
                 <TextView
                     android:id="@+id/harvestDateLabel"
                     android:text="HARVEST DATE"
-                    android:layout_width="175dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="20dp"
                     android:textColor="@color/black"
                     android:textStyle="bold"
@@ -153,7 +175,8 @@
 
                 <TextView
                     android:id="@+id/harvestDate"
-                    android:layout_width="215dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="20dp"
                     android:textColor="@color/black"
                     android:layout_marginHorizontal="5dp"
@@ -163,11 +186,14 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:weightSum="2"
+
                 android:orientation="horizontal">
                 <TextView
                     android:id="@+id/harvestQuantityLabel"
                     android:text="HARVEST QTY"
-                    android:layout_width="175dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="20dp"
                     android:textColor="@color/black"
                     android:textStyle="bold"
@@ -176,7 +202,8 @@
 
                 <TextView
                     android:id="@+id/harvestQuantity"
-                    android:layout_width="215dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="20dp"
                     android:textColor="@color/black"
                     android:layout_marginHorizontal="5dp"
@@ -185,11 +212,14 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
+                android:weightSum="2"
+
                 android:layout_height="match_parent">
                 <TextView
                     android:id="@+id/ownUseQuantityLabel"
                     android:text="OWNUSE QTY"
-                    android:layout_width="175dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="0.975"
                     android:layout_height="20dp"
                     android:textColor="@color/black"
                     android:textStyle="bold"
@@ -198,7 +228,8 @@
 
                 <TextView
                     android:id="@+id/ownUseQuantity"
-                    android:layout_width="215dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="20dp"
                     android:textColor="@color/black"
                     android:layout_marginTop="5dp"
@@ -207,11 +238,14 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
+                android:weightSum="2"
+
                 android:layout_height="match_parent">
                 <TextView
                     android:id="@+id/soldQuantityLabel"
                     android:text="SOLD QTY"
-                    android:layout_width="175dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="20dp"
                     android:textColor="@color/black"
                     android:textStyle="bold"
@@ -219,7 +253,8 @@
                     android:layout_marginTop="5dp" />
                 <TextView
                     android:id="@+id/soldQuantity"
-                    android:layout_width="215dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="20dp"
                     android:textColor="@color/black"
                     android:layout_marginHorizontal="5dp"
@@ -228,11 +263,14 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
+                android:weightSum="2"
+
                 android:layout_height="match_parent">
                 <TextView
                     android:id="@+id/soldRateLabel"
                     android:text="SOLD RATE"
-                    android:layout_width="175dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="20dp"
                     android:textColor="@color/black"
                     android:textStyle="bold"
@@ -240,7 +278,8 @@
                     android:layout_marginTop="5dp" />
                 <TextView
                     android:id="@+id/soldRate"
-                    android:layout_width="215dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="20dp"
                     android:textColor="@color/black"
                     android:layout_marginHorizontal="5dp"
@@ -249,11 +288,13 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
+                android:weightSum="2"
                 android:layout_height="match_parent">
                 <TextView
                     android:id="@+id/totalIncomeLabel"
                     android:text="TOTAL INCOME"
-                    android:layout_width="175dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1.1"
                     android:layout_height="20dp"
                     android:textColor="@color/black"
                     android:textStyle="bold"
@@ -261,7 +302,8 @@
                     android:layout_marginTop="5dp" />
                 <TextView
                     android:id="@+id/totalIncome"
-                    android:layout_width="165dp"
+                    android:layout_weight="0.8"
+                    android:layout_width="0dp"
                     android:layout_height="20dp"
                     android:textColor="@color/black"
                     android:layout_marginHorizontal="5dp"

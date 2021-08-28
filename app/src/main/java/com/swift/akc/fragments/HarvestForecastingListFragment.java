@@ -144,8 +144,10 @@ public class HarvestForecastingListFragment extends BaseFragment {
                         myseeds.add(seeds);
                         mystatus.add(status);
 
-                        Log.e("Testing", "" + forcastId);
-                        Log.e("Testing", "" + myforcastid.size());
+//                        Log.e("Testing", "" + forcastId);
+//                        Log.e("Testing1", "" + myforcastid.size());
+                    Log.e("Status :",""+status);
+
 
 
                     } while (cur.moveToNext());
