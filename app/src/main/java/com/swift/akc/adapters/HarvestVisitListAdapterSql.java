@@ -37,7 +37,7 @@ public class HarvestVisitListAdapterSql  extends RecyclerView.Adapter<HarvestVis
     ArrayList<String> myStatus                  = new ArrayList<>();
     ArrayList<String> myFarmerName              = new ArrayList<>();
     ArrayList<String> myVillageName             = new ArrayList<>();
-    ArrayList<String> myplanseed             = new ArrayList<>();
+    ArrayList<String> myplanseed                = new ArrayList<>();
 
     public HarvestVisitListAdapterSql(FragmentActivity activity,
                                       ArrayList<String> mystrsowingDate,
@@ -63,7 +63,7 @@ public class HarvestVisitListAdapterSql  extends RecyclerView.Adapter<HarvestVis
         this.myStatus               = myStatus;
         this.myFarmerName           = myFarmerName;
         this.myVillageName          = myVillageName;
-        this.myplanseed          = myplanseed;
+        this.myplanseed             = myplanseed;
 
 
 

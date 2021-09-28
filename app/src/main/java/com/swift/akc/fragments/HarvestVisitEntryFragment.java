@@ -18,6 +18,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -59,7 +60,8 @@ public class HarvestVisitEntryFragment extends BaseFragment implements TextWatch
         View.OnClickListener, AdapterView.OnItemClickListener {
 
     EditText sowingDate, sapQuantity, harvestQuantity,
-            ownUse, soldQuantity, soldRate, totalIncome, harvestDate;
+            ownUse, soldQuantity, soldRate, harvestDate;
+    TextView txt_totalIncome;
     Button submit;
     TextView tvw;
     DatePickerDialog picker;
@@ -78,7 +80,9 @@ public class HarvestVisitEntryFragment extends BaseFragment implements TextWatch
     String strMyfarmid;
     List<String> myplantorSeed;
     ArrayAdapter<String> mylistPlantSeed;
+    ArrayAdapter<String> adapterPlots;
     int strMyplantId;
+    int strPlotId;
 
     public HarvestVisitEntryFragment() {
 
@@ -118,6 +122,38 @@ public class HarvestVisitEntryFragment extends BaseFragment implements TextWatch
 //        mAdapter = new PlantSeedListAdapter(getActivity(), R.layout.item_autocomplete, new ArrayList<>());
 //        plantOrSeed.setAdapter(mAdapter);
 
+        //get the spinner from the xml.
+        Spinner dropdown =  mParentView.findViewById(R.id.spinner1);
+        String[] plots = new String[]{"Non-AB Plot", "AB Plot", "Before AB Plot"};
+          adapterPlots = new ArrayAdapter<>(getActivity(),R.layout.support_simple_spinner_dropdown_item, plots);
+        dropdown.setAdapter(adapterPlots);
+
+
+        dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+        {
+            @Override
+            public void onItemSelected(AdapterView adapter, View v, int i, long lng) {
+
+                String selecteditem =  adapter.getItemAtPosition(i).toString();
+
+
+                if(selecteditem.equals("Non-AB Plot"))
+                    strPlotId = 1;
+                else if(selecteditem.equals("AB Plot"))
+                    strPlotId = 2;
+                else if(selecteditem.equals("Before AB Plot"))
+                    strPlotId = 3;
+                //or this can be also right: selecteditem = level[i];
+Log.e("Dharma",""+strPlotId);
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView)
+            {
+
+            }
+        });
+
+
 
         harvestDate = (EditText) mParentView.findViewById(R.id.harvestdate);
         sowingDate = (EditText) mParentView.findViewById(R.id.sowingdate);
@@ -126,7 +162,7 @@ public class HarvestVisitEntryFragment extends BaseFragment implements TextWatch
         ownUse = (EditText) mParentView.findViewById(R.id.ownhomeuse);
         soldQuantity = (EditText) mParentView.findViewById(R.id.soldquantity);
         soldRate = (EditText) mParentView.findViewById(R.id.soldrate);
-        totalIncome = (EditText) mParentView.findViewById(R.id.totalincome);
+        txt_totalIncome = (TextView) mParentView.findViewById(R.id.totalincome);
         submit = (Button) mParentView.findViewById(R.id.submit);
         submit.setOnClickListener(this);
 
@@ -135,7 +171,7 @@ public class HarvestVisitEntryFragment extends BaseFragment implements TextWatch
 
         mynetwork = CommonUtil.pref.getBoolean("NetworkCon",false);
         strMyfarmid  = CommonUtil.pref.getString("FARMID","0");
-        Log.e("TestingFarm", ""+ strMyfarmid);
+       // Log.e("TestingFarm", ""+ strMyfarmid);
 
 
        myplantorSeed = CommonUtil.databaseUtil.getPlantseed();
@@ -169,6 +205,32 @@ public class HarvestVisitEntryFragment extends BaseFragment implements TextWatch
                 datePickerView.setDatePickerView(getActivity(), sowingDate);
             }
         });
+
+        soldRate.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                double solrate = Double.parseDouble(soldRate.getText().toString());
+                double solrdqty = Double.parseDouble(soldQuantity.getText().toString());
+                double total =  solrate * solrdqty;
+
+                txt_totalIncome.setText(""+total);
+
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
     }
 
     @Override
@@ -232,34 +294,28 @@ public class HarvestVisitEntryFragment extends BaseFragment implements TextWatch
             return;
         }
 
-        if (totalIncome.getText().toString().matches("")) {
-            totalIncome.setError("Enter Total Income");
-            totalIncome.requestFocus();
-            return;
-        }
         harvestVisitEntryAPICall();
     }
 
     private void harvestVisitEntryAPICall() {
-        int floraId =strMyplantId;
-        String strsowingDate =  DateUtils.convertDateFormat(sowingDate.getText().toString());
-        String strsapQuantity = sapQuantity.getText().toString();
-        String strharvestDate =DateUtils.convertDateFormat(harvestDate.getText().toString());
-        String strharvestQuantity = harvestQuantity.getText().toString();
-        String strownUseQuantity = ownUse.getText().toString();
-        String strsoldQuantity = soldQuantity.getText().toString();
-        String strsoldRate =soldRate.getText().toString();
-        String strtotalIncome = totalIncome.getText().toString();
+        int floraId     = strMyplantId;
+        int projectId   = strPlotId;
+Log.e("Dharma111",""+projectId);
+        String strsowingDate        =  DateUtils.convertDateFormat(sowingDate.getText().toString());
+        String strsapQuantity       = sapQuantity.getText().toString();
+        String strharvestDate       = DateUtils.convertDateFormat(harvestDate.getText().toString());
+        String strharvestQuantity   = harvestQuantity.getText().toString();
+        String strownUseQuantity    = ownUse.getText().toString();
+        String strsoldQuantity      = soldQuantity.getText().toString();
+        String strsoldRate          = soldRate.getText().toString();
+        String strtotalIncome       =  txt_totalIncome.getText().toString();
        // String strfarmId =strMyfarmid;
       //  int strfarmId = Storage.selectedHarvestFarm.getFarmId();
 
         String currentDateTimeString = java.text.DateFormat.getDateTimeInstance().format(new Date());
         CommonUtil.databaseUtil.addHarvest(floraId,strsowingDate,strsapQuantity,
                 strharvestDate,strharvestQuantity,strownUseQuantity,strsoldQuantity,
-                strsoldRate,strtotalIncome,strMyfarmid,currentDateTimeString);
-
-
-
+                strsoldRate,strtotalIncome,strMyfarmid,currentDateTimeString,projectId);
         if (mynetwork) {
 
             JSONObject params = new JSONObject();
@@ -272,8 +328,9 @@ public class HarvestVisitEntryFragment extends BaseFragment implements TextWatch
                 params.put("ownUseQuantity", ownUse.getText().toString());
                 params.put("soldQuantity", soldQuantity.getText().toString());
                 params.put("soldRate", soldRate.getText().toString());
-                params.put("totalIncome", totalIncome.getText().toString());
+                params.put("totalIncome", txt_totalIncome.getText().toString());
                 params.put("farmId", strMyfarmid);
+                params.put("projectId",strPlotId);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -292,6 +349,9 @@ public class HarvestVisitEntryFragment extends BaseFragment implements TextWatch
 
                         @Override
                         public void onNext(HarvestVO object) {
+                            double result = 0;
+                            String finalresult = new Double(result).toString();
+
                             CommonUtil.databaseUtil.updateHarevest(floraId);
                             Toast.makeText(getActivity(), "Successfully Added", Toast.LENGTH_LONG).show();
                             harvestDate.setText(currentDate);
@@ -299,10 +359,12 @@ public class HarvestVisitEntryFragment extends BaseFragment implements TextWatch
                             sapQuantity.setText("");
                             harvestQuantity.setText("");
                             ownUse.setText("");
-                            soldQuantity.setText("");
-                            soldRate.setText("");
-                            totalIncome.setText("");
+                            soldQuantity.setText(finalresult);
+                            soldRate.setText(finalresult);
+                            txt_totalIncome.setText(finalresult);
+                            strPlotId=0;
                             switchFragment(LandingPageActivity.FRAGMENT_HARVEST_FARM_SEARCH, "Harvest Entry", true);
+
                         }
 
                         @Override
@@ -318,15 +380,18 @@ public class HarvestVisitEntryFragment extends BaseFragment implements TextWatch
                     });
         } else{
             Toast.makeText(getActivity(), "Successfully Added", Toast.LENGTH_LONG).show();
+            double result = 0;
+            String finalresult = new Double(result).toString();
+
             harvestDate.setText(currentDate);
             sowingDate.setText(currentDate);
             sapQuantity.setText("");
             harvestQuantity.setText("");
             ownUse.setText("");
-            soldQuantity.setText("");
-            soldRate.setText("");
-            totalIncome.setText("");
-
+            soldQuantity.setText(finalresult);
+            soldRate.setText(finalresult);
+            txt_totalIncome.setText(finalresult);
+            strPlotId=0;
             switchFragment(LandingPageActivity.FRAGMENT_HARVEST_FARM_SEARCH, "Harvest Entry", true);
 
         }
@@ -340,6 +405,7 @@ public class HarvestVisitEntryFragment extends BaseFragment implements TextWatch
 
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
+
 //        if (plantOrSeed.isPerformingCompletion()) {
 //            // An item has been selected from the list. Ignore.
 //            return;
@@ -352,6 +418,9 @@ public class HarvestVisitEntryFragment extends BaseFragment implements TextWatch
 
     }
 
+
+
+
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
@@ -359,10 +428,14 @@ public class HarvestVisitEntryFragment extends BaseFragment implements TextWatch
         plantOrSeed.setText(mylistPlantSeed.getItem(position));
 
         Cursor mycusr = CommonUtil.databaseUtil.getPlantseedbyName(mylistPlantSeed.getItem(position));
-
         if(mycusr.getCount() >0 && mycusr.moveToFirst()){
             strMyplantId= mycusr.getInt(mycusr.getColumnIndexOrThrow(DatabaseHelper.SQL_PLANT_ID));
         }
+
+//        Cursor mycusrPlot = CommonUtil.databaseUtil.getPlotId();
+//        if(mycusrPlot.getCount() >0 && mycusrPlot.moveToFirst()){
+//            strPlotId= mycusrPlot.getInt(mycusrPlot.getColumnIndexOrThrow(DatabaseHelper.PROJECT_ID));
+//        }
 
 
     }

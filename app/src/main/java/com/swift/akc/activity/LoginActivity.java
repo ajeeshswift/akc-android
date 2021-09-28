@@ -97,13 +97,13 @@ public class LoginActivity extends BaseAppCompatActivity implements View.OnClick
         if (cur.moveToFirst()) {
             try {
                 do {
-                    String farm = cur.getString(cur.getColumnIndexOrThrow(DatabaseHelper.FORECAST_FARM_ID));
-                    String forcastArea = cur.getString(cur.getColumnIndexOrThrow(DatabaseHelper.FORECAST_CULTIVATION));
-                    int plant = cur.getInt(cur.getColumnIndexOrThrow(DatabaseHelper.FORECAST_PLANT_SEED));
-                    String date = cur.getString(cur.getColumnIndexOrThrow(DatabaseHelper.FORECAST_ENTRY_DATE));
-                    String time = cur.getString(cur.getColumnIndexOrThrow(DatabaseHelper.FORECAST_ENTRY_TIME));
-                    String cropDate = cur.getString(cur.getColumnIndexOrThrow(DatabaseHelper.FORECAST_SOWING_DATE));
-                    String seeds = cur.getString(cur.getColumnIndexOrThrow(DatabaseHelper.FORECAST_SOWING_KG));
+                    String farm         = cur.getString(cur.getColumnIndexOrThrow(DatabaseHelper.FORECAST_FARM_ID));
+                    String forcastArea  = cur.getString(cur.getColumnIndexOrThrow(DatabaseHelper.FORECAST_CULTIVATION));
+                    int plant           = cur.getInt(cur.getColumnIndexOrThrow(DatabaseHelper.FORECAST_PLANT_SEED));
+                    String date         = cur.getString(cur.getColumnIndexOrThrow(DatabaseHelper.FORECAST_ENTRY_DATE));
+                    String time         = cur.getString(cur.getColumnIndexOrThrow(DatabaseHelper.FORECAST_ENTRY_TIME));
+                    String cropDate     = cur.getString(cur.getColumnIndexOrThrow(DatabaseHelper.FORECAST_SOWING_DATE));
+                    String seeds        = cur.getString(cur.getColumnIndexOrThrow(DatabaseHelper.FORECAST_SOWING_KG));
 
                     JSONObject params = new JSONObject();
                     try {
@@ -169,17 +169,17 @@ public class LoginActivity extends BaseAppCompatActivity implements View.OnClick
 
             try {
                 do {
-                    String florastid = cur.getString(cur.getColumnIndexOrThrow(DatabaseHelper.FARM_ID));
-                    int plantseed = cur.getInt(cur.getColumnIndexOrThrow(DatabaseHelper.PLANTSEED));
-                    String sowing_date = cur.getString(cur.getColumnIndexOrThrow(DatabaseHelper.SOWING_DATE));
-                    String slapping_qty = cur.getString(cur.getColumnIndexOrThrow(DatabaseHelper.SAPPLING_QUANTITY));
-                    String harvest_date = cur.getString(cur.getColumnIndexOrThrow(DatabaseHelper.HARVEST_DATE));
-                    String harvest_qty = cur.getString(cur.getColumnIndexOrThrow(DatabaseHelper.HARVEST_QUANTITY));
-                    String home_use = cur.getString(cur.getColumnIndexOrThrow(DatabaseHelper.OWN_HOME_USE));
-                    String sold_qty = cur.getString(cur.getColumnIndexOrThrow(DatabaseHelper.SOLD_QUANTITY));
-                    String sold_rate = cur.getString(cur.getColumnIndexOrThrow(DatabaseHelper.SOLD_RATE));
-                    String total_income = cur.getString(cur.getColumnIndexOrThrow(DatabaseHelper.TOTAL_INCOME));
-                    String status = cur.getString(cur.getColumnIndexOrThrow(DatabaseHelper.STATUS));
+                    String florastid        = cur.getString(cur.getColumnIndexOrThrow(DatabaseHelper.FARM_ID));
+                    int plantseed           = cur.getInt(cur.getColumnIndexOrThrow(DatabaseHelper.PLANTSEED));
+                    String sowing_date      = cur.getString(cur.getColumnIndexOrThrow(DatabaseHelper.SOWING_DATE));
+                    String slapping_qty     = cur.getString(cur.getColumnIndexOrThrow(DatabaseHelper.SAPPLING_QUANTITY));
+                    String harvest_date     = cur.getString(cur.getColumnIndexOrThrow(DatabaseHelper.HARVEST_DATE));
+                    String harvest_qty      = cur.getString(cur.getColumnIndexOrThrow(DatabaseHelper.HARVEST_QUANTITY));
+                    String home_use         = cur.getString(cur.getColumnIndexOrThrow(DatabaseHelper.OWN_HOME_USE));
+                    String sold_qty         = cur.getString(cur.getColumnIndexOrThrow(DatabaseHelper.SOLD_QUANTITY));
+                    String sold_rate        = cur.getString(cur.getColumnIndexOrThrow(DatabaseHelper.SOLD_RATE));
+                    String total_income     = cur.getString(cur.getColumnIndexOrThrow(DatabaseHelper.TOTAL_INCOME));
+                    String projectid        = cur.getString(cur.getColumnIndexOrThrow(DatabaseHelper.PROJECT_ID));
 
                     JSONObject params = new JSONObject();
 
@@ -194,6 +194,8 @@ public class LoginActivity extends BaseAppCompatActivity implements View.OnClick
                         params.put("soldRate", sold_rate);
                         params.put("totalIncome", total_income);
                         params.put("farmId", florastid);
+                        params.put("projectId",projectid);
+
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -324,9 +326,6 @@ public class LoginActivity extends BaseAppCompatActivity implements View.OnClick
                             String strFarmno         = farmVillageListVO.getData().get(i).getFarmNo();
                             int strFarmId            = farmVillageListVO.getData().get(i).getFarmId();
                             String strFarmName       = farmVillageListVO.getData().get(i).getFarmName();
-
-                            Log.e("Testing",""+ strFarmName);
-
 
 
                             if(!CommonUtil.databaseUtil.hasFarmVD(strFarmId,strFarmDetailId)) {

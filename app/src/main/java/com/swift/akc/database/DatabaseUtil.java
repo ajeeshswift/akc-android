@@ -39,8 +39,6 @@ public class DatabaseUtil {
             DatabaseHelper.TOTAL_INCOME,
             DatabaseHelper.STATUS,
             DatabaseHelper.FLORA_ST_ID_M,
-
-
     };
 
     public static final String[] MY_HARVEST_FORECASTING_FIELD ={
@@ -103,7 +101,7 @@ public class DatabaseUtil {
 
     public long addHarvest(int floraId, String strsowingDate, String strsapQuantity, String strharvestDate, String strharvestQuantity,
                            String strownUseQuantity, String strsoldQuantity,
-                           String strsoldRate, String strtotalIncome, String strfarmId, String currentdate) {
+                           String strsoldRate, String strtotalIncome, String strfarmId, String currentdate, int projectId) {
         values.clear();
         values.put(DatabaseHelper.FARM_ID,strfarmId);
         values.put(DatabaseHelper.DTM,currentdate);
@@ -125,6 +123,7 @@ public class DatabaseUtil {
         values.put(DatabaseHelper.TOTAL_INCOME,strtotalIncome);
         values.put(DatabaseHelper.FLORA_ST_ID_M,0);
         values.put(DatabaseHelper.STATUS,0);
+        values.put(DatabaseHelper.PROJECT_ID,projectId);
 
        return db.insert(DatabaseHelper.HARVEST_TABLE,null,values);
 
@@ -282,8 +281,6 @@ public class DatabaseUtil {
         String abc = DatabaseHelper.STATUS + "='" + "0" +"'";
         return db.query(DatabaseHelper.HARVEST_TABLE,MY_HARVEST_FIELD,abc,null,
                 null,null,null);
-
-
     }
 
     public Cursor getHarvestForcastingbystatus() {

@@ -5,7 +5,7 @@ import java.util.Date;
 
 public class HarvestVO {
     private Date sowingDate;
-    private String sapQuantity;
+ //   private String sapQuantity;
 //    private Date harvestDate;
 //    private String harvestQuantity;
 //    private String ownUseQuantity;
